@@ -1,37 +1,50 @@
+import bcrypt from 'bcrypt'
 import pool from '../config/db.js'
 
-const getAllUsers = async () => {
-  const { rows } = await pool.query('SELECT * FROM users')
-  return rows
+const createUser = async (name, email, password, role) => {
+  // Generar el hash de la contraseña
+  const saltRounds = 10 // Número de rondas para generar el salt
+  const hashedPassword = await bcrypt.hash(password, saltRounds)
+
+  const query =
+    'INSERT INTO users (name, email, password, role) VALUES ($1, $2, $3, $4) RETURNING *'
+  const values = [name, email, hashedPassword, role] // Usamos la contraseña encriptada
+  const result = await pool.query(query, values)
+  return result.rows[0]
 }
 
 const getUserById = async id => {
-  const { rows } = await pool.query('SELECT * FROM users WHERE id_user = $1', [
-    id
-  ])
-  return rows[0]
+  const query = 'SELECT * FROM users WHERE id_user = $1'
+  const values = [id]
+  const result = await pool.query(query, values)
+  return result.rows[0]
 }
 
-const createUser = async user => {
-  const { name, email, password, role } = user
-  const { rows } = await pool.query(
-    'INSERT INTO users (name, email, password, role) VALUES ($1, $2, $3, $4) RETURNING *',
-    [name, email, password, role]
-  )
-  return rows[0]
+const getAllUsers = async () => {
+  const query = 'SELECT * FROM users'
+  const result = await pool.query(query)
+  return result.rows
 }
 
-const updateUser = async (id, user) => {
-  const { name, email, password, role } = user
-  const { rows } = await pool.query(
-    'UPDATE users SET name = $1, email = $2, password = $3, role = $4 WHERE id_user = $5 RETURNING *',
-    [name, email, password, role, id]
-  )
-  return rows[0]
+const updateUser = async (id, name, email, password, role) => {
+  const query =
+    'UPDATE users SET name = $1, email = $2, password = $3, role = $4 WHERE id_user = $5 RETURNING *'
+  const values = [name, email, password, role, id]
+  const result = await pool.query(query, values)
+  return result.rows[0]
 }
 
 const deleteUser = async id => {
-  await pool.query('DELETE FROM users WHERE id_user = $1', [id])
+  const query = 'DELETE FROM users WHERE id_user = $1 RETURNING *'
+  const values = [id]
+  const result = await pool.query(query, values)
+  return result.rows[0]
 }
 
-export default { getAllUsers, getUserById, createUser, updateUser, deleteUser }
+export default {
+  createUser,
+  getUserById,
+  getAllUsers,
+  updateUser,
+  deleteUser
+}

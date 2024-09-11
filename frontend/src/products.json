@@ -1,0 +1,1564 @@
+{
+    "productos": [
+        {
+            "id": "1",
+            "marca": "Apple",
+            "desc": "Apple MacBook Air 15,3 M2 (8GB RAM, 256 GB SSD, 8n CPU, 10n GPU) Azul medianoche",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/16874259_01/w=1500,h=1500,fit=pad",
+            "nombre": "Apple MacBook Air 15,3'",
+            "categoria": "Notebooks",
+            "precio": 1790990,
+            "especificaciones": [
+                {
+                    "Tamaño de pantalla": "15 pulgadas"
+                },
+                {
+                    "Tarjeta gráfica": "GPU de 10 nucleos"
+                },
+                {
+                    "Capacidad de almacenamiento": "256 GB"
+                },
+                {
+                    "Procesador": "Chip M2"
+                },
+                {
+                    "Características de pantalla": "Retina"
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "marca": "Apple",
+            "desc": "Apple MacBook Pro 16' M2 Pro (16GB RAM, 512GB SSD, 12n CPU, 19n GPU) Gris espacial",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/16725090_01/w=1500,h=1500,fit=pad",
+            "nombre": "Apple MacBook Pro 16'",
+            "categoria": "Notebooks",
+            "precio": 2590990,
+            "especificaciones": [
+                {
+                    "Tamaño de pantalla": "16 pulgadas"
+                },
+                {
+                    "Cantidad de puertos": "3"
+                },
+                {
+                    "Capacidad de almacenamiento": "512 GB"
+                },
+                {
+                    "Procesador": "Chip M2 Pro"
+                },
+                {
+                    "Memoria RAM": "16 GB"
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "marca": "Apple",
+            "desc": "Apple MacBook Air (13' con Chip M1 CPU 8 núcleos y GPU 7 núcleos, 8GB RAM, 256 GB SSD)",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/15028801_01/w=1500,h=1500,fit=pad",
+            "nombre": "Apple MacBook Air 13'",
+            "categoria": "Notebooks",
+            "precio": 1319990,
+            "especificaciones": [
+                {
+                    "Tamaño de pantalla": "13,3 pulgadas"
+                },
+                {
+                    "Cantidad de puertos": "2"
+                },
+                {
+                    "Capacidad de almacenamiento": "256 GB"
+                },
+                {
+                    "Procesador": "Chip M1 de Apple"
+                },
+                {
+                    "Memoria RAM": "8 GB"
+                }
+            ]
+        },
+        {
+            "id": "4",
+            "marca": "Dell",
+            "desc": "Notebook INSPIRON 15.6' Intel Core i7 16GB RAM 512GB SSD Dell",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/17152732_1/w=1500,h=1500,fit=pad",
+            "nombre": "Notebook Inspiron 15.6",
+            "categoria": "Notebooks",
+            "precio": 899990,
+            "especificaciones": [
+                {
+                    "Tamaño de pantalla": "15,6 pulgadas"
+                },
+                {
+                    "Tarjeta gráfica": "Intel Iris Xe Graphics"
+                },
+                {
+                    "Capacidad de almacenamiento": "512 GB"
+                },
+                {
+                    "Procesador": "i7-1255U"
+                },
+                {
+                    "Memoria RAM": "16 GB"
+                }
+            ]
+        },
+        {
+            "id": "5",
+            "marca": "Asus",
+            "desc": "Notebook Vivobook 14 X1404 Intel Core i5 8GB RAM 512GB SSD 14' FHD 60Hz Asus",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/16874581_01/w=1500,h=1500,fit=pad",
+            "nombre": "Notebook Vivobook 14",
+            "categoria": "Notebooks",
+            "precio": 689990,
+            "especificaciones": [
+                {
+                    "Tamaño de pantalla": "14 pulgadas"
+                },
+                {
+                    "Cantidad de puertos": "4"
+                },
+                {
+                    "Capacidad de almacenamiento": "512 GB"
+                },
+                {
+                    "Memoria RAM": "8 GB"
+                },
+                {
+                    "Procesador": "Intel Core i5"
+                }
+            ]
+        },
+        {
+            "id": "6",
+            "marca": "Asus",
+            "desc": "Notebook Vivobook 16 X1605 Intel Core i7 10 Núcleos 12GB RAM 512GB SSD 16' WUXGA 60Hz Asus",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/16882526_01/w=1500,h=1500,fit=pad",
+            "nombre": "Notebook Vivobook 16",
+            "categoria": "Notebooks",
+            "precio": 1049990,
+            "especificaciones": [
+                {
+                    "Tamaño de pantalla": "16 pulgadas"
+                },
+                {
+                    "Cantidad de puertos": "4"
+                },
+                {
+                    "Capacidad de almacenamiento": "512 GB"
+                },
+                {
+                    "Procesador": "Intel Core i7"
+                },
+                {
+                    "Memoria RAM": "12 GB"
+                }
+            ]
+        },
+        {
+            "id": "7",
+            "marca": "Acer",
+            "desc": "Notebook Acer Aspire Lite AL14-31P-31TH-1 Intel Core i3 8 Nucleos 16GB RAM 512GB SSD WUXGA",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/17070601_1/w=1500,h=1500,fit=pad",
+            "nombre": "Notebook Acer Aspire",
+            "categoria": "Notebooks",
+            "precio": 629990,
+            "especificaciones": [
+                {
+                    "Tamaño de pantalla": "14 pulgadas"
+                },
+                {
+                    "Cantidad de puertos": "4"
+                },
+                {
+                    "Capacidad de almacenamiento": "512 GB"
+                },
+                {
+                    "Memoria RAM": "16 GB"
+                },
+                {
+                    "Procesador": "Intel Core i3"
+                }
+            ]
+        },
+        {
+            "id": "8",
+            "marca": "HP",
+            "desc": "Notebook Intel Core I7 16Gb 1Tb Ssd Rtx 3050 15,6' Fhd Táctil Oled + Lápiz Hp",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/17031111_1/w=1500,h=1500,fit=pad",
+            "nombre": "Notebook HP I7",
+            "categoria": "Notebooks",
+            "precio": 1590990,
+            "especificaciones": [
+                {
+                    "Tamaño de pantalla": "15,6 pulgadas"
+                },
+                {
+                    "Cantidad de puertos": "4"
+                },
+                {
+                    "Capacidad de almacenamiento": "1 TB"
+                },
+                {
+                    "Memoria RAM": "16 GB"
+                },
+                {
+                    "Procesador": "Intel Core i7"
+                }
+            ]
+        },
+        {
+            "id": "9",
+            "marca": "HP",
+            "desc": "Notebook HP 15-EF2516LA AMD Ryzen 3 5300U 8GB RAM 512GB SSD 15,6' FHD Webcam HD",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/17031101_1/w=1500,h=1500,fit=pad",
+            "nombre": "Notebook HP 15",
+            "categoria": "Notebooks",
+            "precio": 529990,
+            "especificaciones": [
+                {
+                    "Tamaño de pantalla": "15,6 pulgadas"
+                },
+                {
+                    "Cantidad de puertos": "3"
+                },
+                {
+                    "Capacidad de almacenamiento": "512 GB"
+                },
+                {
+                    "Memoria RAM": "8 GB"
+                },
+                {
+                    "Procesador": "AMD Ryzen 3 5300U"
+                }
+            ]
+        },
+        {
+            "id": "10",
+            "marca": "Lenovo",
+            "desc": "Notebook Ideapad 3 AMD Ryzen 7 16GB RAM 512GB SSD 15,6' FHD Lenovo",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/16907613_1/w=1500,h=1500,fit=pad",
+            "nombre": "Notebook Ideapad 3",
+            "categoria": "Notebooks",
+            "precio": 669990,
+            "especificaciones": [
+                {
+                    "Tamaño de pantalla": "15,6 pulgadas"
+                },
+                {
+                    "Cantidad de puertos": "3"
+                },
+                {
+                    "Capacidad de almacenamiento": "512 GB"
+                },
+                {
+                    "Memoria RAM": "16 GB"
+                },
+                {
+                    "Procesador": "AMD RYZEN R7"
+                }
+            ]
+        },
+        {
+            "id": "11",
+            "marca": "Lenovo",
+            "desc": "Notebook Ideapad Slim 5 Intel Core i7-13620H 16GB RAM 512GB SSD 16' WUXGA IPS 16:10 Lenovo",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/16894288_1/w=1500,h=1500,fit=pad",
+            "nombre": "Notebook Ideapad Slim",
+            "categoria": "Notebooks",
+            "precio": 929990,
+            "especificaciones": [
+                {
+                    "Tamaño de pantalla": "16 pulgadas"
+                },
+                {
+                    "Cantidad de puertos": "2"
+                },
+                {
+                    "Capacidad de almacenamiento": "512 GB"
+                },
+                {
+                    "Memoria RAM": "16 GB"
+                },
+                {
+                    "Procesador": "Intel Core i7"
+                }
+            ]
+        },
+        {
+            "id": "12",
+            "marca": "Samsung",
+            "desc": "Notebook Book4 Intel Core5 8GB RAM 512GB SSD FHD Samsung",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/17086122_1/w=1500,h=1500,fit=pad",
+            "nombre": "Notebook Book4",
+            "categoria": "Notebooks",
+            "precio": 799990,
+            "especificaciones": [
+                {
+                    "Tamaño de pantalla": "15,6 pulgadas"
+                },
+                {
+                    "Cantidad de puertos": "4"
+                },
+                {
+                    "Capacidad de almacenamiento": "512 GB"
+                },
+                {
+                    "Memoria RAM": "8 GB"
+                },
+                {
+                    "Procesador": "Intel Core i5"
+                }
+            ]
+        },
+        {
+            "id": "13",
+            "marca": "Apple",
+            "desc": "Apple iPhone 15 Pro Max 256Gb",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/16907167_01/w=1500,h=1500,fit=pad",
+            "nombre": "iPhone 15 Pro",
+            "categoria": "Celulares",
+            "precio": 1469990,
+            "especificaciones": [
+                {
+                    "Cámara frontal": "40 MP"
+                },
+                {
+                    "Cámara posterior": "16 MP"
+                },
+                {
+                    "Tamaño de pantalla": "6,7 Pulgadas"
+                },
+                {
+                    "Memoria": "256 GB"
+                },
+                {
+                    "Sistema operativo": "iOS"
+                }
+            ]
+        },
+        {
+            "id": "14",
+            "marca": "Apple",
+            "desc": "Apple iPhone 14 256Gb",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/16563276_01/w=1500,h=1500,fit=pad",
+            "nombre": "iPhone 14",
+            "categoria": "Celulares",
+            "precio": 1099990,
+            "especificaciones": [
+                {
+                    "Cámara frontal": "12 MP"
+                },
+                {
+                    "Cámara posterior": "12 MP"
+                },
+                {
+                    "Tamaño de pantalla": "6,7 Pulgadas"
+                },
+                {
+                    "Memoria": "256 GB"
+                },
+                {
+                    "Resistente al agua": "IP68 (Protegido contra inmersión)"
+                }
+            ]
+        },
+        {
+            "id": "15",
+            "marca": "Apple",
+            "desc": "Apple iPhone 13 128Gb",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/15643401_01/w=1500,h=1500,fit=pad",
+            "nombre": "iPhone 13",
+            "categoria": "Celulares",
+            "precio": 869990,
+            "especificaciones": [
+                {
+                    "Cámara frontal": "12 MP"
+                },
+                {
+                    "Cámara posterior": "12 MP"
+                },
+                {
+                    "Tamaño de pantalla": "6.1 pulgadas"
+                },
+                {
+                    "Memoria": "128 GB"
+                },
+                {
+                    "Resistente al agua": "IP68 (Protegido contra inmersión)"
+                }
+            ]
+        },
+        {
+            "id": "16",
+            "marca": "Samsung",
+            "desc": "Celular Smartphone Samsung S24 Ultra 5G 256GB",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/17007784_01/w=1500,h=1500,fit=pad",
+            "nombre": "Smartphone Samsung S24",
+            "categoria": "Celulares",
+            "precio": 1469990,
+            "especificaciones": [
+                {
+                    "Cámara frontal": "12 MP"
+                },
+                {
+                    "Cámara posterior": "16MP"
+                },
+                {
+                    "Tamaño de pantalla": "6,8 pulgadas"
+                },
+                {
+                    "Memoria": "256 GB"
+                },
+                {
+                    "Resistente al agua": "IP68 (Protegido contra inmersión)"
+                }
+            ]
+        },
+        {
+            "id": "17",
+            "marca": "Samsung",
+            "desc": "Celular Smartphone Samsung A55 256GB",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/17088204_1/w=1500,h=1500,fit=pad",
+            "nombre": "Smartphone Samsung A55",
+            "categoria": "Celulares",
+            "precio": 499990,
+            "especificaciones": [
+                {
+                    "Cámara frontal": "32 MP"
+                },
+                {
+                    "Cámara posterior": "16 MP"
+                },
+                {
+                    "Tamaño de pantalla": "6,6 pulgadas"
+                },
+                {
+                    "Memoria": "256 GB"
+                },
+                {
+                    "Generacion": "5G"
+                }
+            ]
+        },
+        {
+            "id": "18",
+            "marca": "Samsung",
+            "desc": "Celular Smartphone Samsung A35 128GB",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/17088202_1/w=1500,h=1500,fit=pad",
+            "nombre": "Smartphone Samsung A35",
+            "categoria": "Celulares",
+            "precio": 369990,
+            "especificaciones": [
+                {
+                    "Cámara frontal": "13 MP"
+                },
+                {
+                    "Cámara posterior": "16 MP"
+                },
+                {
+                    "Tamaño de pantalla": "6,6 pulgadas"
+                },
+                {
+                    "Memoria": "128 GB"
+                },
+                {
+                    "Generacion": "5G"
+                }
+            ]
+        },
+        {
+            "id": "19",
+            "marca": "Motorola",
+            "desc": "Celular Motorola Moto G84 5G 256GB",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/16980026_1/w=1500,h=1500,fit=pad",
+            "nombre": "Moto G84",
+            "categoria": "Celulares",
+            "precio": 279990,
+            "especificaciones": [
+                {
+                    "Cámara frontal": "16 MP"
+                },
+                {
+                    "Cámara posterior": "16 MP"
+                },
+                {
+                    "Tamaño de pantalla": "6,5 pulgadas"
+                },
+                {
+                    "Memoria": "256 GB"
+                },
+                {
+                    "Resistente al agua": "IPX4 (Protegido contra las salpicaduras de agua)"
+                }
+            ]
+        },
+        {
+            "id": "20",
+            "marca": "Motorola",
+            "desc": "Celular Motorola Moto Edge 50 Fusion 8 + 256GB",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/17137500_01/w=1500,h=1500,fit=pad",
+            "nombre": "Moto Edge 50 Fusion",
+            "categoria": "Celulares",
+            "precio": 329990,
+            "especificaciones": [
+                {
+                    "Cámara frontal": "32 MP"
+                },
+                {
+                    "Cámara posterior": "16 MP"
+                },
+                {
+                    "Tamaño de pantalla": "6,7 pulgadas"
+                },
+                {
+                    "Memoria": "256 GB"
+                },
+                {
+                    "Resistente al agua": "IP68 (Protegido contra inmersión)"
+                }
+            ]
+        },
+        {
+            "id": "21",
+            "marca": "Xiaomi",
+            "desc": "Celular Smartphone Xiaomi Redmi Note 13 PRO +",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/17056238_1/w=1500,h=1500,fit=pad",
+            "nombre": "Redmi Note 13 Pro+",
+            "categoria": "Celulares",
+            "precio": 559990,
+            "especificaciones": [
+                {
+                    "Cámara frontal": "16 MP"
+                },
+                {
+                    "Cámara posterior": "16 MP"
+                },
+                {
+                    "Tamaño de pantalla": "6,6 pulgadas"
+                },
+                {
+                    "Memoria": "512 GB"
+                },
+                {
+                    "Resistente al agua": "IP68 (Protegido contra inmersión)"
+                }
+            ]
+        },
+        {
+            "id": "22",
+            "marca": "Xiaomi",
+            "desc": "Celular Xiaomi Redmi 13C 256GB",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/16970733_1/w=1500,h=1500,fit=pad",
+            "nombre": "Xiaomi Redmi",
+            "categoria": "Celulares",
+            "precio": 199990,
+            "especificaciones": [
+                {
+                    "Cámara frontal": "40 MP"
+                },
+                {
+                    "Cámara posterior": "16 MP"
+                },
+                {
+                    "Tamaño de pantalla": "6,7 pulgadas"
+                },
+                {
+                    "Memoria": "256 GB"
+                },
+                {
+                    "Sistema operativo": "Android"
+                }
+            ]
+        },
+        {
+            "id": "23",
+            "marca": "Honor",
+            "desc": "Celular Honor H90 512Gb",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/16920381_1/w=1500,h=1500,fit=pad",
+            "nombre": "Honor H90 5G",
+            "categoria": "Celulares",
+            "precio": 549990,
+            "especificaciones": [
+                {
+                    "Cámara frontal": "40 MP"
+                },
+                {
+                    "Cámara posterior": "16 MP"
+                },
+                {
+                    "Tamaño de pantalla": "6,7 pulgadas"
+                },
+                {
+                    "Memoria": "512 GB"
+                },
+                {
+                    "Sistema operativo": "Android"
+                }
+            ]
+        },
+        {
+            "id": "24",
+            "marca": "Honor",
+            "desc": "Celular Honor X8A 128Gb",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/16841933_1/w=1500,h=1500,fit=pad",
+            "nombre": "Honor X8A",
+            "categoria": "Celulares",
+            "precio": 259990,
+            "especificaciones": [
+                {
+                    "Cámara frontal": "16 MP"
+                },
+                {
+                    "Cámara posterior": "40 MP"
+                },
+                {
+                    "Tamaño de pantalla": "6,7 pulgadas"
+                },
+                {
+                    "Memoria": "128 GB"
+                },
+                {
+                    "Sistema operativo": "Android"
+                }
+            ]
+        },{
+            "id": "25",
+            "marca": "Bose",
+            "desc": "Parlante Bluetooth Soundlink Revolve Ii Gray Bose",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/16753893_1/w=1500,h=1500,fit=pad",
+            "nombre": "Parlante Bluetooth",
+            "categoria": "Audio",
+            "precio": 449990,
+            "especificaciones": [
+                {
+                    "Conexión bluetooth": "Si"
+                },
+                {
+                    "Duracion de la batería": "17 horas"
+                },
+                {
+                    "Entradas USB": "Sin entradas"
+                },
+                {
+                    "Modelo": "REVOLVEPLUSIIG"
+                },
+                {
+                    "Fuente de energia": "Baterías"
+                }
+            ]
+        },
+        {
+            "id": "26",
+            "marca": "Bose",
+            "desc": "Audífono Inalambrico QCHW Bose",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/17036963_1/w=1500,h=1500,fit=pad",
+            "nombre": "Audífono Inalambrico",
+            "categoria": "Audio",
+            "precio": 459990,
+            "especificaciones": [
+                {
+                    "Aislador de sonido": "Si"
+                },
+                {
+                    "Conexión bluetooth": "Si"
+                },
+                {
+                    "Audio": "Audio HQ"
+                },
+                {
+                    "Modelo": "QCHW"
+                },
+                {
+                    "Resistente al agua": "No"
+                }
+            ]
+        },
+        {
+            "id": "27",
+            "marca": "Apple",
+            "desc": "Apple HomePod - Blanco",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/16703011_01/w=1500,h=1500,fit=pad",
+            "nombre": "HomePod",
+            "categoria": "Audio",
+            "precio": 449990,
+            "especificaciones": [
+                {
+                    "Conexión bluetooth": "Si"
+                },
+                {
+                    "Entradas USB": "Sin entradas"
+                },
+                {
+                    "Garantia del proveedor": "12 Meses"
+                },
+                {
+                    "Modelo": "Asistente de Voz MQJ83CI/A"
+                },
+                {
+                    "Alarma": "Sí"
+                }
+            ]
+        },
+        {
+            "id": "28",
+            "marca": "Apple",
+            "desc": "AirPods 3Ra Generación Con Estuche Lightning Apple",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/16567537_01/w=1500,h=1500,fit=pad",
+            "nombre": "Audífonos AirPods",
+            "categoria": "Audio",
+            "precio": 259990,
+            "especificaciones": [
+                {
+                    "Aislador de sonido": "No"
+                },
+                {
+                    "Conexión bluetooth": "Si"
+                },
+                {
+                    "Compatibilidad": "IOS"
+                },
+                {
+                    "Modelo": "MPNY3AM/A"
+                },
+                {
+                    "Resistente al agua": "Si"
+                }
+            ]
+        },
+        {
+            "id": "29",
+            "marca": "Huawei",
+            "desc": "Audífono Inalambrico Tws Freebuds 6I Black Huawei",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/17132891_2/w=1500,h=1500,fit=pad",
+            "nombre": "Audífonos bluetooth",
+            "categoria": "Audio",
+            "precio": 109990,
+            "especificaciones": [
+                {
+                    "Aislador de sonido": "Si"
+                },
+                {
+                    "Conexión bluetooth": "Si"
+                },
+                {
+                    "Compatibilidad": "iOS/Android"
+                },
+                {
+                    "Duracion de la batería": "Hasta 20 horas"
+                },
+                {
+                    "Garantia del proveedor": "12 Meses"
+                }
+            ]
+        },
+        {
+            "id": "30",
+            "marca": "Huawei",
+            "desc": "Audífonos bluetooth Freebuds Se 2 Blanco Huawei",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/16853558_1/w=1500,h=1500,fit=pad",
+            "nombre": "Audífonos bluetooth",
+            "categoria": "Audio",
+            "precio": 49990,
+            "especificaciones": [
+                {
+                    "Aislador de sonido": "No"
+                },
+                {
+                    "Conexión bluetooth": "Si"
+                },
+                {
+                    "Compatibilidad": "iOS/Android"
+                },
+                {
+                    "Duracion de la batería": "Hasta 9 horas"
+                },
+                {
+                    "Resistente al agua": "Si"
+                }
+            ]
+        },
+        {
+            "id": "31",
+            "marca": "Sony",
+            "desc": "Audífonos Bluetooth Noise Cancelling Wh-1000Xm4 Azul Sony",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/15790298_1/w=1500,h=1500,fit=pad",
+            "nombre": "Audífonos headset",
+            "categoria": "Audio",
+            "precio": 299990,
+            "especificaciones": [
+                {
+                    "Aislador de sonido": "Si"
+                },
+                {
+                    "Conexión bluetooth": "Si"
+                },
+                {
+                    "Audio": "Hi-Res Audio"
+                },
+                {
+                    "Garantia del proveedor": "3 Meses"
+                },
+                {
+                    "Resistente al agua": "No"
+                }
+            ]
+        },
+        {
+            "id": "32",
+            "marca": "Sony",
+            "desc": "Audifonos Sony Tw Wf-C700N/Uc",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/16757116_1/w=1500,h=1500,fit=pad",
+            "nombre": "Audífonos earbuds",
+            "categoria": "Audio",
+            "precio": 99990,
+            "especificaciones": [
+                {
+                    "Aislador de sonido": "Si"
+                },
+                {
+                    "Conexión bluetooth": "Si"
+                },
+                {
+                    "Garantia del proveedor": "6 Meses"
+                },
+                {
+                    "Modelo": "WF-C700N/VZ UC"
+                },
+                {
+                    "Resistente al agua": "Si"
+                }
+            ]
+        },
+        {
+            "id": "33",
+            "marca": "Samsung",
+            "desc": "Samsung Galaxy Buds 2 Pro",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/16473353_1/w=1500,h=1500,fit=pad",
+            "nombre": "Audífonos earbuds",
+            "categoria": "Audio",
+            "precio": 219990,
+            "especificaciones": [
+                {
+                    "Aislador de sonido": "Si"
+                },
+                {
+                    "Conexión bluetooth": "Si"
+                },
+                {
+                    "Compatibilidad": "iOS/Android"
+                },
+                {
+                    "Garantia del proveedor": "12 Meses"
+                },
+                {
+                    "Resistente al agua": "Si"
+                }
+            ]
+        },
+        {
+            "id": "34",
+            "marca": "Samsung",
+            "desc": "Soundbar Home Theater HW-Q700C/ZS Samsung",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/16814438_1/w=1500,h=1500,fit=pad",
+            "nombre": "Soundbars",
+            "categoria": "Audio",
+            "precio": 469990,
+            "especificaciones": [
+                {
+                    "Cantidad de partantes": "4"
+                },
+                {
+                    "Conexión bluetooth": "Si"
+                },
+                {
+                    "Garantia del proveedor": "12 Meses"
+                },
+                {
+                    "Entradas USB": "Sin entradas"
+                },
+                {
+                    "Control remoto incluido": "Si"
+                }
+            ]
+        },
+        {
+            "id": "35",
+            "marca": "House of Marley",
+            "desc": "Parlante Portatil Bluetooth EM-JA006-SB Marley",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/5546136_1/w=1500,h=1500,fit=pad",
+            "nombre": "Parlante Bluetooth",
+            "categoria": "Audio",
+            "precio": 179990,
+            "especificaciones": [
+                {
+                    "Duracion de la batería": "10 horas"
+                },
+                {
+                    "Conexión bluetooth": "Si"
+                },
+                {
+                    "Entradas USB": "1"
+                },
+                {
+                    "Control remoto incluido": "No"
+                },
+                {
+                    "Modelo": "EM-JA006-SB"
+                }
+            ]
+        },
+        {
+            "id": "36",
+            "marca": "JBL",
+            "desc": "Parlante Inalámbrico Bluetooth Flip 6 JBL",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/16293052_2/w=1500,h=1500,fit=pad",
+            "nombre": "Parlante Bluetooth",
+            "categoria": "Audio",
+            "precio": 149990,
+            "especificaciones": [
+                {
+                    "Duracion de la batería": "12 horas"
+                },
+                {
+                    "Conexión bluetooth": "Si"
+                },
+                {
+                    "Entradas USB": "Sin entradas"
+                },
+                {
+                    "Fuente de energía": "Baterías"
+                },
+                {
+                    "Garantia del proveedor": "1 año"
+                }
+            ]
+        },
+        {
+            "id": "37",
+            "marca": "Nikon",
+            "desc": "Nikon D7500 DSLR Negro cámara reflex digital Solo cuerpo negro",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/115680922_04/w=1500,h=1500,fit=pad",
+            "nombre": "Nikon D7500",
+            "categoria": "Camaras",
+            "precio": 1279990,
+            "especificaciones": [
+                {
+                    "Tipo de cámara": "Reflex"
+                },
+                {
+                    "Modelo": "D7500"
+                },
+                {
+                    "Velocidad del obturador": "18000 s"
+                },
+                {
+                    "Camara posterior": "20.9 MP"
+                },
+                {
+                    "Zoom óptico": "1x"
+                }
+            ]
+        },
+        {
+            "id": "38",
+            "marca": "Nikon",
+            "desc": "Cámara Nikon Coolpix P950 Digital",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/115680920_01/w=1500,h=1500,fit=pad",
+            "nombre": "Nikon Coolpix P950",
+            "categoria": "Camaras",
+            "precio": 1429990,
+            "especificaciones": [
+                {
+                    "Resolución máxima": "4608 x 3456"
+                },
+                {
+                    "Modelo": "P950"
+                },
+                {
+                    "Velocidad del obturador": "1/2000 a 1 s"
+                },
+                {
+                    "Camara posterior": "16 MP"
+                },
+                {
+                    "Zoom óptico": "83x"
+                }
+            ]
+        },
+        {
+            "id": "39",
+            "marca": "Fujifilm",
+            "desc": "Fujifilm X-T30 II Sin Espejo Cámara Con 18-55mm Lente - Negro",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/130227374_01/w=1500,h=1500,fit=pad",
+            "nombre": "Fujifilm X-T30",
+            "categoria": "Camaras",
+            "precio": 1839990,
+            "especificaciones": [
+                {
+                    "Resolución de pantalla": "4K (2.304 x 4.096)"
+                },
+                {
+                    "Modelo": "X-T30 II"
+                },
+                {
+                    "Estabilización de imagen": "Sí"
+                },
+                {
+                    "Camara posterior": "26.1 MP"
+                },
+                {
+                    "Zoom óptico": "18-55mm"
+                }
+            ]
+        },
+        {
+            "id": "40",
+            "marca": "Canon",
+            "desc": "Cámara Profesional 90D 18-135 Canon",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/15171325_1/w=1500,h=1500,fit=pad",
+            "nombre": "Cámara Profesional 90D",
+            "categoria": "Camaras",
+            "precio": 1599990,
+            "especificaciones": [
+                {
+                    "Calidad de grabación": "4K Ultra HD"
+                },
+                {
+                    "Modelo": "90D 18-135"
+                },
+                {
+                    "Velocidad del obturador": "1/2000 a 1 s"
+                },
+                {
+                    "Megapixeles": "32.5 MP"
+                },
+                {
+                    "Tamaño de la pantalla": "3 pulgadas"
+                }
+            ]
+        },
+        {
+            "id": "41",
+            "marca": "Canon",
+            "desc": "Cámara Reflex T100 + Lente 18-55 Canon",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/6886486_1/w=1500,h=1500,fit=pad",
+            "nombre": "Cámara Reflex T100",
+            "categoria": "Camaras",
+            "precio": 499990,
+            "especificaciones": [
+                {
+                    "Calidad de grabación": "Full HD"
+                },
+                {
+                    "Modelo": "T100"
+                },
+                {
+                    "Velocidad del obturador": "30 - 1/4000 - Bulb"
+                },
+                {
+                    "Megapixeles": "18 MP"
+                },
+                {
+                    "Tamaño de la pantalla": "2.7 pulgadas"
+                }
+            ]
+        },
+        {
+            "id": "42",
+            "marca": "Canon",
+            "desc": "Camara Eos R100 18-45 Is Stm Canon",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/16877531_3/w=1500,h=1500,fit=pad",
+            "nombre": "Camara Eos R100",
+            "categoria": "Camaras",
+            "precio": 749990,
+            "especificaciones": [
+                {
+                    "Calidad de grabación": "4K Ultra HD"
+                },
+                {
+                    "Modelo": "R100"
+                },
+                {
+                    "Velocidad del obturador": "1/4000"
+                },
+                {
+                    "Megapixeles": "24 MP"
+                },
+                {
+                    "Tamaño de la pantalla": "3 pulgadas"
+                }
+            ]
+        },
+        {
+            "id": "43",
+            "marca": "Sony",
+            "desc": "Cámara Alpha ILCE-6400L Lente 16-50 Sony",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/7398775_1/w=1500,h=1500,fit=pad",
+            "nombre": "Cámara Alpha ILCE",
+            "categoria": "Camaras",
+            "precio": 1099990,
+            "especificaciones": [
+                {
+                    "Calidad de grabación": "4K Ultra HD"
+                },
+                {
+                    "Modelo": "ILCE-6400L"
+                },
+                {
+                    "Velocidad del obturador": "1/4000 a 30 s"
+                },
+                {
+                    "Megapixeles": "24.2 MP"
+                },
+                {
+                    "Sensibilidad ISO": "Auto 100-3200"
+                }
+            ]
+        },
+        {
+            "id": "44",
+            "marca": "Sony",
+            "desc": "Cámara Zv-1F Para Videoblogs Sony",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/16622657_1/w=1500,h=1500,fit=pad",
+            "nombre": "Cámara Zv-1F",
+            "categoria": "Camaras",
+            "precio": 599990,
+            "especificaciones": [
+                {
+                    "Calidad de grabación": "4K Ultra HD"
+                },
+                {
+                    "Modelo": "CX64700"
+                },
+                {
+                    "Zoom digital": "4x"
+                },
+                {
+                    "Megapixeles": "20,1 MP"
+                },
+                {
+                    "Sensibilidad ISO": "ISO Automático"
+                }
+            ]
+        },
+        {
+            "id": "45",
+            "marca": "Sony",
+            "desc": "Handycam 4K AX43A con Sensor CMOS Exmor R Sony",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/16622650_1/w=1500,h=1500,fit=pad",
+            "nombre": "Handycam",
+            "categoria": "Camaras",
+            "precio": 1039990,
+            "especificaciones": [
+                {
+                    "Calidad de grabación": "4K Ultra HD (3840 x 2160)"
+                },
+                {
+                    "Modelo": "FDR AX43A"
+                },
+                {
+                    "Zoom óptico": "20x"
+                },
+                {
+                    "Megapixeles": "8,3 MP"
+                },
+                {
+                    "Tamaño de la pantalla": "2.8 pulgadas"
+                }
+            ]
+        },
+        {
+            "id": "46",
+            "marca": "Panasonic",
+            "desc": "Panasonic Lumix DC-GH5 Sin Espejo Cámara Solo Cuerpo - Negro",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/113695955_01/w=1500,h=1500,fit=pad",
+            "nombre": "Panasonic Lumix DC-GH5",
+            "categoria": "Camaras",
+            "precio": 1389990,
+            "especificaciones": [
+                {
+                    "Tamaño del sensor": "17.3 x 13 mm"
+                },
+                {
+                    "Modelo": "DC-GH5"
+                },
+                {
+                    "Resolución máxima": "5184 x 3888"
+                },
+                {
+                    "Megapixeles": "21,1 MP"
+                },
+                {
+                    "Tamaño de la pantalla": "3 pulgadas"
+                }
+            ]
+        },
+        {
+            "id": "47",
+            "marca": "Gopro",
+            "desc": "Camara Deportiva Hero 12 Black Gopro",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/16897697_1/w=1500,h=1500,fit=pad",
+            "nombre": "Gopro Hero 12",
+            "categoria": "Camaras",
+            "precio": 469990,
+            "especificaciones": [
+                {
+                    "Tamaño de la pantalla": "2 pulgadas"
+                },
+                {
+                    "Sensibilidad ISO": "Auto 100-6400 (12800max)"
+                },
+                {
+                    "Megapíxeles": "27 MP"
+                },
+                {
+                    "Modelo": "Hero 12"
+                },
+                {
+                    "Calidad de la grabación": "4K Ultra HD"
+                }
+            ]
+        },
+        {
+            "id": "48",
+            "marca": "Gopro",
+            "desc": "Cámara GoPro Hero 11 Black",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/16524811_1/w=1500,h=1500,fit=pad",
+            "nombre": "Gopro Hero 11",
+            "categoria": "Camaras",
+            "precio": 409990,
+            "especificaciones": [
+                {
+                    "Tamaño de la pantalla": "2 pulgadas"
+                },
+                {
+                    "Sensibilidad ISO": "ISO Automático"
+                },
+                {
+                    "Megapíxeles": "27 MP"
+                },
+                {
+                    "Modelo": "Hero 11"
+                },
+                {
+                    "Calidad de la grabación": "4K Ultra HD"
+                }
+            ]
+        },
+        {
+            "id": "49",
+            "marca": "Sony",
+            "desc": "LED 43 Smart TV 4K HDR Google TV KD-43X77L Sony",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/123152644_01/w=1500,h=1500,fit=pad",
+            "nombre": "Smart TV 4K",
+            "categoria": "Televisores",
+            "precio": 589990,
+            "especificaciones": [
+                {
+                    "Tamaño de la pantalla": "43 pulgadas"
+                },
+                {
+                    "Conectividad/conexión": "HDMI,USB,Wifi"
+                },
+                {
+                    "Dimensiones": "168 x 96 x 7 cm"
+                },
+                {
+                    "Modelo": "KD-43X77L"
+                },
+                {
+                    "Sistema operativo": "Android Tv"
+                }
+            ]
+        },
+        {
+            "id": "50",
+            "marca": "Sony",
+            "desc": "LED Smart TV 55 4K Full Array Google TV KD-55X90L",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/123326026_01/w=1500,h=1500,fit=pad",
+            "nombre": "Smart TV 55 4K",
+            "categoria": "Televisores",
+            "precio": 1129990,
+            "especificaciones": [
+                {
+                    "Tamaño de la pantalla": "55 pulgadas"
+                },
+                {
+                    "Conectividad/conexión": "Bluetooth,HDMI,USB,Wifi"
+                },
+                {
+                    "Contraste": "Super contrast"
+                },
+                {
+                    "Modelo": "XR-55X90L"
+                },
+                {
+                    "Sistema operativo": "Android go"
+                }
+            ]
+        },
+        {
+            "id": "51",
+            "marca": "Sony",
+            "desc": "OLED Smart TV 4K Google TV XR-65A80L",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/122893589_01/w=1500,h=1500,fit=pad",
+            "nombre": "OLED Smart TV",
+            "categoria": "Televisores",
+            "precio": 1949990,
+            "especificaciones": [
+                {
+                    "Tamaño de la pantalla": "65 pulgadas"
+                },
+                {
+                    "Conectividad/conexión": "Bluetooth,Wifi"
+                },
+                {
+                    "Dimensiones": "144 x 83 x 5 cm"
+                },
+                {
+                    "Contraste": "Direct full array 8x"
+                },
+                {
+                    "Sistema operativo": "Android TV"
+                }
+            ]
+        },
+        {
+            "id": "52",
+            "marca": "Samsung",
+            "desc": "LED Smart TV 43 UN43AU7090GXZS Tizen Samsung",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/16150653_1/w=1500,h=1500,fit=pad",
+            "nombre": "LED Smart TV 43",
+            "categoria": "Televisores",
+            "precio": 409990,
+            "especificaciones": [
+                {
+                    "Tamaño de la pantalla": "43 pulgadas"
+                },
+                {
+                    "Resolución de pantalla": "UHD (3.840 x 2.160)"
+                },
+                {
+                    "Contraste": "Mega contraste"
+                },
+                {
+                    "Modelo": "UN43AU7090GXZS"
+                },
+                {
+                    "Cantidad de puertos HDMI": "3"
+                }
+            ]
+        },
+        {
+            "id": "53",
+            "marca": "Samsung",
+            "desc": "QLED Smart TV 50' QN50Q65DAGXZS 4K HDR Tizen Samsung",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/17113434_1/w=1500,h=1500,fit=pad",
+            "nombre": "QLED Smart TV 50",
+            "categoria": "Televisores",
+            "precio": 699990,
+            "especificaciones": [
+                {
+                    "Tamaño de la pantalla": "50 pulgadas"
+                },
+                {
+                    "Resolución de pantalla": "4K HDR"
+                },
+                {
+                    "Sintonizador TDT": "Sintonizador digital ISDB-T"
+                },
+                {
+                    "Modelo": "QN50Q65DAGXZS"
+                },
+                {
+                    "Sistema operativo": "Tizen"
+                }
+            ]
+        },
+        {
+            "id": "54",
+            "marca": "Samsung",
+            "desc": "QLED 4K 65' Q70D Smart TV 2024 Samsung",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/17113438_1/w=1500,h=1500,fit=pad",
+            "nombre": "QLED 4K 65",
+            "categoria": "Televisores",
+            "precio": 1199990,
+            "especificaciones": [
+                {
+                    "Tamaño de la pantalla": "65 pulgadas"
+                },
+                {
+                    "Resolución de pantalla": "4K HDR"
+                },
+                {
+                    "Sintonizador TDT": "Sintonizador digital ISDB-T"
+                },
+                {
+                    "Modelo": "QN65Q70DAGXZS"
+                },
+                {
+                    "Sistema operativo": "Tizen"
+                }
+            ]
+        },
+        {
+            "id": "55",
+            "marca": "LG",
+            "desc": "Nano Cell Smart TV 43' + Soundbar SK1 43NANO80TSA 4K Ultra HD Web OS LG",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/17173447_1/w=1500,h=1500,fit=pad",
+            "nombre": "Nano Cell Smart TV",
+            "categoria": "Televisores",
+            "precio": 499990,
+            "especificaciones": [
+                {
+                    "Tamaño de la pantalla": "43 pulgadas"
+                },
+                {
+                    "Resolución de pantalla": "4K Ultra HD"
+                },
+                {
+                    "Contraste": "5000:01"
+                },
+                {
+                    "Modelo": "43NANO80TSA"
+                },
+                {
+                    "Cantidad de puertos HDMI": "3"
+                }
+            ]
+        },
+        {
+            "id": "56",
+            "marca": "LG",
+            "desc": "Televisor QNED 50 Pulgadas Smart TV 4K UHD 50QNED85TSA + Magic Remote LG",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/17112110_1/w=1500,h=1500,fit=pad",
+            "nombre": "Televisor QNED 50",
+            "categoria": "Televisores",
+            "precio": 279990,
+            "especificaciones": [
+                {
+                    "Tamaño de la pantalla": "50 pulgadas"
+                },
+                {
+                    "Resolución de pantalla": "4K Ultra HD"
+                },
+                {
+                    "Contraste": "5000:01"
+                },
+                {
+                    "Modelo": "50QNED85TSA"
+                },
+                {
+                    "Cantidad de puertos HDMI": "4"
+                }
+            ]
+        },
+        {
+            "id": "57",
+            "marca": "LG",
+            "desc": "LED LG StanbyME Go Smart 27' Full HD 27LX5QKNA",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/17045292_1/w=1500,h=1500,fit=pad",
+            "nombre": "LED LG StanbyME Go",
+            "categoria": "Televisores",
+            "precio": 1199990,
+            "especificaciones": [
+                {
+                    "Tamaño de la pantalla": "27 pulgadas"
+                },
+                {
+                    "Resolución de pantalla": "Full HD"
+                },
+                {
+                    "Contraste": "5000:01"
+                },
+                {
+                    "Modelo": "27LX5QKNA.AWH"
+                },
+                {
+                    "Sistema operativo": "Web OS"
+                }
+            ]
+        },
+        {
+            "id": "58",
+            "marca": "Philips",
+            "desc": "LED Smart TV 55' 55PUD7408 4K Ultra HD Philips",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/16880713_1/w=1500,h=1500,fit=pad",
+            "nombre": "LED Smart TV 55",
+            "categoria": "Televisores",
+            "precio": 499990,
+            "especificaciones": [
+                {
+                    "Tamaño de la pantalla": "55 pulgadas"
+                },
+                {
+                    "Resolución de pantalla": "4K Ultra HD"
+                },
+                {
+                    "Cantidad de puertos HDMI": "3"
+                },
+                {
+                    "Modelo": "55PUD7408/43"
+                },
+                {
+                    "Entradas USB": "2"
+                }
+            ]
+        },
+        {
+            "id": "59",
+            "marca": "Philips",
+            "desc": "LED Smart TV 43' 43PFD6918 Full HD Philips",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/16880705_1/w=800,h=800,fit=pad",
+            "nombre": "LED Smart TV 43",
+            "categoria": "Televisores",
+            "precio": 339990,
+            "especificaciones": [
+                {
+                    "Tamaño de la pantalla": "43 pulgadas"
+                },
+                {
+                    "Resolución de pantalla": "Full HD"
+                },
+                {
+                    "Cantidad de puertos HDMI": "3"
+                },
+                {
+                    "Modelo": "43PFD6918/43"
+                },
+                {
+                    "Entradas USB": "2"
+                }
+            ]
+        },
+        {
+            "id": "60",
+            "marca": "Apple",
+            "desc": "Apple Tv 4K Wifi 64Gb",
+            "img": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/16614299_01/w=1500,h=1500,fit=pad",
+            "nombre": "Apple Tv 4K",
+            "categoria": "Televisores",
+            "precio": 189990,
+            "especificaciones": [
+                {
+                    "Tipo": "Streaming"
+                },
+                {
+                    "Conectividad/conexión": "Inalámbrico"
+                },
+                {
+                    "Garantía del proveedor": "12 meses"
+                },
+                {
+                    "Modelo": "MN873CI/A"
+                },
+                {
+                    "Incluye parlantes": "Si"
+                }
+            ]
+        }
+    ]
+}
+

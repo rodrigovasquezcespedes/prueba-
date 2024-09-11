@@ -10,8 +10,8 @@ describe('User Routes', () => {
 
   test('POST /api/users - debería crear un nuevo usuario', async () => {
     const newUser = {
-      name: '',
-      email: 'rodrigo@example.com',
+      name: 'rodrigo3',
+      email: 'rodrigo3@example.com',
       password: 'password123',
       role: false
     }

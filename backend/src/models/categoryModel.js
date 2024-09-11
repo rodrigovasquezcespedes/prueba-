@@ -1,44 +1,44 @@
 import pool from '../config/db.js'
 
-const getAllCategories = async () => {
-  const { rows } = await pool.query('SELECT * FROM categories')
-  return rows
+const createCategory = async category_name => {
+  const query = 'INSERT INTO categories (category_name) VALUES ($1) RETURNING *'
+  const values = [category_name]
+  const result = await pool.query(query, values)
+  return result.rows[0]
 }
 
 const getCategoryById = async id => {
-  const { rows } = await pool.query(
-    'SELECT * FROM categories WHERE id_category = $1',
-    [id]
-  )
-  return rows[0]
+  const query = 'SELECT * FROM categories WHERE id_category = $1'
+  const values = [id]
+  const result = await pool.query(query, values)
+  return result.rows[0]
 }
 
-const createCategory = async category => {
-  const { category_name } = category
-  const { rows } = await pool.query(
-    'INSERT INTO categories (category_name) VALUES ($1) RETURNING *',
-    [category_name]
-  )
-  return rows[0]
+const getAllCategories = async () => {
+  const query = 'SELECT * FROM categories'
+  const result = await pool.query(query)
+  return result.rows
 }
 
-const updateCategory = async (id, category) => {
-  const { category_name } = category
-  const { rows } = await pool.query(
-    'UPDATE categories SET category_name = $1 WHERE id_category = $2 RETURNING *',
-    [category_name, id]
-  )
-  return rows[0]
+const updateCategory = async (id, category_name) => {
+  const query =
+    'UPDATE categories SET category_name = $1 WHERE id_category = $2 RETURNING *'
+  const values = [category_name, id]
+  const result = await pool.query(query, values)
+  return result.rows[0]
 }
 
 const deleteCategory = async id => {
-  await pool.query('DELETE FROM categories WHERE id_category = $1', [id])
+  const query = 'DELETE FROM categories WHERE id_category = $1 RETURNING *'
+  const values = [id]
+  const result = await pool.query(query, values)
+  return result.rows[0]
 }
 
 export default {
-  getAllCategories,
-  getCategoryById,
   createCategory,
+  getCategoryById,
+  getAllCategories,
   updateCategory,
   deleteCategory
 }

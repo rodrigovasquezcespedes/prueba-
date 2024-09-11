@@ -1,71 +1,45 @@
 import pool from '../config/db.js'
 
-// Get the cart for a user
-const getCartByUserId = async userId => {
-  const { rows } = await pool.query('SELECT * FROM cart WHERE id_user = $1', [
-    userId
-  ])
-  return rows[0]
+const createCart = async id_user => {
+  const query = 'INSERT INTO cart (id_user) VALUES ($1) RETURNING *'
+  const values = [id_user]
+  const result = await pool.query(query, values)
+  return result.rows[0]
 }
 
-// Get all items in a cart
-const getCartItems = async cartId => {
-  const { rows } = await pool.query(
-    'SELECT * FROM cart_items WHERE id_cart = $1',
-    [cartId]
-  )
-  return rows
+const getCartByUserId = async id_user => {
+  const query = 'SELECT * FROM cart WHERE id_user = $1'
+  const values = [id_user]
+  const result = await pool.query(query, values)
+  return result.rows[0]
 }
 
-// Add a product to a cart
-const addItemToCart = async (cartId, item) => {
-  const { id_product, quantity } = item
-  const { rows } = await pool.query(
-    'INSERT INTO cart_items (id_cart, id_product, quantity) VALUES ($1, $2, $3) RETURNING *',
-    [cartId, id_product, quantity]
-  )
-  return rows[0]
+const addItemToCart = async (id_cart, id_product, quantity) => {
+  const query =
+    'INSERT INTO cart_items (id_cart, id_product, quantity) VALUES ($1, $2, $3) RETURNING *'
+  const values = [id_cart, id_product, quantity]
+  const result = await pool.query(query, values)
+  return result.rows[0]
 }
 
-// Update the quantity of a product in the cart
-const updateCartItem = async (cartId, item) => {
-  const { id_product, quantity } = item
-  const { rows } = await pool.query(
-    'UPDATE cart_items SET quantity = $1 WHERE id_cart = $2 AND id_product = $3 RETURNING *',
-    [quantity, cartId, id_product]
-  )
-  return rows[0]
+const getCartItems = async id_cart => {
+  const query = 'SELECT * FROM cart_items WHERE id_cart = $1'
+  const values = [id_cart]
+  const result = await pool.query(query, values)
+  return result.rows
 }
 
-// Remove a product from the cart
-const removeItemFromCart = async (cartId, productId) => {
-  await pool.query(
-    'DELETE FROM cart_items WHERE id_cart = $1 AND id_product = $2',
-    [cartId, productId]
-  )
-}
-
-// Create a new cart for a user
-const createCart = async userId => {
-  const { rows } = await pool.query(
-    'INSERT INTO cart (id_user) VALUES ($1) RETURNING *',
-    [userId]
-  )
-  return rows[0]
-}
-
-// Delete a cart and its items
-const deleteCart = async cartId => {
-  await pool.query('DELETE FROM cart_items WHERE id_cart = $1', [cartId])
-  await pool.query('DELETE FROM cart WHERE id_cart = $1', [cartId])
+const removeItemFromCart = async id_cart_item => {
+  const query = 'DELETE FROM cart_items WHERE id_cart_item = $1 RETURNING *'
+  const values = [id_cart_item]
+  const result = await pool.query(query, values)
+  return result.rows[0]
 }
 
 export default {
-  getCartByUserId,
-  getCartItems,
-  addItemToCart,
-  updateCartItem,
-  removeItemFromCart,
   createCart,
-  deleteCart
+  getCartByUserId,
+  addItemToCart,
+  getCartItems,
+  removeItemFromCart
 }

@@ -1,52 +1,41 @@
-import paymentModel from '../models/paymentModel.js';
+import paymentModel from '../models/paymentModel.js'
 
-export const getPayments = async (req, res) => {
-    try {
-        const payments = await paymentModel.getPaymentsByUserId(req.params.userId);
-        res.json(payments);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
+const createPayment = async (req, res) => {
+  const { id_order, amount, payment_method, status } = req.body
+  try {
+    const payment = await paymentModel.createPayment(
+      id_order,
+      amount,
+      payment_method,
+      status
+    )
+    res.status(201).json(payment)
+  } catch (error) {
+    res.status(500).json({ message: 'Error al crear el pago', error })
+  }
+}
 
-export const getPayment = async (req, res) => {
-    try {
-        const payment = await paymentModel.getPaymentById(req.params.id);
-        if (!payment) {
-            return res.status(404).json({ message: 'Payment not found' });
-        }
-        res.json(payment);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
+const getPaymentById = async (req, res) => {
+  const { id } = req.params
+  try {
+    const payment = await paymentModel.getPaymentById(id)
+    res.status(200).json(payment)
+  } catch (error) {
+    res.status(500).json({ message: 'Error al obtener el pago', error })
+  }
+}
 
-export const createPayment = async (req, res) => {
-    try {
-        const newPayment = await paymentModel.createPayment(req.body);
-        res.status(201).json(newPayment);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
+const getAllPayments = async (req, res) => {
+  try {
+    const payments = await paymentModel.getAllPayments()
+    res.status(200).json(payments)
+  } catch (error) {
+    res.status(500).json({ message: 'Error al obtener los pagos', error })
+  }
+}
 
-export const updatePaymentStatus = async (req, res) => {
-    try {
-        const updatedPayment = await paymentModel.updatePaymentStatus(req.params.id, req.body.status);
-        if (!updatedPayment) {
-            return res.status(404).json({ message: 'Payment not found' });
-        }
-        res.json(updatedPayment);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
-
-export const deletePayment = async (req, res) => {
-    try {
-        await paymentModel.deletePayment(req.params.id);
-        res.json({ message: 'Payment deleted successfully' });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
+export default {
+  createPayment,
+  getPaymentById,
+  getAllPayments
+}

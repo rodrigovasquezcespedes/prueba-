@@ -1,29 +1,29 @@
 import pool from '../config/db.js'
 
-// Get all favorite products for a user
-const getFavoritesByUserId = async userId => {
-  const { rows } = await pool.query(
-    'SELECT * FROM favorites WHERE id_user = $1',
-    [userId]
-  )
-  return rows
+const addFavorite = async (id_user, id_product) => {
+  const query =
+    'INSERT INTO favorites (id_user, id_product) VALUES ($1, $2) RETURNING *'
+  const values = [id_user, id_product]
+  const result = await pool.query(query, values)
+  return result.rows[0]
 }
 
-// Add a product to favorites
-const addFavorite = async (userId, productId) => {
-  const { rows } = await pool.query(
-    'INSERT INTO favorites (id_user, id_product) VALUES ($1, $2) RETURNING *',
-    [userId, productId]
-  )
-  return rows[0]
+const getFavoritesByUserId = async id_user => {
+  const query = 'SELECT * FROM favorites WHERE id_user = $1'
+  const values = [id_user]
+  const result = await pool.query(query, values)
+  return result.rows
 }
 
-// Remove a product from favorites
-const removeFavorite = async (userId, productId) => {
-  await pool.query(
-    'DELETE FROM favorites WHERE id_user = $1 AND id_product = $2',
-    [userId, productId]
-  )
+const removeFavorite = async id_favorite => {
+  const query = 'DELETE FROM favorites WHERE id_favorite = $1 RETURNING *'
+  const values = [id_favorite]
+  const result = await pool.query(query, values)
+  return result.rows[0]
 }
 
-export default { getFavoritesByUserId, addFavorite, removeFavorite }
+export default {
+  addFavorite,
+  getFavoritesByUserId,
+  removeFavorite
+}

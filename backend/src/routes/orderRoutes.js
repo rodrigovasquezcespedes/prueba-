@@ -1,11 +1,11 @@
-import express from 'express'
+import { Router } from 'express'
 import orderController from '../controllers/orderController.js'
 
-const router = express.Router()
+const router = Router()
 
-router.get('/:userId', orderController.getOrders)
-router.get('/:id/order', orderController.getOrder)
 router.post('/', orderController.createOrder)
+router.get('/:id', orderController.getOrderById)
+router.get('/', orderController.getAllOrders)
 router.put('/:id', orderController.updateOrderStatus)
 router.delete('/:id', orderController.deleteOrder)
 

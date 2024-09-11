@@ -1,11 +1,11 @@
-import express from 'express'
+import { Router } from 'express'
 import productController from '../controllers/productController.js'
 
-const router = express.Router()
+const router = Router()
 
-router.get('/', productController.getProducts)
-router.get('/:id', productController.getProduct)
 router.post('/', productController.createProduct)
+router.get('/:id', productController.getProductById)
+router.get('/', productController.getAllProducts)
 router.put('/:id', productController.updateProduct)
 router.delete('/:id', productController.deleteProduct)
 
