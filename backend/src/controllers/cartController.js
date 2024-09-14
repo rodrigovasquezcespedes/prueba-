@@ -1,9 +1,9 @@
 import cartModel from '../models/cartModel.js'
 
 const createCart = async (req, res) => {
-  const { id_user } = req.body
+  const { idUser } = req.body
   try {
-    const cart = await cartModel.createCart(id_user)
+    const cart = await cartModel.createCart(idUser)
     res.status(201).json(cart)
   } catch (error) {
     res.status(500).json({ message: 'Error al crear el carrito', error })
@@ -11,9 +11,9 @@ const createCart = async (req, res) => {
 }
 
 const getCartByUserId = async (req, res) => {
-  const { id_user } = req.params
+  const { idUser } = req.params
   try {
-    const cart = await cartModel.getCartByUserId(id_user)
+    const cart = await cartModel.getCartByUserId(idUser)
     const items = await cartModel.getCartItems(cart.id_cart)
     res.status(200).json({ cart, items })
   } catch (error) {
@@ -22,11 +22,11 @@ const getCartByUserId = async (req, res) => {
 }
 
 const addItemToCart = async (req, res) => {
-  const { id_cart, id_product, quantity } = req.body
+  const { idCart, idProduct, quantity } = req.body
   try {
     const cartItem = await cartModel.addItemToCart(
-      id_cart,
-      id_product,
+      idCart,
+      idProduct,
       quantity
     )
     res.status(201).json(cartItem)
@@ -38,9 +38,9 @@ const addItemToCart = async (req, res) => {
 }
 
 const removeItemFromCart = async (req, res) => {
-  const { id_cart_item } = req.params
+  const { idCartItem } = req.params
   try {
-    const deletedItem = await cartModel.removeItemFromCart(id_cart_item)
+    const deletedItem = await cartModel.removeItemFromCart(idCartItem)
     res
       .status(200)
       .json({ message: 'Producto eliminado del carrito', deletedItem })

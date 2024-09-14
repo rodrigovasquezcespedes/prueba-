@@ -14,8 +14,12 @@ dotenv.config()
 
 const app = express()
 
-// Middlewares
-app.use(cors())
+const corsOptions = {
+  origin: 'http://localhost:5173', // Cambia esto a la URL de tu frontend
+  credentials: true // Permitir el uso de credenciales (cookies)
+}
+
+app.use(cors(corsOptions))
 app.use(morgan('dev'))
 app.use(express.json())
 

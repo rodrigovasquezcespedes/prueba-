@@ -1,63 +1,37 @@
+import { Routes, Route, HashRouter } from 'react-router-dom'
+import { CartProvider } from './context/CartContext'
 import Navigation from './components/Navigation'
-import { Routes, Route } from 'react-router-dom'
-import { Home, Profile, NotFound, Shopping, Products, Login, Detail, Favorites, Register, ProductsInsert } from './views'
-import Footer from './components/Footer'
-import ProtectedRoute from './ProtectedRoute'
+import Home from './pages/Home'
+import Products from './pages/Products'
+import Profile from './pages/Profile'
+import ShoppingCart from './pages/ShoppingCart'
+import Favorites from './pages/Favorites'
+import Dashboard from './pages/Dashboard'
+import Login from './pages/Login'
+import Register from './pages/Register'
+import Detail from './pages/Detail'
+import { AuthProvider } from './context/AuthContext'
 
 const App = () => {
   return (
-    <>
-      <Navigation />
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/register' element={<Register />} />
-        <Route
-          path='/productos' element={
-            <ProtectedRoute>
-              <Products />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path='/productos/:id' element={
-            <ProtectedRoute>
-              <Detail />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path='/profile' element={
-            <ProtectedRoute>
-              <Profile />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path='/productos-insert' element={
-            <ProtectedRoute>
-              <ProductsInsert />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path='/favoritos' element={
-            <ProtectedRoute>
-              <Favorites />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path='/carrito' element={
-            <ProtectedRoute>
-              <Shopping />
-            </ProtectedRoute>
-          }
-        />
-        <Route path='*' element={<NotFound />} />
-      </Routes>
-      <Footer />
-    </>
+    <HashRouter>
+      <AuthProvider> {/* Use the named AuthProvider */}
+        <CartProvider>
+          <Navigation />
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/products' element={<Products />} />
+            <Route path='/detail/:id' element={<Detail />} />
+            <Route path='/profile' element={<Profile />} />
+            <Route path='/favorites' element={<Favorites />} />
+            <Route path='/shoppingcart' element={<ShoppingCart />} />
+            <Route path='/dashboard' element={<Dashboard />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/register' element={<Register />} />
+          </Routes>
+        </CartProvider>
+      </AuthProvider>
+    </HashRouter>
   )
 }
 

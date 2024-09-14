@@ -1,0 +1,20 @@
+/* Estado inicial de la navbar */
+.navbar-normal {
+    transition: all 0.4s ease;
+    padding: 20px 0;
+    background-color: transparent;
+  }
+  
+  /* Estado "encogido" al hacer scroll */
+  .navbar-shrink {
+    padding: 10px 0;
+    background-color: #333;
+    transition: all 0.4s ease;
+  }
+  
+  /* Estilo para el botón activo */
+  .navbar-nav .nav-link.active {
+    color: #FFD700 !important; /* Color dorado para destacar */
+    font-weight: bold;
+  }
+  

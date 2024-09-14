@@ -27,145 +27,93 @@ INSERT INTO products (name, description, price, stock, image_url, brand, id_cate
 ('Smart TV 55 4K', 'LED Smart TV 55 4K Full Array Google TV KD-55X90L', 1129990, 10, 'https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/123326026_01/w=1500,h=1500,fit=pad', 'Sony', 4),
 ('Canon 90D', 'Cámara Profesional 90D 18-135 Canon', 1599990, 10, 'https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/15171325_1/w=1500,h=1500,fit=pad', 'Canon', 5);
 
-
--- Insertar especificaciones para el producto "Apple MacBook Air 15,3"
 INSERT INTO product_specifications (id_product, spec_name, spec_value) VALUES
+-- Especificaciones para "Apple MacBook Air 15,3"
 (1, 'Tamaño de pantalla', '15 pulgadas'),
 (1, 'Tarjeta gráfica', 'GPU de 10 nucleos'),
 (1, 'Capacidad de almacenamiento', '256 GB'),
 (1, 'Procesador', 'Chip M2'),
-(1, 'Características de pantalla', 'Retina');
-
--- Insertar especificaciones para el producto "Apple MacBook Pro 16"
-INSERT INTO product_specifications (id_product, spec_name, spec_value) VALUES
+(1, 'Características de pantalla', 'Retina'),
 (2, 'Tamaño de pantalla', '16 pulgadas'),
 (2, 'Cantidad de puertos', '3'),
 (2, 'Capacidad de almacenamiento', '512 GB'),
 (2, 'Procesador', 'Chip M2 Pro'),
-(2, 'Memoria RAM', '16 GB');
-
--- Insertar especificaciones para el producto "Apple MacBook Air 13"
-INSERT INTO product_specifications (id_product, spec_name, spec_value) VALUES
+(2, 'Memoria RAM', '16 GB'),
 (3, 'Tamaño de pantalla', '13,3 pulgadas'),
 (3, 'Cantidad de puertos', '2'),
 (3, 'Capacidad de almacenamiento', '256 GB'),
 (3, 'Procesador', 'Chip M1 de Apple'),
-(3, 'Memoria RAM', '8 GB');
-
--- Insertar especificaciones para el producto "Notebook Inspiron 15.6"
-INSERT INTO product_specifications (id_product, spec_name, spec_value) VALUES
+(3, 'Memoria RAM', '8 GB'),
 (4, 'Tamaño de pantalla', '15,6 pulgadas'),
 (4, 'Tarjeta gráfica', 'Intel Iris Xe Graphics'),
 (4, 'Capacidad de almacenamiento', '512 GB'),
 (4, 'Procesador', 'i7-1255U'),
-(4, 'Memoria RAM', '16 GB');
-
--- Insertar especificaciones para el producto "Notebook Vivobook 14"
-INSERT INTO product_specifications (id_product, spec_name, spec_value) VALUES
+(4, 'Memoria RAM', '16 GB'),
 (5, 'Tamaño de pantalla', '14 pulgadas'),
 (5, 'Cantidad de puertos', '4'),
 (5, 'Capacidad de almacenamiento', '512 GB'),
 (5, 'Procesador', 'Intel Core i5'),
-(5, 'Memoria RAM', '8 GB');
-
--- Insertar especificaciones para el producto "Notebook Vivobook 16"
-INSERT INTO product_specifications (id_product, spec_name, spec_value) VALUES
+(5, 'Memoria RAM', '8 GB'),
 (6, 'Tamaño de pantalla', '16 pulgadas'),
 (6, 'Cantidad de puertos', '4'),
 (6, 'Capacidad de almacenamiento', '512 GB'),
 (6, 'Procesador', 'Intel Core i7'),
-(6, 'Memoria RAM', '12 GB');
-
--- Insertar especificaciones para el producto "Notebook Acer Aspire"
-INSERT INTO product_specifications (id_product, spec_name, spec_value) VALUES
+(6, 'Memoria RAM', '12 GB'),
 (7, 'Tamaño de pantalla', '14 pulgadas'),
 (7, 'Cantidad de puertos', '4'),
 (7, 'Capacidad de almacenamiento', '512 GB'),
 (7, 'Memoria RAM', '16 GB'),
-(7, 'Procesador', 'Intel Core i3');
-
--- Insertar especificaciones para el producto "Notebook HP I7"
-INSERT INTO product_specifications (id_product, spec_name, spec_value) VALUES
+(7, 'Procesador', 'Intel Core i3'),
 (8, 'Tamaño de pantalla', '15,6 pulgadas'),
 (8, 'Cantidad de puertos', '4'),
 (8, 'Capacidad de almacenamiento', '1 TB'),
 (8, 'Memoria RAM', '16 GB'),
-(8, 'Procesador', 'Intel Core i7');
-
--- Insertar especificaciones para el producto "iPhone 15 Pro"
-INSERT INTO product_specifications (id_product, spec_name, spec_value) VALUES
+(8, 'Procesador', 'Intel Core i7'),
 (9, 'Cámara frontal', '40 MP'),
 (9, 'Cámara posterior', '16 MP'),
 (9, 'Tamaño de pantalla', '6,7 pulgadas'),
 (9, 'Memoria', '256 GB'),
-(9, 'Sistema operativo', 'iOS');
-
--- Insertar especificaciones para el producto "iPhone 14"
-INSERT INTO product_specifications (id_product, spec_name, spec_value) VALUES
+(9, 'Sistema operativo', 'iOS'),
 (10, 'Cámara frontal', '12 MP'),
 (10, 'Cámara posterior', '12 MP'),
 (10, 'Tamaño de pantalla', '6,7 pulgadas'),
 (10, 'Memoria', '256 GB'),
-(10, 'Resistente al agua', 'IP68 (Protegido contra inmersión)');
-
--- Insertar especificaciones para el producto "iPhone 13"
-INSERT INTO product_specifications (id_product, spec_name, spec_value) VALUES
+(10, 'Resistente al agua', 'IP68 (Protegido contra inmersión)'),
 (11, 'Cámara frontal', '12 MP'),
 (11, 'Cámara posterior', '12 MP'),
 (11, 'Tamaño de pantalla', '6,1 pulgadas'),
 (11, 'Memoria', '128 GB'),
-(11, 'Resistente al agua', 'IP68 (Protegido contra inmersión)');
-
--- Insertar especificaciones para el producto "Smartphone Samsung A55"
-INSERT INTO product_specifications (id_product, spec_name, spec_value) VALUES
+(11, 'Resistente al agua', 'IP68 (Protegido contra inmersión)'),
 (12, 'Cámara frontal', '32 MP'),
 (12, 'Cámara posterior', '16 MP'),
 (12, 'Tamaño de pantalla', '6,6 pulgadas'),
 (12, 'Memoria', '256 GB'),
-(12, 'Generacion', '5G');
-
--- Insertar especificaciones para el producto "Smartphone Samsung S24"
-INSERT INTO product_specifications (id_product, spec_name, spec_value) VALUES
+(12, 'Generacion', '5G'),
 (13, 'Cámara frontal', '12 MP'),
 (13, 'Cámara posterior', '16 MP'),
 (13, 'Tamaño de pantalla', '6,8 pulgadas'),
 (13, 'Memoria', '256 GB'),
-(13, 'Resistente al agua', 'IP68 (Protegido contra inmersión)');
-
--- Insertar especificaciones para el producto "Parlante Bluetooth"
-INSERT INTO product_specifications (id_product, spec_name, spec_value) VALUES
+(13, 'Resistente al agua', 'IP68 (Protegido contra inmersión)'),
 (14, 'Conexión bluetooth', 'Si'),
 (14, 'Duracion de la batería', '17 horas'),
 (14, 'Entradas USB', 'Sin entradas'),
 (14, 'Modelo', 'REVOLVEPLUSIIG'),
-(14, 'Fuente de energia', 'Baterías');
-
--- Insertar especificaciones para el producto "Audífono Inalambrico"
-INSERT INTO product_specifications (id_product, spec_name, spec_value) VALUES
+(14, 'Fuente de energia', 'Baterías'),
 (15, 'Aislador de sonido', 'Si'),
 (15, 'Conexión bluetooth', 'Si'),
 (15, 'Audio', 'Audio HQ'),
 (15, 'Modelo', 'QCHW'),
-(15, 'Resistente al agua', 'No');
-
--- Insertar especificaciones para el producto "Smart TV 4K"
-INSERT INTO product_specifications (id_product, spec_name, spec_value) VALUES
+(15, 'Resistente al agua', 'No'),
 (16, 'Tamaño de pantalla', '43 pulgadas'),
 (16, 'Conectividad/conexión', 'HDMI,USB,Wifi'),
 (16, 'Dimensiones', '168 x 96 x 7 cm'),
 (16, 'Modelo', 'KD-43X77L'),
-(16, 'Sistema operativo', 'Android Tv');
-
--- Insertar especificaciones para el producto "Smart TV 55 4K"
-INSERT INTO product_specifications (id_product, spec_name, spec_value) VALUES
+(16, 'Sistema operativo', 'Android Tv'),
 (17, 'Tamaño de pantalla', '55 pulgadas'),
 (17, 'Conectividad/conexión', 'Bluetooth,HDMI,USB,Wifi'),
 (17, 'Contraste', 'Super contrast'),
 (17, 'Modelo', 'XR-55X90L'),
-(17, 'Sistema operativo', 'Android go');
-
--- Insertar especificaciones para el producto "Canon 90D"
-INSERT INTO product_specifications (id_product, spec_name, spec_value) VALUES
+(17, 'Sistema operativo', 'Android go'),
 (18, 'Calidad de grabación', '4K Ultra HD'),
 (18, 'Modelo', '90D 18-135'),
 (18, 'Velocidad del obturador', '1/2000 a 1 s'),

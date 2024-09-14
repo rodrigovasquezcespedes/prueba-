@@ -1,21 +1,21 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 import { Button, Container, Form, InputGroup, Row } from 'react-bootstrap'
 import { FaUser } from 'react-icons/fa'
 import { MdAlternateEmail } from 'react-icons/md'
 import { RiLockPasswordFill } from 'react-icons/ri'
 import Swal from 'sweetalert2'
-import axios from 'axios'
+import { urlBaseServer } from '../config'
 
 const Register = () => {
-  const [user, setUser] = useState('')
+  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const navigate = useNavigate()
-  const urlBaseServer = 'http://localhost:3000' // Asegúrate de que sea tu URL base del servidor
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
     // Verificar que las contraseñas coincidan
@@ -29,14 +29,13 @@ const Register = () => {
     }
 
     try {
-      // Enviar solicitud POST al backend para registrar al usuario
+      // Enviar solicitud POST al backend para registrar al usuario usando axios
       const response = await axios.post(`${urlBaseServer}/api/users/register`, {
-        name: user,
+        name,
         email,
         password
       })
 
-      // Si el registro es exitoso
       if (response.status === 201) {
         Swal.fire({
           icon: 'success',
@@ -44,7 +43,7 @@ const Register = () => {
           showConfirmButton: false,
           timer: 2000
         })
-        navigate('/productos')
+        navigate('/login') // Redirigir a la página de login después de un registro exitoso
       }
     } catch (error) {
       console.error('Error al registrar usuario:', error)
@@ -75,8 +74,8 @@ const Register = () => {
               </InputGroup.Text>
               <Form.Control
                 type='text'
-                onChange={e => setUser(e.target.value)}
-                value={user}
+                onChange={e => setName(e.target.value)}
+                value={name}
                 required
               />
             </InputGroup>

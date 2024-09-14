@@ -1,105 +1,86 @@
-import { Container, Nav, Navbar } from 'react-bootstrap'
-import { NavLink } from 'react-router-dom'
-import { TecnoContext } from '../context/TecnoContext'
+import { useContext } from 'react'
+import { Link } from 'react-router-dom'
+import { Navbar, Nav, Container } from 'react-bootstrap'
 import { AuthContext } from '../context/AuthContext'
-import { useContext, useEffect, useState } from 'react'
-import { FaUser, FaShoppingCart, FaStore, FaHeart, FaHome } from 'react-icons/fa'
-import logo from '../assets/logo.png'
+import { useCart } from '../context/CartContext'
+import {
+  FaShoppingCart,
+  FaUser,
+  FaSignInAlt,
+  FaUserPlus,
+  FaBoxOpen,
+  FaTachometerAlt,
+  FaSignOutAlt
+} from 'react-icons/fa'
 
 const Navigation = () => {
-  const { carrito, formatPrice } = useContext(TecnoContext)
-  const { isAuthenticated, logout } = useContext(AuthContext)
+  const { isAuthenticated, user, logout } = useContext(AuthContext)
+  const { cartItems } = useCart() // Get cart items to show the quantity
 
-  // Calcular el total del precio del carrito
-  const total = carrito.reduce((accum, item) => accum + item.price * item.count, 0)
-  const formattedTotal = formatPrice(total)
-
-  // Calcular la cantidad total de productos en el carrito
-  const cantidadTotalProductos = carrito.reduce((accum, item) => accum + item.count, 0)
-
-  const handleMenu = ({ isActive }) =>
-    isActive ? 'nav-item nav-link active' : 'nav-item nav-link'
-
-  const [navbarClass, setNavbarClass] = useState('navbar-custom')
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setNavbarClass('navbar-custom shrink')
-      } else {
-        setNavbarClass('navbar-custom')
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll)
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
-  }, [])
+  const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0)
 
   return (
-    <>
-      <Navbar
-        expand='lg'
-        bg='dark'
-        data-bs-theme='dark'
-        className={`${navbarClass} sticky-top`}
-      >
-        <Container>
-          <NavLink className={handleMenu} to='/'>
-            <Navbar.Brand>
-              <img
-                src={logo}
-                alt='Logo'
-                width='60'
-                height='60'
-                className='d-inline-block align-top'
-              />
-            </Navbar.Brand>
-          </NavLink>
-          <Navbar.Toggle aria-controls='basic-navbar-nav' />
-          <Navbar.Collapse id='basic-navbar-nav'>
-            <Nav className='ms-auto'>
-              <NavLink className={handleMenu} to='/'>
-                <FaHome />
-              </NavLink>
-              {isAuthenticated && (
-                <>
-                  <NavLink className={handleMenu} to='/productos'>
-                    <FaStore />
-                  </NavLink>
-                  <NavLink className={handleMenu} to='/profile'>
-                    <FaUser />
-                  </NavLink>
-                  <NavLink className={handleMenu} to='/favoritos'>
-                    <FaHeart />
-                  </NavLink>
-                  <NavLink className={handleMenu} to='/carrito'>
-                    <FaShoppingCart />
-                    {/* Mostrar cantidad de productos si el carrito no está vacío */}
-                    {cantidadTotalProductos > 0 && (
-                      <span className="badge bg-danger ms-2">{cantidadTotalProductos}</span>
-                    )}
-                  </NavLink>
-                  <Nav.Link onClick={logout}>Logout</Nav.Link>
-                </>
-              )}
-              {!isAuthenticated && (
-                <>
-                  <NavLink className={handleMenu} to='/login'>
-                    Login
-                  </NavLink>
-                  <NavLink className={handleMenu} to='/register'>
-                    Registrarse
-                  </NavLink>
-                </>
-              )}
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-    </>
+    <Navbar bg='dark' variant='dark' expand='lg'>
+      <Container>
+        <Navbar.Brand as={Link} to='/'>
+          Ecommerce
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls='basic-navbar-nav' />
+        <Navbar.Collapse id='basic-navbar-nav'>
+          <Nav className='me-auto'>
+            <Nav.Link as={Link} to='/products'>
+              <FaBoxOpen className='me-2' />
+              Productos
+            </Nav.Link>
+          </Nav>
+          <Nav className='ms-auto'>
+            <Nav.Link as={Link} to='/shoppingcart'>
+              <FaShoppingCart className='me-2' />
+              Carrito ({totalItems})
+            </Nav.Link>
+
+            {isAuthenticated && user && (
+              <>
+                <Nav.Item className='text-light me-3'>
+                  Bienvenido: {user.name}
+                </Nav.Item>
+                <Nav.Link as={Link} to='/profile'>
+                  <FaUser className='me-2' />
+                  Perfil
+                </Nav.Link>
+              </>
+            )}
+
+            {isAuthenticated && user?.role === true && (
+              <Nav.Link as={Link} to='/dashboard'>
+                <FaTachometerAlt className='me-2' />
+                Dashboard
+              </Nav.Link>
+            )}
+
+            {!isAuthenticated && (
+              <>
+                <Nav.Link as={Link} to='/login'>
+                  <FaSignInAlt className='me-2' />
+                  Iniciar sesión
+                </Nav.Link>
+                <Nav.Link as={Link} to='/register'>
+                  <FaUserPlus className='me-2' />
+                  Registrarse
+                </Nav.Link>
+              </>
+            )}
+
+            {isAuthenticated && (
+              <Nav.Link onClick={logout}>
+                <FaSignOutAlt className='me-2' />
+                Cerrar sesión
+              </Nav.Link>
+            )}
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   )
 }
 
