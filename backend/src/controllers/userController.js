@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt'
 import userModel from '../models/userModel.js'
-import Token from '../../utils/tokens.js'
+import Token from '../utils/tokens.js'
 
 const loginUser = async (req, res) => {
   const { email, password } = req.body
