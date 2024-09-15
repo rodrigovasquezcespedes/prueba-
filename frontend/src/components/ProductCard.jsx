@@ -1,23 +1,60 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Card, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
 import { useFavorites } from '../context/FavoritesContext' // Importar correctamente useFavorites
 import { FaEye, FaCartPlus, FaHeart } from 'react-icons/fa'
+import axios from 'axios'
+import { urlBaseServer } from '../config' // Importar la URL base de tu servidor
 
-const ProductCard = ({ producto }) => {
+const ProductCard = ({ producto, userId }) => {
   const { addToCart } = useCart()
-  const { addToFavorites, removeFromFavorites } = useFavorites() // Utilizar useFavorites correctamente
-  const [isFavorite, setIsFavorite] = useState(false) // Estado inicial del corazón
+  const { addToFavorites, removeFromFavorites } = useFavorites()
+  const [isFavorite, setIsFavorite] = useState(false)
+
+  useEffect(() => {
+    // Comprobar si el producto ya está en favoritos al cargar la página
+    const fetchFavoriteStatus = async () => {
+      try {
+        const response = await axios.get(
+          `${urlBaseServer}/api/favorites/${userId}`
+        )
+        const favoriteProducts = response.data.map(fav => fav.id_product)
+        setIsFavorite(favoriteProducts.includes(producto.id_product))
+      } catch (error) {
+        console.error('Error al comprobar el estado de los favoritos:', error)
+      }
+    }
+
+    if (userId) {
+      fetchFavoriteStatus()
+    }
+  }, [userId, producto.id_product])
 
   // Función para manejar el click en el corazón
-  const toggleFavorite = () => {
+  const toggleFavorite = async () => {
     if (isFavorite) {
-      removeFromFavorites(producto.id_product) // Eliminar de favoritos si ya está marcado
+      try {
+        await axios.delete(`${urlBaseServer}/api/favorites`, {
+          data: { id_user: userId, id_product: producto.id_product }
+        })
+        removeFromFavorites(producto.id_product)
+        setIsFavorite(false)
+      } catch (error) {
+        console.error('Error al eliminar de favoritos:', error)
+      }
     } else {
-      addToFavorites(producto) // Añadir a favoritos
+      try {
+        await axios.post(`${urlBaseServer}/api/favorites`, {
+          id_user: userId,
+          id_product: producto.id_product
+        })
+        addToFavorites(producto)
+        setIsFavorite(true)
+      } catch (error) {
+        console.error('Error al agregar a favoritos:', error)
+      }
     }
-    setIsFavorite(!isFavorite) // Cambiar el estado del corazón
   }
 
   return (
@@ -51,8 +88,8 @@ const ProductCard = ({ producto }) => {
             backgroundColor: 'transparent',
             borderRadius: '50%',
             border: '2px solid rgba(0, 0, 0, 0.2)',
-            width: '40px', // Asegura el tamaño circular
-            height: '40px', // Asegura el tamaño circular
+            width: '40px',
+            height: '40px',
             color: isFavorite ? 'red' : 'rgba(0, 0, 0, 0.5)',
             boxShadow: '0 0 5px rgba(0, 0, 0, 0.2)',
             display: 'flex',
