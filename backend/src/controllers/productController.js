@@ -1,7 +1,7 @@
 import productModel from '../models/productModel.js'
 
 const createProduct = async (req, res) => {
-  const { name, description, price, stock, image_url, brand, id_category } =
+  const { name, description, price, stock, imageUrl, brand, idCategory } =
     req.body
   try {
     const product = await productModel.createProduct(
@@ -9,9 +9,9 @@ const createProduct = async (req, res) => {
       description,
       price,
       stock,
-      image_url,
+      imageUrl,
       brand,
-      id_category
+      idCategory
     )
     res.status(201).json(product)
   } catch (error) {
@@ -40,7 +40,7 @@ const getAllProducts = async (req, res) => {
 
 const updateProduct = async (req, res) => {
   const { id } = req.params
-  const { name, description, price, stock, image_url, brand, id_category } =
+  const { name, description, price, stock, imageUrl, brand, idCategory } =
     req.body
   try {
     const updatedProduct = await productModel.updateProduct(
@@ -49,9 +49,9 @@ const updateProduct = async (req, res) => {
       description,
       price,
       stock,
-      image_url,
+      imageUrl,
       brand,
-      id_category
+      idCategory
     )
     res.status(200).json(updatedProduct)
   } catch (error) {

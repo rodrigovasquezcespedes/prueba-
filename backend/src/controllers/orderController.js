@@ -1,9 +1,9 @@
 import orderModel from '../models/orderModel.js'
 
 const createOrder = async (req, res) => {
-  const { id_user, total_amount, status } = req.body
+  const { idUser, totalAmount, status } = req.body
   try {
-    const order = await orderModel.createOrder(id_user, total_amount, status)
+    const order = await orderModel.createOrder(idUser, totalAmount, status)
     res.status(201).json(order)
   } catch (error) {
     res.status(500).json({ message: 'Error al crear la orden', error })

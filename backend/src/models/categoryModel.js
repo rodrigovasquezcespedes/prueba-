@@ -1,8 +1,8 @@
 import pool from '../config/db.js'
 
-const createCategory = async category_name => {
+const createCategory = async categoryName => {
   const query = 'INSERT INTO categories (category_name) VALUES ($1) RETURNING *'
-  const values = [category_name]
+  const values = [categoryName]
   const result = await pool.query(query, values)
   return result.rows[0]
 }
@@ -20,10 +20,10 @@ const getAllCategories = async () => {
   return result.rows
 }
 
-const updateCategory = async (id, category_name) => {
+const updateCategory = async (id, categoryName) => {
   const query =
     'UPDATE categories SET category_name = $1 WHERE id_category = $2 RETURNING *'
-  const values = [category_name, id]
+  const values = [categoryName, id]
   const result = await pool.query(query, values)
   return result.rows[0]
 }

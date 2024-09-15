@@ -1,13 +1,16 @@
 import { Card, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
-import { FaEye, FaCartPlus } from 'react-icons/fa' // Import icons for "view" and "add to cart"
+import { FaEye, FaCartPlus } from 'react-icons/fa'
 
 const ProductCard = ({ producto }) => {
   const { addToCart } = useCart()
 
   return (
-    <Card style={{ width: '100%', minHeight: '25rem' }} className='mb-4'>
+    <Card
+      className='h-100 d-flex flex-column justify-content-between mb-4'
+      style={{ minHeight: '25rem' }}
+    >
       <div
         style={{
           height: '200px',
@@ -31,8 +34,7 @@ const ProductCard = ({ producto }) => {
           Precio: ${producto.price.toLocaleString()}
         </Card.Text>
         <Card.Text>{producto.description}</Card.Text>
-        <div className='d-flex w-100 mt-2'>
-          {/* Full-width buttons with equal space */}
+        <div className='mt-auto d-flex w-100'>
           <Button
             as={Link}
             to={`/detail/${producto.id_product}`}

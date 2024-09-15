@@ -11,9 +11,10 @@ import {
 } from 'react-bootstrap'
 
 const ShoppingCart = () => {
-  const { cartItems, addToCart, removeFromCart, clearCart } = useCart()
+  const { cartItems, addToCart, removeFromCart, clearCart, deleteFromCart } =
+    useCart()
 
-  // Calculate total price of all items in the cart
+  // Calcular el precio total de todos los productos en el carrito
   const totalPrice = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
     0
@@ -30,7 +31,7 @@ const ShoppingCart = () => {
             {cartItems.map(item => (
               <ListGroup.Item key={item.id_product} className='mb-3'>
                 <Row className='align-items-center'>
-                  {/* Product Image */}
+                  {/* Imagen del producto */}
                   <Col md={2}>
                     <Image
                       src={item.image_url || 'https://via.placeholder.com/100'}
@@ -41,20 +42,22 @@ const ShoppingCart = () => {
                         width: '80px',
                         height: '80px',
                         objectFit: 'cover'
-                      }} // Smaller image size
+                      }}
                     />
                   </Col>
-                  {/* Product Details */}
+
+                  {/* Detalles del producto */}
                   <Col md={4}>
                     <h5>{item.name}</h5>
                     <p>Precio: ${item.price.toLocaleString()}</p>
                   </Col>
-                  {/* Quantity Controls */}
+
+                  {/* Controles de cantidad */}
                   <Col md={3} className='d-flex align-items-center'>
                     <Button
                       variant='secondary'
                       className='me-2'
-                      onClick={() => removeFromCart(item.id_product)}
+                      onClick={() => removeFromCart(item.id_product)} // Disminuye la cantidad
                       disabled={item.quantity <= 1}
                     >
                       -
@@ -68,16 +71,17 @@ const ShoppingCart = () => {
                     <Button
                       variant='primary'
                       className='ms-2'
-                      onClick={() => addToCart(item)}
+                      onClick={() => addToCart(item)} // Aumenta la cantidad
                     >
                       +
                     </Button>
                   </Col>
-                  {/* Remove Button */}
+
+                  {/* Botón de eliminar */}
                   <Col md={3}>
                     <Button
                       variant='danger'
-                      onClick={() => removeFromCart(item.id_product)}
+                      onClick={() => deleteFromCart(item.id_product)} // Elimina el producto completamente
                     >
                       Eliminar
                     </Button>
@@ -87,7 +91,7 @@ const ShoppingCart = () => {
             ))}
           </ListGroup>
 
-          {/* Display the total price and "Pagar" button */}
+          {/* Mostrar el precio total y el botón "Pagar" */}
           <div className='mt-4'>
             <h4>Total: ${totalPrice.toLocaleString()}</h4>
             <div className='d-flex justify-content-between'>

@@ -1,12 +1,12 @@
 import paymentModel from '../models/paymentModel.js'
 
 const createPayment = async (req, res) => {
-  const { id_order, amount, payment_method, status } = req.body
+  const { idOrder, amount, paymentMethod, status } = req.body
   try {
     const payment = await paymentModel.createPayment(
-      id_order,
+      idOrder,
       amount,
-      payment_method,
+      paymentMethod,
       status
     )
     res.status(201).json(payment)

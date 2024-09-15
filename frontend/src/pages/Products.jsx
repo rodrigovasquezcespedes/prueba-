@@ -46,7 +46,10 @@ const Products = () => {
       : [
           ...new Set(
             productos
-              .filter(producto => producto.id_category === Number(categoriaSeleccionada)) // Filtrar por id_category
+              .filter(
+                producto =>
+                  producto.id_category === Number(categoriaSeleccionada)
+              ) // Filtrar por id_category
               .map(producto => producto.brand)
           )
         ]
@@ -54,8 +57,10 @@ const Products = () => {
   // Filtrar productos por categoría (id_category) y marca seleccionadas
   const productosFiltrados = productos.filter(producto => {
     const coincideCategoria =
-      categoriaSeleccionada === '' || producto.id_category === Number(categoriaSeleccionada) // Comparar id_category
-    const coincideMarca = marcaSeleccionada === '' || producto.brand === marcaSeleccionada
+      categoriaSeleccionada === '' ||
+      producto.id_category === Number(categoriaSeleccionada) // Comparar id_category
+    const coincideMarca =
+      marcaSeleccionada === '' || producto.brand === marcaSeleccionada
 
     return coincideCategoria && coincideMarca
   })
@@ -80,7 +85,10 @@ const Products = () => {
   // Paginación
   const indexOfLastProduct = currentPage * productsPerPage
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage
-  const currentProducts = productosOrdenados.slice(indexOfFirstProduct, indexOfLastProduct)
+  const currentProducts = productosOrdenados.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  )
   const totalPages = Math.ceil(productosOrdenados.length / productsPerPage)
 
   const handlePageChange = pageNumber => {
@@ -91,12 +99,13 @@ const Products = () => {
   return (
     <Container className='py-5'>
       {/* Filtros */}
-      <Row className='mb-4'>
-        <Col md={3}>
+      {/* Filtros centrados */}
+      <Row className='mb-4 d-flex justify-content-center'>
+        <Col xs={12} sm={6} md={4} lg={3} className='mb-2'>
           <select
-            className='form-select'
+            className='form-select w-100' // Asegura que el select ocupe el 100% del ancho
             value={categoriaSeleccionada}
-            onChange={e => setCategoriaSeleccionada(e.target.value)} // Guardamos el id_category seleccionado
+            onChange={e => setCategoriaSeleccionada(e.target.value)}
           >
             <option value=''>Todas las categorías</option>
             {categorias.map(categoria => (
@@ -107,11 +116,11 @@ const Products = () => {
           </select>
         </Col>
 
-        <Col md={3}>
+        <Col xs={12} sm={6} md={4} lg={3} className='mb-2'>
           <select
-            className='form-select'
-            value={marcaSeleccionada} // Usamos el estado "marcaSeleccionada"
-            onChange={e => setMarcaSeleccionada(e.target.value)} // Cambia la marca seleccionada
+            className='form-select w-100' // Asegura que el select ocupe el 100% del ancho
+            value={marcaSeleccionada}
+            onChange={e => setMarcaSeleccionada(e.target.value)}
           >
             <option value=''>Todas las marcas</option>
             {marcasFiltradas.map((marca, index) => (
@@ -122,9 +131,9 @@ const Products = () => {
           </select>
         </Col>
 
-        <Col md={3}>
+        <Col xs={12} sm={6} md={4} lg={3} className='mb-2'>
           <select
-            className='form-select'
+            className='form-select w-100' // Asegura que el select ocupe el 100% del ancho
             value={ordenSeleccionado}
             onChange={e => setOrdenSeleccionado(e.target.value)}
           >
@@ -147,18 +156,22 @@ const Products = () => {
       </Row>
 
       {/* Paginación */}
-      <Row className='d-flex justify-content-center'>
-        <Pagination>
-          {Array.from({ length: totalPages }, (_, index) => (
-            <Pagination.Item
-              key={index + 1}
-              active={index + 1 === currentPage}
-              onClick={() => handlePageChange(index + 1)}
-            >
-              {index + 1}
-            </Pagination.Item>
-          ))}
-        </Pagination>
+      <Row className='d-flex justify-content-center mt-4'>
+        <Col xs='auto'>
+          {' '}
+          {/* Asegura que la paginación ocupe solo el espacio necesario */}
+          <Pagination>
+            {Array.from({ length: totalPages }, (_, index) => (
+              <Pagination.Item
+                key={index + 1}
+                active={index + 1 === currentPage}
+                onClick={() => handlePageChange(index + 1)}
+              >
+                {index + 1}
+              </Pagination.Item>
+            ))}
+          </Pagination>
+        </Col>
       </Row>
     </Container>
   )

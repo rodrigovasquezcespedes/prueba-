@@ -1,23 +1,23 @@
 import pool from '../config/db.js'
 
-const addFavorite = async (id_user, id_product) => {
+const addFavorite = async (idUser, idProduct) => {
   const query =
     'INSERT INTO favorites (id_user, id_product) VALUES ($1, $2) RETURNING *'
-  const values = [id_user, id_product]
+  const values = [idUser, idProduct]
   const result = await pool.query(query, values)
   return result.rows[0]
 }
 
-const getFavoritesByUserId = async id_user => {
+const getFavoritesByUserId = async idUser => {
   const query = 'SELECT * FROM favorites WHERE id_user = $1'
-  const values = [id_user]
+  const values = [idUser]
   const result = await pool.query(query, values)
   return result.rows
 }
 
-const removeFavorite = async id_favorite => {
+const removeFavorite = async idFavorite => {
   const query = 'DELETE FROM favorites WHERE id_favorite = $1 RETURNING *'
-  const values = [id_favorite]
+  const values = [idFavorite]
   const result = await pool.query(query, values)
   return result.rows[0]
 }

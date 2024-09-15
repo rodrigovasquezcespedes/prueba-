@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from 'react' 
+import { useContext, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Navbar, Nav, Container, Badge } from 'react-bootstrap'
 import { AuthContext } from '../context/AuthContext'
@@ -60,7 +60,10 @@ const Navigation = () => {
                 </Badge>
               )}
             </Nav.Link>
-
+            <Nav.Link as={Link} to='/dashboard'>
+              <FaTachometerAlt className='me-2' />
+              Dashboard
+            </Nav.Link>
             {isAuthenticated && user?.role === true && (
               <Nav.Link as={Link} to='/dashboard'>
                 <FaTachometerAlt className='me-2' />

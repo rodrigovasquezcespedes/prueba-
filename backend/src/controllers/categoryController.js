@@ -1,9 +1,9 @@
 import categoryModel from '../models/categoryModel.js'
 
 const createCategory = async (req, res) => {
-  const { category_name } = req.body
+  const { categoryName } = req.body
   try {
-    const category = await categoryModel.createCategory(category_name)
+    const category = await categoryModel.createCategory(categoryName)
     res.status(201).json(category)
   } catch (error) {
     res.status(500).json({ message: 'Error al crear la categoría', error })
@@ -31,11 +31,11 @@ const getAllCategories = async (req, res) => {
 
 const updateCategory = async (req, res) => {
   const { id } = req.params
-  const { category_name } = req.body
+  const { categoryName } = req.body
   try {
     const updatedCategory = await categoryModel.updateCategory(
       id,
-      category_name
+      categoryName
     )
     res.status(200).json(updatedCategory)
   } catch (error) {

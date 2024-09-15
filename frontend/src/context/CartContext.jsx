@@ -1,72 +1,56 @@
-import { createContext, useState, useContext } from 'react'
+import React, { createContext, useContext, useState } from 'react'
 
-export const CartContext = createContext()
+const CartContext = createContext()
+
+export const useCart = () => {
+  return useContext(CartContext)
+}
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([])
 
-  const addToCart = product => {
-    setCartItems(prevItems => {
-      const existingItem = prevItems.find(
-        item => item.id_product === product.id_product
-      )
+  // Añadir un producto al carrito
+  const addToCart = (product) => {
+    setCartItems((prevItems) => {
+      const existingItem = prevItems.find(item => item.id_product === product.id_product)
       if (existingItem) {
-        // Update quantity if the product already exists
         return prevItems.map(item =>
           item.id_product === product.id_product
             ? { ...item, quantity: item.quantity + 1 }
             : item
         )
+      } else {
+        return [...prevItems, { ...product, quantity: 1 }]
       }
-      // Add new product with quantity 1
-      return [...prevItems, { ...product, quantity: 1 }]
     })
   }
 
-  const removeFromCart = id_product => {
-    setCartItems(prevItems => {
-      const existingItem = prevItems.find(
-        item => item.id_product === id_product
+  // Disminuir la cantidad de un producto en el carrito
+  const removeFromCart = (productId) => {
+    setCartItems((prevItems) => {
+      return prevItems.map(item =>
+        item.id_product === productId && item.quantity > 1
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
       )
-      if (existingItem && existingItem.quantity > 1) {
-        // Only reduce quantity if it is greater than 1
-        return prevItems.map(item =>
-          item.id_product === id_product
-            ? { ...item, quantity: item.quantity - 1 }
-            : item
-        )
-      }
-      // If quantity is 1 or less, do not decrement further
-      return prevItems
     })
   }
 
-  const removeItemFromCart = id_product => {
-    // Remove the item entirely from the cart
-    setCartItems(prevItems =>
-      prevItems.filter(item => item.id_product !== id_product)
-    )
+  // Eliminar completamente un producto del carrito
+  const deleteFromCart = (productId) => {
+    setCartItems((prevItems) => prevItems.filter(item => item.id_product !== productId))
   }
 
+  // Vaciar el carrito
   const clearCart = () => {
     setCartItems([])
   }
 
   return (
     <CartContext.Provider
-      value={{
-        cartItems,
-        addToCart,
-        removeFromCart,
-        removeItemFromCart,
-        clearCart
-      }}
+      value={{ cartItems, addToCart, removeFromCart, deleteFromCart, clearCart }}
     >
       {children}
     </CartContext.Provider>
   )
-}
-
-export const useCart = () => {
-  return useContext(CartContext)
 }
