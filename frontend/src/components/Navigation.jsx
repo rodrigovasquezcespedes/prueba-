@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from 'react'
+import { useContext, useState, useEffect } from 'react' 
 import { Link } from 'react-router-dom'
 import { Navbar, Nav, Container, Badge } from 'react-bootstrap'
 import { AuthContext } from '../context/AuthContext'
@@ -42,6 +42,11 @@ const Navigation = () => {
             </Nav.Link>
           </Nav>
           <Nav className='ms-auto align-items-center'>
+            {isAuthenticated && (
+              <Nav.Item className='text-light me-3'>
+                <Navbar.Text>Bienvenido, {userName}!</Navbar.Text>
+              </Nav.Item>
+            )}
             <Nav.Link
               as={Link}
               to='/shoppingcart'
@@ -55,18 +60,6 @@ const Navigation = () => {
                 </Badge>
               )}
             </Nav.Link>
-
-            {isAuthenticated && (
-              <>
-                <Nav.Item className='text-light me-3'>
-                  <Navbar.Text>Bienvenido, {userName}!</Navbar.Text>
-                </Nav.Item>
-                <Nav.Link as={Link} to='/profile'>
-                  <FaUser className='me-2' />
-                  Perfil
-                </Nav.Link>
-              </>
-            )}
 
             {isAuthenticated && user?.role === true && (
               <Nav.Link as={Link} to='/dashboard'>
@@ -89,10 +82,16 @@ const Navigation = () => {
             )}
 
             {isAuthenticated && (
-              <Nav.Link onClick={logout}>
-                <FaSignOutAlt className='me-2' />
-                Cerrar sesión
-              </Nav.Link>
+              <>
+                <Nav.Link as={Link} to='/profile'>
+                  <FaUser className='me-2' />
+                  Perfil
+                </Nav.Link>
+                <Nav.Link onClick={logout}>
+                  <FaSignOutAlt className='me-2' />
+                  Cerrar sesión
+                </Nav.Link>
+              </>
             )}
           </Nav>
         </Navbar.Collapse>

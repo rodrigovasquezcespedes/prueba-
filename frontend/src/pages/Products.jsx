@@ -6,9 +6,10 @@ import ProductCard from '../components/ProductCard'
 
 const Products = () => {
   const [productos, setProductos] = useState([])
-  const [categorias, setCategorias] = useState('')
-  const [marcas, setMarcas] = useState('')
-  const [ordenSeleccionado, setOrdenSeleccionado] = useState('')
+  const [categorias, setCategorias] = useState([])
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState('') // Ahora seleccionamos por id_category
+  const [marcaSeleccionada, setMarcaSeleccionada] = useState('')
+  const [ordenSeleccionado, setOrdenSeleccionado] = useState('recientes')
   const [currentPage, setCurrentPage] = useState(1)
   const productsPerPage = 12
 
@@ -22,55 +23,68 @@ const Products = () => {
     }
   }
 
-  useEffect(() => {
-    fetchProductos()
-  }, [])
+  // Obtener las categorías desde la API
+  const fetchCategorias = async () => {
+    try {
+      const response = await axios.get(`${urlBaseServer}/api/categories`)
+      setCategorias(response.data) // Guardar las categorías en el estado
+    } catch (error) {
+      console.error('Error fetching categories:', error)
+    }
+  }
 
-  // Obtener categorías únicas
-  const categoriasUnicas = [
-    ...new Set(productos.map(producto => producto.category_name))
-  ]
+  useEffect(() => {
+    // Cargar productos y categorías al iniciar
+    fetchProductos()
+    fetchCategorias()
+  }, [])
 
   // Obtener marcas filtradas según la categoría seleccionada
   const marcasFiltradas =
-    categorias === ''
+    categoriaSeleccionada === ''
       ? [...new Set(productos.map(producto => producto.brand))]
       : [
           ...new Set(
             productos
-              .filter(producto => producto.category_name === categorias)
+              .filter(producto => producto.id_category === Number(categoriaSeleccionada)) // Filtrar por id_category
               .map(producto => producto.brand)
           )
         ]
 
-  // Filtrar productos por categoría y marca seleccionadas
-  const productosFiltrados = productos.filter(
-    producto =>
-      (categorias === '' || producto.category_name === categorias) &&
-      (marcas === '' || producto.brand === marcas)
-  )
+  // Filtrar productos por categoría (id_category) y marca seleccionadas
+  const productosFiltrados = productos.filter(producto => {
+    const coincideCategoria =
+      categoriaSeleccionada === '' || producto.id_category === Number(categoriaSeleccionada) // Comparar id_category
+    const coincideMarca = marcaSeleccionada === '' || producto.brand === marcaSeleccionada
 
-  // Ordenar productos
+    return coincideCategoria && coincideMarca
+  })
+
+  // Mostrar en consola las categorías y productos para depurar
+  useEffect(() => {
+    console.log('Productos:', productos)
+    console.log('Categorías:', categorias)
+    console.log('Categoría seleccionada (ID):', categoriaSeleccionada)
+  }, [productos, categorias, categoriaSeleccionada])
+
+  // Ordenar productos, agregando opción para ordenar por recientes
   const productosOrdenados = productosFiltrados.slice().sort((a, b) => {
     if (ordenSeleccionado === 'price-asc') return a.price - b.price
     if (ordenSeleccionado === 'price-desc') return b.price - a.price
     if (ordenSeleccionado === 'name-asc') return a.name.localeCompare(b.name)
     if (ordenSeleccionado === 'name-desc') return b.name.localeCompare(a.name)
+    if (ordenSeleccionado === 'recientes') return new Date(b.created_at) - new Date(a.created_at)
     return 0
   })
 
   // Paginación
   const indexOfLastProduct = currentPage * productsPerPage
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage
-  const currentProducts = productosOrdenados.slice(
-    indexOfFirstProduct,
-    indexOfLastProduct
-  )
+  const currentProducts = productosOrdenados.slice(indexOfFirstProduct, indexOfLastProduct)
   const totalPages = Math.ceil(productosOrdenados.length / productsPerPage)
 
   const handlePageChange = pageNumber => {
     setCurrentPage(pageNumber)
-    // Mover la página al principio del contenedor de productos
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
@@ -81,13 +95,13 @@ const Products = () => {
         <Col md={3}>
           <select
             className='form-select'
-            value={categorias}
-            onChange={e => setCategorias(e.target.value)}
+            value={categoriaSeleccionada}
+            onChange={e => setCategoriaSeleccionada(e.target.value)} // Guardamos el id_category seleccionado
           >
             <option value=''>Todas las categorías</option>
-            {categoriasUnicas.map((categoria, index) => (
-              <option key={index} value={categoria}>
-                {categoria}
+            {categorias.map(categoria => (
+              <option key={categoria.id_category} value={categoria.id_category}>
+                {categoria.category_name}
               </option>
             ))}
           </select>
@@ -96,8 +110,8 @@ const Products = () => {
         <Col md={3}>
           <select
             className='form-select'
-            value={marcas}
-            onChange={e => setMarcas(e.target.value)}
+            value={marcaSeleccionada} // Usamos el estado "marcaSeleccionada"
+            onChange={e => setMarcaSeleccionada(e.target.value)} // Cambia la marca seleccionada
           >
             <option value=''>Todas las marcas</option>
             {marcasFiltradas.map((marca, index) => (
@@ -114,7 +128,7 @@ const Products = () => {
             value={ordenSeleccionado}
             onChange={e => setOrdenSeleccionado(e.target.value)}
           >
-            <option value='default'>Ordenar por</option>
+            <option value='recientes'>Recientes</option>
             <option value='price-asc'>Precio de menor a mayor</option>
             <option value='price-desc'>Precio de mayor a menor</option>
             <option value='name-asc'>Nombre A-Z</option>

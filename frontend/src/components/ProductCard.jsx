@@ -27,11 +27,10 @@ const ProductCard = ({ producto }) => {
       </div>
       <Card.Body className='d-flex flex-column justify-content-between'>
         <Card.Title>{producto.name}</Card.Title>
-        <Card.Text>
+        <Card.Text className='fs-5'>
           Precio: ${producto.price.toLocaleString()}
-          <br />
-          {producto.description}
         </Card.Text>
+        <Card.Text>{producto.description}</Card.Text>
         <div className='d-flex w-100 mt-2'>
           {/* Full-width buttons with equal space */}
           <Button
