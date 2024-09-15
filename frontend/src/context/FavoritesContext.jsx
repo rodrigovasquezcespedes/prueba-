@@ -1,45 +1,39 @@
-import { createContext, useState, useContext } from 'react'
+import React, { createContext, useContext, useState } from 'react'
 
-// Crear el contexto
-export const FavoritesContext = createContext()
+// Crear el contexto para los favoritos
+const FavoritesContext = createContext()
 
-// Proveedor del contexto
-const FavoritesProvider = ({ children }) => {
-  const [favoriteItems, setFavoriteItems] = useState([])
-
-  // Función para agregar un producto a favoritos
-  const addToFavorites = product => {
-    setFavoriteItems(prevItems => {
-      const existingItem = prevItems.find(item => item.id === product.id)
-      if (!existingItem) {
-        return [...prevItems, product]
-      }
-      return prevItems
-    })
-  }
-
-  // Función para eliminar un producto de favoritos
-  const removeFromFavorites = id => {
-    setFavoriteItems(prevItems => prevItems.filter(item => item.id !== id))
-  }
-
-  // Función para verificar si un producto está en favoritos
-  const isFavorite = id => {
-    return favoriteItems.some(item => item.id === id)
-  }
-
-  return (
-    <FavoritesContext.Provider
-      value={{ favoriteItems, addToFavorites, removeFromFavorites, isFavorite }}
-    >
-      {children}
-    </FavoritesContext.Provider>
-  )
-}
-
-// Hook personalizado para acceder al contexto de favoritos
+// Hook para utilizar el contexto de favoritos
 export const useFavorites = () => {
   return useContext(FavoritesContext)
 }
 
-export default FavoritesProvider
+// Proveedor de favoritos
+export const FavoritesProvider = ({ children }) => {
+  const [favorites, setFavorites] = useState([])
+
+  // Función para añadir a favoritos
+  const addToFavorites = product => {
+    setFavorites(prevFavorites => [...prevFavorites, product])
+  }
+
+  // Función para eliminar de favoritos
+  const removeFromFavorites = productId => {
+    setFavorites(prevFavorites =>
+      prevFavorites.filter(favorite => favorite.id_product !== productId)
+    )
+  }
+
+  // Valor que se pasa a los componentes hijos
+  const value = {
+    favorites,
+    addToFavorites,
+    removeFromFavorites
+  }
+
+  return (
+    <FavoritesContext.Provider value={value}>
+      {children}
+    </FavoritesContext.Provider>
+  )
+}

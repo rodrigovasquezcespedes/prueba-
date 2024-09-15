@@ -1,4 +1,5 @@
 import { Routes, Route, HashRouter } from 'react-router-dom'
+import { FavoritesProvider } from './context/FavoritesContext'
 import { CartProvider } from './context/CartContext'
 import Navigation from './components/Navigation'
 import Home from './pages/Home'
@@ -16,20 +17,22 @@ const App = () => {
   return (
     <HashRouter>
       <AuthProvider>
-        <CartProvider>
-          <Navigation />
-          <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/products' element={<Products />} />
-            <Route path='/detail/:id' element={<Detail />} />
-            <Route path='/profile' element={<Profile />} />
-            <Route path='/favorites' element={<Favorites />} />
-            <Route path='/shoppingcart' element={<ShoppingCart />} />
-            <Route path='/dashboard' element={<Dashboard />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='/register' element={<Register />} />
-          </Routes>
-        </CartProvider>
+        <FavoritesProvider>
+          <CartProvider>
+            <Navigation />
+            <Routes>
+              <Route path='/' element={<Home />} />
+              <Route path='/products' element={<Products />} />
+              <Route path='/detail/:id' element={<Detail />} />
+              <Route path='/profile' element={<Profile />} />
+              <Route path='/favorites' element={<Favorites />} />
+              <Route path='/shoppingcart' element={<ShoppingCart />} />
+              <Route path='/dashboard' element={<Dashboard />} />
+              <Route path='/login' element={<Login />} />
+              <Route path='/register' element={<Register />} />
+            </Routes>
+          </CartProvider>
+        </FavoritesProvider>
       </AuthProvider>
     </HashRouter>
   )
