@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
-import { Container, Row, Col, Pagination } from 'react-bootstrap'
+import { Container, Row, Col, Pagination, Button } from 'react-bootstrap'
 import axios from 'axios'
+import { FaArrowUp, FaArrowDown } from 'react-icons/fa'
 import { urlBaseServer } from '../config'
 import ProductCard from '../components/ProductCard'
 
@@ -12,6 +13,7 @@ const Products = () => {
   const [ordenSeleccionado, setOrdenSeleccionado] = useState('recientes')
   const [currentPage, setCurrentPage] = useState(1)
   const productsPerPage = 12
+  const [showScrollButton, setShowScrollButton] = useState(false)
 
   // Obtener los productos desde la API
   const fetchProductos = async () => {
@@ -37,6 +39,22 @@ const Products = () => {
     // Cargar productos y categorías al iniciar
     fetchProductos()
     fetchCategorias()
+  }, [])
+
+  // Mostrar u ocultar botones de scroll según la posición de la página
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 200) {
+        setShowScrollButton(true)
+      } else {
+        setShowScrollButton(false)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
   }, [])
 
   // Obtener marcas filtradas según la categoría seleccionada
@@ -65,20 +83,14 @@ const Products = () => {
     return coincideCategoria && coincideMarca
   })
 
-  // Mostrar en consola las categorías y productos para depurar
-  useEffect(() => {
-    console.log('Productos:', productos)
-    console.log('Categorías:', categorias)
-    console.log('Categoría seleccionada (ID):', categoriaSeleccionada)
-  }, [productos, categorias, categoriaSeleccionada])
-
   // Ordenar productos, agregando opción para ordenar por recientes
   const productosOrdenados = productosFiltrados.slice().sort((a, b) => {
     if (ordenSeleccionado === 'price-asc') return a.price - b.price
     if (ordenSeleccionado === 'price-desc') return b.price - a.price
     if (ordenSeleccionado === 'name-asc') return a.name.localeCompare(b.name)
     if (ordenSeleccionado === 'name-desc') return b.name.localeCompare(a.name)
-    if (ordenSeleccionado === 'recientes') return new Date(b.created_at) - new Date(a.created_at)
+    if (ordenSeleccionado === 'recientes')
+      return new Date(b.created_at) - new Date(a.created_at)
     return 0
   })
 
@@ -95,6 +107,11 @@ const Products = () => {
     setCurrentPage(pageNumber)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
+
+  // Función para subir o bajar
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
+  const scrollToBottom = () =>
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
 
   return (
     <Container className='py-5'>
@@ -173,6 +190,40 @@ const Products = () => {
           </Pagination>
         </Col>
       </Row>
+
+      {/* Botones de subir y bajar */}
+      {showScrollButton && (
+        <>
+          <Button
+            variant='primary'
+            className='position-fixed top-0 end-0 my-5'
+            onClick={scrollToBottom}
+            style={{
+              width: '40px',
+              height: '40px',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
+            <FaArrowDown size={20} />
+          </Button>
+          <Button
+            variant='primary'
+            className='position-fixed bottom-0 end-0 my-5'
+            onClick={scrollToTop}
+            style={{
+              width: '40px',
+              height: '40px',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
+            <FaArrowUp size={20} />
+          </Button>
+        </>
+      )}
     </Container>
   )
 }

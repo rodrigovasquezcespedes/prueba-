@@ -28,7 +28,7 @@ const Navigation = () => {
   }, [])
 
   return (
-    <Navbar bg='dark' variant='dark' expand='lg' className='sticky-top py-3'>
+    <Navbar bg='dark' variant='dark' expand='lg' className='sticky-top py-1'>
       <Container>
         <Navbar.Brand as={Link} to='/' className='fw-bold'>
           Ecommerce
