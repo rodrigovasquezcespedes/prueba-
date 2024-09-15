@@ -15,7 +15,7 @@ import { AuthProvider } from './context/AuthContext'
 const App = () => {
   return (
     <HashRouter>
-      <AuthProvider> {/* Use the named AuthProvider */}
+      <AuthProvider>
         <CartProvider>
           <Navigation />
           <Routes>

@@ -41,7 +41,13 @@ const Login = () => {
       })
 
       if (response.status === 200) {
-        login()
+        const data = await response.json()
+
+        // Almacenar token y nombre del usuario en localStorage
+        localStorage.setItem('token', data.token)
+        localStorage.setItem('userName', data.user.name) // Asegurarse de que el nombre se guarde correctamente
+
+        login() // Ejecutar función de autenticación global
         Swal.fire({
           icon: 'success',
           title: 'Inicio de sesión exitoso',

@@ -1,6 +1,6 @@
-import { useContext } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Navbar, Nav, Container } from 'react-bootstrap'
+import { Navbar, Nav, Container, Badge } from 'react-bootstrap'
 import { AuthContext } from '../context/AuthContext'
 import { useCart } from '../context/CartContext'
 import {
@@ -16,13 +16,21 @@ import {
 const Navigation = () => {
   const { isAuthenticated, user, logout } = useContext(AuthContext)
   const { cartItems } = useCart() // Get cart items to show the quantity
+  const [userName, setUserName] = useState(null)
 
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0)
 
+  useEffect(() => {
+    const storedUserName = localStorage.getItem('userName')
+    if (storedUserName) {
+      setUserName(storedUserName) // Actualizar el estado con el nombre
+    }
+  }, [])
+
   return (
-    <Navbar bg='dark' variant='dark' expand='lg'>
+    <Navbar bg='dark' variant='dark' expand='lg' className='sticky-top py-3'>
       <Container>
-        <Navbar.Brand as={Link} to='/'>
+        <Navbar.Brand as={Link} to='/' className='fw-bold'>
           Ecommerce
         </Navbar.Brand>
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
@@ -33,16 +41,25 @@ const Navigation = () => {
               Productos
             </Nav.Link>
           </Nav>
-          <Nav className='ms-auto'>
-            <Nav.Link as={Link} to='/shoppingcart'>
+          <Nav className='ms-auto align-items-center'>
+            <Nav.Link
+              as={Link}
+              to='/shoppingcart'
+              className='d-flex align-items-center'
+            >
               <FaShoppingCart className='me-2' />
-              Carrito ({totalItems})
+              Carrito
+              {totalItems > 0 && (
+                <Badge pill bg='success' className='ms-2'>
+                  {totalItems}
+                </Badge>
+              )}
             </Nav.Link>
 
-            {isAuthenticated && user && (
+            {isAuthenticated && (
               <>
                 <Nav.Item className='text-light me-3'>
-                  Bienvenido: {user.name}
+                  <Navbar.Text>Bienvenido, {userName}!</Navbar.Text>
                 </Nav.Item>
                 <Nav.Link as={Link} to='/profile'>
                   <FaUser className='me-2' />
