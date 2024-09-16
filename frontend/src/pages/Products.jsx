@@ -15,7 +15,6 @@ const Products = () => {
   const productsPerPage = 12
   const [showScrollButton, setShowScrollButton] = useState(false)
 
-  // Obtener los productos desde la API
   const fetchProductos = async () => {
     try {
       const response = await axios.get(`${urlBaseServer}/api/products`)
