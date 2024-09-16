@@ -15,7 +15,7 @@ const app = express()
 dotenv.config()
 
 const corsOptions = {
-  origin: process.env.CORS_ORIGIN, // Asegúrate de que no haya barra extra aquí
+  origin: '*', // Asegúrate de que no haya barra extra aquí
   methods: 'GET,POST,PUT,DELETE',
   credentials: true
 }
