@@ -15,7 +15,7 @@ const app = express()
 dotenv.config()
 
 const corsOptions = {
-  origin: process.env.CORS_ORIGIN.trim(),
+  origin: 'https://frontend-q785.onrender.com',
   methods: 'GET,POST,PUT,DELETE',
   credentials: true // Si necesitas pasar cookies o autenticación
 }
