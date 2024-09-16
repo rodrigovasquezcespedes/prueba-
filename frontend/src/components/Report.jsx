@@ -4,6 +4,7 @@ import axios from 'axios'
 import jsPDF from 'jspdf'
 import 'jspdf-autotable' // Para generar tablas automáticamente en PDF
 const urlBaseServer = import.meta.env.VITE_URL_BASE_SERVER
+
 const Report = () => {
   const [reportData, setReportData] = useState(null)
   const [loading, setLoading] = useState(true)

@@ -9,7 +9,8 @@ import {
   ToastContainer
 } from 'react-bootstrap'
 import axios from 'axios'
-import { useCart } from '../context/CartContext' // Import the custom hook to use the cart
+import { useCart } from '../context/CartContext'
+
 const urlBaseServer = import.meta.env.VITE_URL_BASE_SERVER
 
 const Detail = () => {

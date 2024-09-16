@@ -2,10 +2,11 @@ import { useState, useEffect } from 'react'
 import { Card, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
-import { useFavorites } from '../context/FavoritesContext' // Importar correctamente useFavorites
+import { useFavorites } from '../context/FavoritesContext'
 import { FaEye, FaCartPlus, FaHeart } from 'react-icons/fa'
 import axios from 'axios'
-import { urlBaseServer } from '../config' // Importar la URL base de tu servidor
+
+const urlBaseServer = import.meta.env.VITE_URL_BASE_SERVER
 
 const ProductCard = ({ producto, userId }) => {
   const { addToCart } = useCart()
