@@ -14,11 +14,13 @@ const app = express()
 
 dotenv.config()
 
-app.use(cors({
-  origin: 'https://frontend-q785.onrender.com',
+const corsOptions = {
+  origin: process.env.CORS_ORIGIN, // Asegúrate de que no haya barra extra aquí
   methods: 'GET,POST,PUT,DELETE',
   credentials: true
-}))
+}
+
+app.use(cors(corsOptions))
 
 app.use(morgan('dev'))
 app.use(express.json())
