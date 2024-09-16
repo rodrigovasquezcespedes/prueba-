@@ -15,10 +15,10 @@ const app = express()
 dotenv.config()
 
 const corsOptions = {
-  origin: process.env.FRONTEND_URL, // Cambia esto a la URL de tu frontend
-  credentials: true // Permitir el uso de credenciales (cookies)
+  origin: process.env.CORS_ORIGIN, // Leer la URL desde variables de entorno
+  methods: 'GET,POST,PUT,DELETE',
+  credentials: true // Si necesitas pasar cookies o autenticación
 }
-console.log('FRONTEND_URL:', process.env.FRONTEND_URL)
 
 app.use(cors(corsOptions))
 app.use(morgan('dev'))
