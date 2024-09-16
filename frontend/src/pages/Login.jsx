@@ -5,7 +5,7 @@ import { Button, Container, Form, InputGroup } from 'react-bootstrap'
 import { FaUser } from 'react-icons/fa'
 import { RiLockPasswordFill } from 'react-icons/ri'
 import Swal from 'sweetalert2'
-import { urlBaseServer } from '../config'
+const urlBaseServer = import.meta.env.VITE_URL_BASE_SERVER
 
 const Login = () => {
   const { login } = useContext(AuthContext)
@@ -27,7 +27,6 @@ const Login = () => {
     }
 
     try {
-      // Enviar solicitud de autenticación al backend
       const response = await fetch(`${urlBaseServer}/api/users/login`, {
         method: 'POST',
         headers: {

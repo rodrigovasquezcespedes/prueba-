@@ -4,6 +4,7 @@ import ProductCRUD from '../components/ProductCrud'
 import Report from '../components/Report'
 import { Container, Row, Col, Nav } from 'react-bootstrap'
 
+
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState('users')
 

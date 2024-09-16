@@ -6,7 +6,7 @@ import { FaUser } from 'react-icons/fa'
 import { MdAlternateEmail } from 'react-icons/md'
 import { RiLockPasswordFill } from 'react-icons/ri'
 import Swal from 'sweetalert2'
-import { urlBaseServer } from '../config'
+const urlBaseServer = import.meta.env.VITE_URL_BASE_SERVER
 
 const Register = () => {
   const [name, setName] = useState('')

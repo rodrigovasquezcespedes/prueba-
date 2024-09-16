@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import { Container, Row, Col, Pagination, Button } from 'react-bootstrap'
 import axios from 'axios'
 import { FaArrowUp, FaArrowDown } from 'react-icons/fa'
-import { urlBaseServer } from '../config'
 import ProductCard from '../components/ProductCard'
+const urlBaseServer = import.meta.env.VITE_URL_BASE_SERVER
 
 const Products = () => {
   const [productos, setProductos] = useState([])

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { Table, Button, Form, Modal, Row, Col, Pagination } from 'react-bootstrap'
 import axios from 'axios'
 
+const urlBaseServer = import.meta.env.VITE_URL_BASE_SERVER
+
 const ProductCrud = () => {
   const [products, setProducts] = useState([])
   const [showModal, setShowModal] = useState(false)
@@ -19,12 +21,10 @@ const ProductCrud = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const productsPerPage = 5 // Número de productos por página
 
-  const apiUrl = 'http://localhost:3000/api/products' // Cambia por tu URL de la API
-
   // Obtener los productos desde la API
   const fetchProducts = async () => {
     try {
-      const response = await axios.get(apiUrl)
+      const response = await axios.get(`${urlBaseServer}/api/products`)
       setProducts(response.data) // Asumimos que la respuesta contiene un array de productos
     } catch (error) {
       console.error('Error al obtener los productos:', error)
@@ -55,7 +55,7 @@ const ProductCrud = () => {
   // Agregar un nuevo producto con especificaciones mediante la API
   const addProduct = async () => {
     try {
-      const response = await axios.post(apiUrl, newProduct)
+      const response = await axios.post(`${urlBaseServer}/api/products`, newProduct)
       setProducts([...products, response.data]) // Añadir el producto recién creado al listado
       setShowModal(false)
       setNewProduct({
@@ -73,7 +73,7 @@ const ProductCrud = () => {
   // Eliminar un producto de la API
   const deleteProduct = async id => {
     try {
-      await axios.delete(`${apiUrl}/${id}`)
+      await axios.delete(`${urlBaseServer}/api/products/${id}`)
       setProducts(products.filter(product => product.id !== id)) // Eliminar el producto del estado local
     } catch (error) {
       console.error('Error al eliminar el producto:', error)

@@ -9,8 +9,8 @@ import {
   ToastContainer
 } from 'react-bootstrap'
 import axios from 'axios'
-import { urlBaseServer } from '../config'
 import { useCart } from '../context/CartContext' // Import the custom hook to use the cart
+const urlBaseServer = import.meta.env.VITE_URL_BASE_SERVER
 
 const Detail = () => {
   const { id } = useParams() // Obtener el ID del producto desde la URL
@@ -63,7 +63,9 @@ const Detail = () => {
               <Card.Img
                 className='imagen-card'
                 variant='top'
-                src={productoDetail.image_url || 'https://via.placeholder.com/200'}
+                src={
+                  productoDetail.image_url || 'https://via.placeholder.com/200'
+                }
                 alt={productoDetail.name}
               />
             </Card>
@@ -100,6 +102,21 @@ const Detail = () => {
           </div>
         </Row>
       </Container>
+
+      {/* Toast para mostrar notificación */}
+      <ToastContainer position='top-end' className='p-3'>
+        <Toast
+          onClose={() => setShowToast(false)}
+          show={showToast}
+          delay={3000}
+          autohide
+        >
+          <Toast.Header>
+            <strong className='me-auto'>Carrito</strong>
+          </Toast.Header>
+          <Toast.Body>Producto añadido al carrito con éxito!</Toast.Body>
+        </Toast>
+      </ToastContainer>
     </>
   )
 }

@@ -60,10 +60,6 @@ const Navigation = () => {
                 </Badge>
               )}
             </Nav.Link>
-            <Nav.Link as={Link} to='/dashboard'>
-              <FaTachometerAlt className='me-2' />
-              Dashboard
-            </Nav.Link>
             {isAuthenticated && user?.role === true && (
               <Nav.Link as={Link} to='/dashboard'>
                 <FaTachometerAlt className='me-2' />

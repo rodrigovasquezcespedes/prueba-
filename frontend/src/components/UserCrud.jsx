@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Table, Button, Form, Modal, Pagination } from 'react-bootstrap'
 import axios from 'axios'
-import { urlBaseServer } from '../config'
+
+const urlBaseServer = import.meta.env.VITE_URL_BASE_SERVER
 
 const UserCrud = () => {
   const [users, setUsers] = useState([])
