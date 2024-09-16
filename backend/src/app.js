@@ -10,14 +10,15 @@ import orderRoutes from './routes/orderRoutes.js'
 import paymentRoutes from './routes/paymentRoutes.js'
 import favoriteRoutes from './routes/favoriteRoutes.js'
 
-dotenv.config()
-
 const app = express()
+
+dotenv.config()
 
 const corsOptions = {
   origin: process.env.FRONTEND_URL, // Cambia esto a la URL de tu frontend
   credentials: true // Permitir el uso de credenciales (cookies)
 }
+console.log('FRONTEND_URL:', process.env.FRONTEND_URL)
 
 app.use(cors(corsOptions))
 app.use(morgan('dev'))
