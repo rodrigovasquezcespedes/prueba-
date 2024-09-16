@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Card, Row, Col, Container, Spinner, Button } from 'react-bootstrap'
 import axios from 'axios'
-import { urlBaseServer } from '../config'
 import jsPDF from 'jspdf'
 import 'jspdf-autotable' // Para generar tablas automáticamente en PDF
-
+const urlBaseServer = import.meta.env.VITE_URL_BASE_SERVER
 const Report = () => {
   const [reportData, setReportData] = useState(null)
   const [loading, setLoading] = useState(true)
