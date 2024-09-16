@@ -29,19 +29,10 @@ const Login = () => {
     }
 
     try {
-      const response = await axios.post(
-        `${urlBaseServer}/api/users/login`,
-        {
-          email,
-          password
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          withCredentials: true // Asegura que las cookies se incluyan en la solicitud
-        }
-      )
+      const response = await axios.post(`${urlBaseServer}/api/users/login`, {
+        email,
+        password
+      })
 
       if (response.status === 200) {
         const data = response.data

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Card, Row, Col, Container, Spinner, Button } from 'react-bootstrap'
 import axios from 'axios'
 import jsPDF from 'jspdf'
-import 'jspdf-autotable' // Para generar tablas automáticamente en PDF
+import 'jspdf-autotable'
 const urlBaseServer = import.meta.env.VITE_URL_BASE_SERVER
 
 const Report = () => {
@@ -12,8 +12,7 @@ const Report = () => {
   // Obtener los datos del reporte desde la API
   const fetchReportData = async () => {
     try {
-      const response = await axios.get(
-        `${urlBaseServer}/api/dashboard/report`,
+      const response = await axios.get(`${urlBaseServer}/api/dashboard/report`,
         {
           headers: {
             Authorization: `Bearer ${sessionStorage.getItem('token')}`
