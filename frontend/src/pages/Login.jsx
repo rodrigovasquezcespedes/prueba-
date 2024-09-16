@@ -5,6 +5,7 @@ import { Button, Container, Form, InputGroup } from 'react-bootstrap'
 import { FaUser } from 'react-icons/fa'
 import { RiLockPasswordFill } from 'react-icons/ri'
 import Swal from 'sweetalert2'
+import axios from 'axios'
 
 const urlBaseServer = import.meta.env.VITE_URL_BASE_SERVER
 
@@ -28,24 +29,26 @@ const Login = () => {
     }
 
     try {
-      const response = await fetch(`${urlBaseServer}/api/users/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        credentials: 'include', // Asegura que el token se almacene en las cookies, necesario para incluir las cookies en la solicitud
-        body: JSON.stringify({
+      const response = await axios.post(
+        `${urlBaseServer}/api/users/login`,
+        {
           email,
           password
-        })
-      })
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          withCredentials: true // Asegura que las cookies se incluyan en la solicitud
+        }
+      )
 
       if (response.status === 200) {
-        const data = await response.json()
+        const data = response.data
 
         // Almacenar token y nombre del usuario en localStorage
         localStorage.setItem('token', data.token)
-        localStorage.setItem('userName', data.user.name) // Asegurarse de que el nombre se guarde correctamente
+        localStorage.setItem('userName', data.user.name) // Asegúrate de que el nombre esté correctamente guardado
 
         login() // Ejecutar función de autenticación global
         Swal.fire({
@@ -55,20 +58,17 @@ const Login = () => {
           timer: 2000
         })
         navigate('/products')
-      } else {
-        const errorData = await response.json()
-        Swal.fire({
-          icon: 'error',
-          title: 'Error de autenticación',
-          text: errorData.message || 'Correo o contraseña incorrectos'
-        })
       }
     } catch (error) {
       console.error('Error al iniciar sesión:', error)
+
+      // Mostrar un mensaje de error si la autenticación falla
       Swal.fire({
         icon: 'error',
         title: 'Error de autenticación',
-        text: 'Hubo un problema al intentar iniciar sesión, por favor inténtalo de nuevo'
+        text:
+          error.response?.data?.message ||
+          'Hubo un problema al intentar iniciar sesión, por favor inténtalo de nuevo'
       })
     }
   }
