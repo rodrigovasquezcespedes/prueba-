@@ -15,7 +15,7 @@ const app = express()
 dotenv.config()
 
 const corsOptions = {
-  origin: process.env.CORS_ORIGIN, // Leer la URL desde variables de entorno
+  origin: process.env.CORS_ORIGIN,
   methods: 'GET,POST,PUT,DELETE',
   credentials: true // Si necesitas pasar cookies o autenticación
 }
