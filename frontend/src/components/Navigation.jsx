@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from 'react'
+import { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { Navbar, Nav, Container, Badge } from 'react-bootstrap'
 import { AuthContext } from '../context/AuthContext'
@@ -14,18 +14,10 @@ import {
 } from 'react-icons/fa'
 
 const Navigation = () => {
-  const { isAuthenticated, user, logout } = useContext(AuthContext)
-  const { cartItems } = useCart() // Get cart items to show the quantity
-  const [userName, setUserName] = useState(null)
+  const { isAuthenticated, user, logout } = useContext(AuthContext) // Obtener estado de autenticación y usuario del AuthContext
+  const { cartItems } = useCart() // Obtener productos del carrito
 
-  const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0)
-
-  useEffect(() => {
-    const storedUserName = localStorage.getItem('userName')
-    if (storedUserName) {
-      setUserName(storedUserName) // Actualizar el estado con el nombre
-    }
-  }, [])
+  const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0) // Calcular total de productos en el carrito
 
   return (
     <Navbar bg='dark' variant='dark' expand='lg' className='sticky-top py-1'>
@@ -42,11 +34,7 @@ const Navigation = () => {
             </Nav.Link>
           </Nav>
           <Nav className='ms-auto align-items-center'>
-            {isAuthenticated && (
-              <Nav.Item className='text-light me-3'>
-                <Navbar.Text>Bienvenido, {userName}!</Navbar.Text>
-              </Nav.Item>
-            )}
+            {/* Carrito de compras */}
             <Nav.Link
               as={Link}
               to='/shoppingcart'
@@ -60,13 +48,31 @@ const Navigation = () => {
                 </Badge>
               )}
             </Nav.Link>
-            {isAuthenticated && user?.role === true && (
-              <Nav.Link as={Link} to='/dashboard'>
-                <FaTachometerAlt className='me-2' />
-                Dashboard
-              </Nav.Link>
+
+            {/* Mostrar contenido solo si está autenticado */}
+            {isAuthenticated && user && (
+              <>
+                <Nav.Item className='text-light me-3'>
+                  Bienvenido, {user.name}!
+                </Nav.Item>
+                <Nav.Link as={Link} to='/profile'>
+                  <FaUser className='me-2' />
+                  Perfil
+                </Nav.Link>
+                {user.role === true && (
+                  <Nav.Link as={Link} to='/dashboard'>
+                    <FaTachometerAlt className='me-2' />
+                    Dashboard
+                  </Nav.Link>
+                )}
+                <Nav.Link onClick={logout}>
+                  <FaSignOutAlt className='me-2' />
+                  Cerrar sesión
+                </Nav.Link>
+              </>
             )}
 
+            {/* Mostrar opciones de login y registro si NO está autenticado */}
             {!isAuthenticated && (
               <>
                 <Nav.Link as={Link} to='/login'>
@@ -76,19 +82,6 @@ const Navigation = () => {
                 <Nav.Link as={Link} to='/register'>
                   <FaUserPlus className='me-2' />
                   Registrarse
-                </Nav.Link>
-              </>
-            )}
-
-            {isAuthenticated && (
-              <>
-                <Nav.Link as={Link} to='/profile'>
-                  <FaUser className='me-2' />
-                  Perfil
-                </Nav.Link>
-                <Nav.Link onClick={logout}>
-                  <FaSignOutAlt className='me-2' />
-                  Cerrar sesión
                 </Nav.Link>
               </>
             )}

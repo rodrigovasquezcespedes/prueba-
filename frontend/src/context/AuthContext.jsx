@@ -1,64 +1,69 @@
 import { createContext, useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 export const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [user, setUser] = useState(null)
-  const [role, setRole] = useState(null)  // Agregado para manejar el rol
-  const navigate = useNavigate()
 
-  const login = (userData) => {
-    if (userData && userData.user && userData.token) {
-      setIsAuthenticated(true)
-      setUser(userData.user)
-      setRole(userData.role || 'false')
-      localStorage.setItem('user', JSON.stringify(userData.user))
-      localStorage.setItem('token', userData.token)
-      localStorage.setItem('role', userData.role || 'user')  // Asumir 'user' si no se da
-
-      // Redirigir según el rol
-      if (userData.role === 'admin') {
-        navigate('/admin-dashboard')
-      } else {
-        navigate('/user-dashboard')
-      }
-    } else {
-      console.error("Error: Datos de usuario inválidos recibidos")
-    }
-  }
-
-  const logout = () => {
-    setIsAuthenticated(false)
-    setUser(null)
-    setRole(null)
-    localStorage.removeItem('user')
-    localStorage.removeItem('token')
-    localStorage.removeItem('role')
-    navigate('/login')
-  }
-
+  // Función para verificar el estado de autenticación al cargar la app
   useEffect(() => {
-    const storedUser = localStorage.getItem('user')
-    const storedRole = localStorage.getItem('role')
-    const storedToken = localStorage.getItem('token')
-
-    if (storedUser && storedToken) {
+    const checkAuth = async () => {
       try {
-        const parsedUser = JSON.parse(storedUser)
-        setUser(parsedUser)
-        setRole(storedRole || 'user')
-        setIsAuthenticated(true)
+        const response = await axios.get(
+          'http://localhost:3000/api/auth/check',
+          {
+            withCredentials: true
+          }
+        )
+        if (response.data.user) {
+          setUser(response.data.user)
+          setIsAuthenticated(true)
+        } else {
+          setIsAuthenticated(false)
+          setUser(null)
+        }
       } catch (error) {
-        console.error('Error parsing user data from localStorage:', error)
-        localStorage.clear()
+        setIsAuthenticated(false)
+        setUser(null)
       }
     }
+    checkAuth()
   }, [])
 
+  const login = async (email, password) => {
+    try {
+      const response = await axios.post(
+        'http://localhost:3000/api/auth/login',
+        { email, password },
+        { withCredentials: true }
+      )
+      if (response.data.user) {
+        setUser(response.data.user)
+        setIsAuthenticated(true)
+      }
+    } catch (error) {
+      console.error('Error al iniciar sesión:', error)
+    }
+  }
+
+  const logout = async () => {
+    try {
+      await axios.post(
+        'http://localhost:3000/api/auth/logout',
+        {},
+        { withCredentials: true }
+      )
+      setIsAuthenticated(false)
+      setUser(null)
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error)
+    }
+  }
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, role, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
       {children}
     </AuthContext.Provider>
   )

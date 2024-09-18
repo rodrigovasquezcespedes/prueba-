@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt'
 import userModel from '../models/userModel.js'
-import Token from '../utils/tokens.js'
+import jwt from 'jsonwebtoken'
 
 const loginUser = async (req, res) => {
   const { email, password } = req.body
@@ -13,7 +13,7 @@ const loginUser = async (req, res) => {
         .json({ message: 'Correo o contraseña incorrectos' })
     }
 
-    // Verificar la contraseña
+    // Verificar contraseña
     const validPassword = await bcrypt.compare(password, user.password)
     if (!validPassword) {
       return res
@@ -21,27 +21,37 @@ const loginUser = async (req, res) => {
         .json({ message: 'Correo o contraseña incorrectos' })
     }
 
-    // Generar el token utilizando la función de utils/token.js
-    const token = Token.createToken(user) // El token incluirá el id, role y name
+    // Generar token JWT
+    const token = jwt.sign(
+      { id: user.id_user, name: user.name, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' }
+    )
 
-    // Opción 1: Enviar el token en una cookie
+    // Configuración de cookies
     res.cookie('token', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      maxAge: 30 * 60 * 1000,
+      secure: process.env.NODE_ENV === 'production', // Solo HTTPS en producción
+      maxAge: 3600000, // 1 hora
       sameSite: process.env.NODE_ENV === 'production' ? 'Strict' : 'Lax'
     })
 
-    // Opción 2: Enviar el token en el cuerpo de la respuesta JSON
-    res.status(200).json({
-      message: 'Inicio de sesión exitoso',
-      token, // También devolvemos el token al frontend
-      user: { id: user.id_user, name: user.name, role: user.role } // Puedes devolver los datos del usuario si es necesario
-    })
+    return res
+      .status(200)
+      .json({
+        message: 'Inicio de sesión exitoso',
+        user: { name: user.name, role: user.role }
+      })
   } catch (error) {
-    res.status(500).json({ message: 'Error al iniciar sesión', error })
+    return res.status(500).json({ message: 'Error al iniciar sesión', error })
   }
 }
+
+const logoutUser = (req, res) => {
+  res.clearCookie('token')
+  return res.status(200).json({ message: 'Cierre de sesión exitoso' })
+}
+
 const createUser = async (req, res) => {
   const { name, email, password, role } = req.body
 
@@ -108,5 +118,6 @@ export default {
   getAllUsers,
   getUserById,
   updateUser,
-  deleteUser
+  deleteUser,
+  logoutUser
 }

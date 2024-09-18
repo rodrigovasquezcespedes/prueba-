@@ -7,6 +7,12 @@ const router = express.Router()
 // CRUD de usuarios
 router.post('/register', userController.createUser)
 router.post('/login', userController.loginUser)
+router.post('/logout', userController.logoutUser)
+
+// Rutas protegidas
+router.get('/dashboard', verifyToken, isAdmin, (req, res) => {
+  res.status(200).json({ message: 'Bienvenido al Dashboard' })
+})
 router.get('/', verifyToken, isAdmin, userController.getAllUsers)
 router.get('/:id', verifyToken, isAdmin, userController.getUserById)
 router.put('/:id', verifyToken, isAdmin, userController.updateUser)

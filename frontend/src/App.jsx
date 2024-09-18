@@ -1,6 +1,7 @@
 import { Routes, Route, HashRouter } from 'react-router-dom'
 import { FavoritesProvider } from './context/FavoritesContext'
 import { CartProvider } from './context/CartContext'
+import { AuthProvider } from './context/AuthContext'
 import Navigation from './components/Navigation'
 import Home from './pages/Home'
 import Products from './pages/Products'
@@ -11,7 +12,6 @@ import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Detail from './pages/Detail'
-import { AuthProvider } from './context/AuthContext'
 
 const App = () => {
   return (
