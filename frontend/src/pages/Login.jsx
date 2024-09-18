@@ -29,26 +29,31 @@ const Login = () => {
     }
 
     try {
-      const response = await axios.post(`${urlBaseServer}/api/users/login`, {
-        email,
-        password
-      })
+      const response = await axios.post(
+        `${urlBaseServer}/api/users/login`,
+        {
+          email,
+          password
+        },
+        {
+          withCredentials: true // Ensure cookies are sent and handled
+        }
+      )
 
       if (response.status === 200) {
-        const data = response.data
+        const { user } = response.data
 
-        // Almacenar token y nombre del usuario en localStorage
-        localStorage.setItem('token', data.token)
-        localStorage.setItem('userName', data.user.name) // Asegúrate de que el nombre esté correctamente guardado
+        // Call the login function from AuthContext to update state
+        login(user)
 
-        login() // Ejecutar función de autenticación global
         Swal.fire({
           icon: 'success',
           title: 'Inicio de sesión exitoso',
           showConfirmButton: false,
           timer: 2000
         })
-        navigate('/products')
+
+        navigate('/products') // Navigate to the products page
       }
     } catch (error) {
       console.error('Error al iniciar sesión:', error)

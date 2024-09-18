@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken'
 
 const loginUser = async (req, res) => {
   const { email, password } = req.body
-
+  console.log('Login datos recibidos:', email, password)
   try {
     const user = await userModel.getUserByEmail(email)
     if (!user) {
@@ -13,7 +13,6 @@ const loginUser = async (req, res) => {
         .json({ message: 'Correo o contraseña incorrectos' })
     }
 
-    // Verificar contraseña
     const validPassword = await bcrypt.compare(password, user.password)
     if (!validPassword) {
       return res
@@ -21,27 +20,24 @@ const loginUser = async (req, res) => {
         .json({ message: 'Correo o contraseña incorrectos' })
     }
 
-    // Generar token JWT
     const token = jwt.sign(
       { id: user.id_user, name: user.name, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: '1h' }
     )
 
-    // Configuración de cookies
+    // Configuración de la cookie
     res.cookie('token', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production', // Solo HTTPS en producción
-      maxAge: 3600000, // 1 hora
-      sameSite: process.env.NODE_ENV === 'production' ? 'Strict' : 'Lax'
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'Strict' : 'Lax',
+      maxAge: 3600000 // 1 hora
     })
 
-    return res
-      .status(200)
-      .json({
-        message: 'Inicio de sesión exitoso',
-        user: { name: user.name, role: user.role }
-      })
+    return res.status(200).json({
+      message: 'Inicio de sesión exitoso',
+      user: { name: user.name, role: user.role }
+    })
   } catch (error) {
     return res.status(500).json({ message: 'Error al iniciar sesión', error })
   }

@@ -15,18 +15,11 @@ const app = express()
 
 dotenv.config()
 
-// Configurar CORS en producción
-const allowedOrigins =
-  process.env.NODE_ENV === 'production'
-    ? ['https://frontend-q785.onrender.com'] // Permitir solo tu dominio en producción
-    : ['http://localhost:5173'] // Permitir localhost en desarrollo
-
-app.use(
-  cors({
-    origin: allowedOrigins,
-    credentials: true // Permitir cookies
-  })
-)
+// CORS configuration
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true // Important to allow cookies to be sent
+}))
 
 app.use(morgan('dev'))
 app.use(cookieParser())

@@ -14,7 +14,9 @@ import {
 } from 'react-icons/fa'
 
 const Navigation = () => {
-  const { isAuthenticated, user, logout } = useContext(AuthContext) // Obtener estado de autenticación y usuario del AuthContext
+  const { isAuthenticated, user, logout } = useContext(AuthContext)
+  console.log('Usuario autenticado:', isAuthenticated)
+  console.log('Datos del usuario:', user) // Obtener estado de autenticación y usuario del AuthContext
   const { cartItems } = useCart() // Obtener productos del carrito
 
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0) // Calcular total de productos en el carrito
