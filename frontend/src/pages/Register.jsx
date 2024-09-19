@@ -1,54 +1,25 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { Table, Button, Form, Modal, Pagination } from 'react-bootstrap'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { AuthContext } from '../context/AuthContext' // Para verificar si el usuario es administrador
+import { Button, Container, Form, InputGroup, Row } from 'react-bootstrap'
+import { FaUser } from 'react-icons/fa'
+import { MdAlternateEmail } from 'react-icons/md'
+import { RiLockPasswordFill } from 'react-icons/ri'
 import Swal from 'sweetalert2'
-
 const urlBaseServer = import.meta.env.VITE_URL_BASE_SERVER
 
-const UserCrud = () => {
-  const { user } = useContext(AuthContext) // Obtener el usuario actual del contexto
-  const [users, setUsers] = useState([])
-  const [showModal, setShowModal] = useState(false)
-  const [newUser, setNewUser] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
-  })
-  const [currentPage, setCurrentPage] = useState(1)
-  const usersPerPage = 5
+const Register = () => {
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const navigate = useNavigate()
 
-  // Verificar si el usuario es administrador
-  useEffect(() => {
-    if (user && user.role !== true) {
-      Swal.fire(
-        'Acceso denegado',
-        'Solo los administradores pueden gestionar usuarios',
-        'error'
-      )
-    }
-  }, [user])
+  const handleSubmit = async (e) => {
+    e.preventDefault()
 
-  // Obtener los usuarios desde la API
-  const fetchUsers = async () => {
-    try {
-      const response = await axios.get(`${urlBaseServer}/api/users`, {
-        withCredentials: true // Enviar cookies con la solicitud
-      })
-      setUsers(response.data)
-    } catch (error) {
-      console.error('Error al obtener los usuarios:', error)
-    }
-  }
-
-  useEffect(() => {
-    fetchUsers()
-  }, [])
-
-  // Validar que las contraseñas coinciden y guardar el usuario
-  const saveUser = async () => {
-    if (newUser.password !== newUser.confirmPassword) {
+    // Verificar que las contraseñas coincidan
+    if (password !== confirmPassword) {
       Swal.fire({
         icon: 'error',
         title: 'Error en el registro',
@@ -58,177 +29,116 @@ const UserCrud = () => {
     }
 
     try {
-      const response = await axios.post(
-        `${urlBaseServer}/api/users/register`,
-        {
-          name: newUser.name,
-          email: newUser.email,
-          password: newUser.password
-        },
-        {
-          withCredentials: true
-        }
-      )
+      // Enviar solicitud POST al backend para registrar al usuario usando axios
+      const response = await axios.post(`${urlBaseServer}/api/users/register`, {
+        name,
+        email,
+        password
+      })
 
       if (response.status === 201) {
         Swal.fire({
           icon: 'success',
-          title: 'Usuario añadido',
-          text: 'El usuario fue añadido correctamente',
+          title: 'Registro exitoso',
           showConfirmButton: false,
           timer: 2000
         })
-
-        setUsers([...users, response.data]) // Añadir el nuevo usuario a la lista
-        setShowModal(false) // Cerrar el modal
-        setNewUser({ name: '', email: '', password: '', confirmPassword: '' }) // Limpiar el formulario
+        navigate('/login') // Redirigir a la página de login después de un registro exitoso
       }
     } catch (error) {
-      console.error('Error al guardar el usuario:', error)
-      Swal.fire('Error', 'No se pudo guardar el usuario', 'error')
-    }
-  }
-
-  // Eliminar un usuario de la API
-  const deleteUser = async id => {
-    try {
-      await axios.delete(`${urlBaseServer}/api/users/${id}`, {
-        withCredentials: true
-      })
-
-      setUsers(users.filter(user => user.id !== id)) // Eliminar el usuario del estado local
-
+      console.error('Error al registrar usuario:', error)
       Swal.fire({
-        icon: 'success',
-        title: 'Usuario eliminado',
-        text: 'El usuario fue eliminado correctamente',
-        showConfirmButton: false,
-        timer: 2000
+        icon: 'error',
+        title: 'Error en el registro',
+        text: 'Hubo un problema al registrar el usuario, por favor intenta nuevamente'
       })
-    } catch (error) {
-      console.error('Error al eliminar el usuario:', error)
-      Swal.fire('Error', 'No se pudo eliminar el usuario', 'error')
     }
-  }
-
-  // Paginación
-  const indexOfLastUser = currentPage * usersPerPage
-  const indexOfFirstUser = indexOfLastUser - usersPerPage
-  const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser)
-  const totalPages = Math.ceil(users.length / usersPerPage)
-
-  const handlePageChange = pageNumber => {
-    setCurrentPage(pageNumber)
   }
 
   return (
-    <div>
-      <h3>Gestión de Usuarios</h3>
-      {/* Mostrar el botón solo si el usuario es administrador */}
-      {user?.role === true && (
-        <Button variant='primary' onClick={() => setShowModal(true)}>
-          Añadir Usuario
-        </Button>
-      )}
+    <Container className='my-5'>
+      <Row>
+        <Form
+          onSubmit={handleSubmit}
+          className='col-10 col-sm-8 col-md-6 col-lg-4 m-auto border border-light-subtle rounded-5 p-5 mt-5'
+        >
+          <legend className='mb-3 text-center'>
+            ¿Aún no te has registrado?
+          </legend>
 
-      {/* Tabla de usuarios paginada */}
-      <Table striped bordered hover className='mt-3'>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Email</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentUsers.map(user => (
-            <tr key={user.id}>
-              <td>{user.id}</td>
-              <td>{user.name}</td>
-              <td>{user.email}</td>
-              <td>
-                <Button variant='danger' onClick={() => deleteUser(user.id)}>
-                  Eliminar
-                </Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-
-      {/* Paginación */}
-      <Pagination className='justify-content-center'>
-        {Array.from({ length: totalPages }, (_, index) => (
-          <Pagination.Item
-            key={index + 1}
-            active={index + 1 === currentPage}
-            onClick={() => handlePageChange(index + 1)}
-          >
-            {index + 1}
-          </Pagination.Item>
-        ))}
-      </Pagination>
-
-      {/* Modal para añadir usuario */}
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Añadir Usuario</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group controlId='formName'>
-              <Form.Label>Nombre</Form.Label>
+          <Form.Group className='mt-2'>
+            <Form.Label>Ingresa tu nombre de usuario</Form.Label>
+            <InputGroup>
+              <InputGroup.Text>
+                <FaUser />
+              </InputGroup.Text>
               <Form.Control
                 type='text'
-                placeholder='Ingresa el nombre'
-                value={newUser.name}
-                onChange={e => setNewUser({ ...newUser, name: e.target.value })}
+                onChange={e => setName(e.target.value)}
+                value={name}
+                required
               />
-            </Form.Group>
-            <Form.Group controlId='formEmail' className='mt-3'>
-              <Form.Label>Email</Form.Label>
+            </InputGroup>
+          </Form.Group>
+
+          <Form.Group className='mt-2'>
+            <Form.Label>Ingresa tu email</Form.Label>
+            <InputGroup>
+              <InputGroup.Text>
+                <MdAlternateEmail />
+              </InputGroup.Text>
               <Form.Control
                 type='email'
-                placeholder='Ingresa el email'
-                value={newUser.email}
-                onChange={e =>
-                  setNewUser({ ...newUser, email: e.target.value })}
+                onChange={e => setEmail(e.target.value)}
+                value={email}
+                required
               />
-            </Form.Group>
-            <Form.Group controlId='formPassword' className='mt-3'>
-              <Form.Label>Contraseña</Form.Label>
+            </InputGroup>
+          </Form.Group>
+
+          <Form.Group className='mt-2'>
+            <Form.Label>Crea una contraseña</Form.Label>
+            <InputGroup>
+              <InputGroup.Text>
+                <RiLockPasswordFill />
+              </InputGroup.Text>
               <Form.Control
                 type='password'
-                placeholder='Ingresa la contraseña'
-                value={newUser.password}
-                onChange={e =>
-                  setNewUser({ ...newUser, password: e.target.value })}
+                name='password'
+                autoComplete='off'
+                onChange={e => setPassword(e.target.value)}
+                value={password}
+                required
               />
-            </Form.Group>
-            <Form.Group controlId='formConfirmPassword' className='mt-3'>
-              <Form.Label>Confirmar Contraseña</Form.Label>
+            </InputGroup>
+          </Form.Group>
+
+          <Form.Group className='mt-2'>
+            <Form.Label>Repite la contraseña</Form.Label>
+            <InputGroup>
+              <InputGroup.Text>
+                <RiLockPasswordFill />
+              </InputGroup.Text>
               <Form.Control
                 type='password'
-                placeholder='Confirma la contraseña'
-                value={newUser.confirmPassword}
-                onChange={e =>
-                  setNewUser({ ...newUser, confirmPassword: e.target.value })}
+                name='confirm'
+                autoComplete='off'
+                onChange={e => setConfirmPassword(e.target.value)}
+                value={confirmPassword}
+                required
               />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant='secondary' onClick={() => setShowModal(false)}>
-            Cancelar
-          </Button>
-          <Button variant='primary' onClick={saveUser}>
-            Guardar
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </div>
+            </InputGroup>
+          </Form.Group>
+
+          <div className='text-center'>
+            <Button className='mt-3 px-5' type='submit' variant='dark'>
+              Enviar
+            </Button>
+          </div>
+        </Form>
+      </Row>
+    </Container>
   )
 }
 
-export default UserCrud
+export default Register
