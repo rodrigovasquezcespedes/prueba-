@@ -13,6 +13,9 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Detail from './pages/Detail'
 
+import AdminProtectedRoute from './components/AdminProtectedRoute'
+import ProtectedRoute from './components/ProtectedRoutes' // Import the ProtectedRoute
+
 const App = () => {
   return (
     <HashRouter>
@@ -24,10 +27,24 @@ const App = () => {
               <Route path='/' element={<Home />} />
               <Route path='/products' element={<Products />} />
               <Route path='/detail/:id' element={<Detail />} />
-              <Route path='/profile' element={<Profile />} />
               <Route path='/favorites' element={<Favorites />} />
               <Route path='/shoppingcart' element={<ShoppingCart />} />
-              <Route path='/dashboard' element={<Dashboard />} />
+              <Route
+                path='/profile'
+                element={
+                  <ProtectedRoute>
+                    <Profile />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path='/dashboard'
+                element={
+                  <AdminProtectedRoute>
+                    <Dashboard />
+                  </AdminProtectedRoute>
+                }
+              />
               <Route path='/login' element={<Login />} />
               <Route path='/register' element={<Register />} />
             </Routes>

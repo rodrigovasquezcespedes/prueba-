@@ -1,22 +1,41 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Table, Button, Form, Modal, Pagination } from 'react-bootstrap'
 import axios from 'axios'
+import { AuthContext } from '../context/AuthContext' // Para verificar si el usuario es administrador
+import Swal from 'sweetalert2'
 
 const urlBaseServer = import.meta.env.VITE_URL_BASE_SERVER
 
 const UserCrud = () => {
+  const { user } = useContext(AuthContext) // Obtener el usuario actual del contexto
   const [users, setUsers] = useState([])
   const [showModal, setShowModal] = useState(false)
-  const [newUser, setNewUser] = useState({ name: '', email: '', password: '' })
+  const [newUser, setNewUser] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  })
   const [currentPage, setCurrentPage] = useState(1)
   const usersPerPage = 5
+
+  // Verificar si el usuario es administrador
+  useEffect(() => {
+    if (user && user.role !== true) {
+      Swal.fire(
+        'Acceso denegado',
+        'Solo los administradores pueden gestionar usuarios',
+        'error'
+      )
+    }
+  }, [user])
 
   // Obtener los usuarios desde la API
   const fetchUsers = async () => {
     try {
       const response = await axios.get(`${urlBaseServer}/api/users`, {
         headers: {
-          Authorization: `Bearer ${sessionStorage.getItem('token')}`
+          Authorization: `Bearer ${sessionStorage.getItem('token')}` // Enviar token de autorización
         }
       })
       setUsers(response.data)
@@ -31,16 +50,34 @@ const UserCrud = () => {
 
   // Agregar o actualizar un usuario mediante la API
   const saveUser = async () => {
+    // Validar que las contraseñas coinciden
+    if (newUser.password !== newUser.confirmPassword) {
+      Swal.fire('Error', 'Las contraseñas no coinciden', 'error')
+      return
+    }
+
     try {
       const response = await axios.post(
         `${urlBaseServer}/api/users/register`,
-        newUser
+        newUser,
+        {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem('token')}` // Enviar token de autorización
+          },
+          withCredentials: true
+        }
       )
       setUsers([...users, response.data])
       setShowModal(false)
-      setNewUser({ name: '', email: '', password: '' })
+      setNewUser({ name: '', email: '', password: '', confirmPassword: '' })
+      Swal.fire(
+        'Usuario añadido',
+        'El usuario fue añadido correctamente',
+        'success'
+      )
     } catch (error) {
       console.error('Error al guardar el usuario:', error)
+      Swal.fire('Error', 'No se pudo guardar el usuario', 'error')
     }
   }
 
@@ -49,12 +86,19 @@ const UserCrud = () => {
     try {
       await axios.delete(`${urlBaseServer}/api/users/${id}`, {
         headers: {
-          Authorization: `Bearer ${sessionStorage.getItem('token')}`
-        }
+          Authorization: `Bearer ${sessionStorage.getItem('token')}` // Enviar token de autorización
+        },
+        withCredentials: true
       })
       setUsers(users.filter(user => user.id !== id))
+      Swal.fire(
+        'Usuario eliminado',
+        'El usuario fue eliminado correctamente',
+        'success'
+      )
     } catch (error) {
       console.error('Error al eliminar el usuario:', error)
+      Swal.fire('Error', 'No se pudo eliminar el usuario', 'error')
     }
   }
 
@@ -71,9 +115,12 @@ const UserCrud = () => {
   return (
     <div>
       <h3>Gestión de Usuarios</h3>
-      <Button variant='primary' onClick={() => setShowModal(true)}>
-        Añadir Usuario
-      </Button>
+      {/* Mostrar el botón solo si el usuario es administrador */}
+      {user?.role === true && (
+        <Button variant='primary' onClick={() => setShowModal(true)}>
+          Añadir Usuario
+        </Button>
+      )}
 
       {/* Tabla de usuarios paginada */}
       <Table striped bordered hover className='mt-3'>
@@ -149,6 +196,17 @@ const UserCrud = () => {
                 value={newUser.password}
                 onChange={e =>
                   setNewUser({ ...newUser, password: e.target.value })
+                }
+              />
+            </Form.Group>
+            <Form.Group controlId='formConfirmPassword' className='mt-3'>
+              <Form.Label>Confirmar Contraseña</Form.Label>
+              <Form.Control
+                type='password'
+                placeholder='Confirma la contraseña'
+                value={newUser.confirmPassword}
+                onChange={e =>
+                  setNewUser({ ...newUser, confirmPassword: e.target.value })
                 }
               />
             </Form.Group>

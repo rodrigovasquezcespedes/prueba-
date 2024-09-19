@@ -36,7 +36,7 @@ const loginUser = async (req, res) => {
 
     return res.status(200).json({
       message: 'Inicio de sesión exitoso',
-      user: { name: user.name, role: user.role }
+      user: { id_user: user.id_user, name: user.name, role: user.role }
     })
   } catch (error) {
     return res.status(500).json({ message: 'Error al iniciar sesión', error })

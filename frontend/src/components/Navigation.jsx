@@ -1,8 +1,9 @@
 import { useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Navbar, Nav, Container, Badge } from 'react-bootstrap'
 import { AuthContext } from '../context/AuthContext'
 import { useCart } from '../context/CartContext'
+import Swal from 'sweetalert2' // Importar SweetAlert2
 import {
   FaShoppingCart,
   FaUser,
@@ -15,11 +16,39 @@ import {
 
 const Navigation = () => {
   const { isAuthenticated, user, logout } = useContext(AuthContext)
-  console.log('Usuario autenticado:', isAuthenticated)
-  console.log('Datos del usuario:', user) // Obtener estado de autenticación y usuario del AuthContext
+  const navigate = useNavigate() // Para redireccionar después del logout
   const { cartItems } = useCart() // Obtener productos del carrito
 
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0) // Calcular total de productos en el carrito
+
+  const handleLogout = async () => {
+    try {
+      await logout() // Llamar la función de logout del contexto
+
+      // Mostrar la alerta de SweetAlert2
+      Swal.fire({
+        icon: 'success',
+        title: 'Sesión cerrada',
+        text: 'Has cerrado sesión correctamente.',
+        timer: 2000,
+        showConfirmButton: false
+      })
+
+      // Redirigir al usuario a la página de productos después de cerrar sesión
+      setTimeout(() => {
+        navigate('/products')
+      }, 2000) // Esperar 2 segundos antes de redirigir
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error)
+
+      // Mostrar una alerta de error si falla el logout
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Hubo un problema al cerrar sesión. Inténtalo de nuevo.'
+      })
+    }
+  }
 
   return (
     <Navbar bg='dark' variant='dark' expand='lg' className='sticky-top py-1'>
@@ -36,6 +65,13 @@ const Navigation = () => {
             </Nav.Link>
           </Nav>
           <Nav className='ms-auto align-items-center'>
+            {/* Mostrar nombre del usuario si está autenticado */}
+            {isAuthenticated && user && (
+              <Nav.Item className='text-light me-3'>
+                {/* Mostrar el nombre del usuario */}
+                Bienvenido, {user.name}!
+              </Nav.Item>
+            )}
             {/* Carrito de compras */}
             <Nav.Link
               as={Link}
@@ -54,9 +90,6 @@ const Navigation = () => {
             {/* Mostrar contenido solo si está autenticado */}
             {isAuthenticated && user && (
               <>
-                <Nav.Item className='text-light me-3'>
-                  Bienvenido, {user.name}!
-                </Nav.Item>
                 <Nav.Link as={Link} to='/profile'>
                   <FaUser className='me-2' />
                   Perfil
@@ -67,7 +100,7 @@ const Navigation = () => {
                     Dashboard
                   </Nav.Link>
                 )}
-                <Nav.Link onClick={logout}>
+                <Nav.Link onClick={handleLogout}>
                   <FaSignOutAlt className='me-2' />
                   Cerrar sesión
                 </Nav.Link>

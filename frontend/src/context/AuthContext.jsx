@@ -1,4 +1,5 @@
 import { createContext, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 export const AuthContext = createContext()
@@ -6,27 +7,31 @@ export const AuthContext = createContext()
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [user, setUser] = useState(null)
+  const navigate = useNavigate()
 
   // Function to handle login and update context
   const login = userData => {
+    console.log('User data al iniciar sesión:', userData)
     setUser(userData)
     setIsAuthenticated(true)
   }
 
   const logout = async () => {
     try {
-      await axios.post(
-        'http://localhost:3000/api/users/logout',
-        {},
-        { withCredentials: true }
-      )
+      await axios.post('http://localhost:3000/api/users/logout', null, {
+        withCredentials: true
+      })
+
+      // Clear the authentication state
       setIsAuthenticated(false)
       setUser(null)
+
+      // Redirect to products page after logout
+      navigate('/products')
     } catch (error) {
       console.error('Error al cerrar sesión:', error)
     }
   }
-
   return (
     <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
       {children}
