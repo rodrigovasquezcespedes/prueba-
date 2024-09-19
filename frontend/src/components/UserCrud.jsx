@@ -34,9 +34,7 @@ const UserCrud = () => {
   const fetchUsers = async () => {
     try {
       const response = await axios.get(`${urlBaseServer}/api/users`, {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem('token')}` // Enviar token de autorización
-        }
+        withCredentials: true // Se asegura de enviar la cookie del token
       })
       setUsers(response.data)
     } catch (error) {
@@ -52,29 +50,40 @@ const UserCrud = () => {
   const saveUser = async () => {
     // Validar que las contraseñas coinciden
     if (newUser.password !== newUser.confirmPassword) {
-      Swal.fire('Error', 'Las contraseñas no coinciden', 'error')
+      Swal.fire({
+        icon: 'error',
+        title: 'Error en el registro',
+        text: 'Las contraseñas no coinciden'
+      })
       return
     }
 
     try {
       const response = await axios.post(
         `${urlBaseServer}/api/users/register`,
-        newUser,
         {
-          headers: {
-            Authorization: `Bearer ${sessionStorage.getItem('token')}` // Enviar token de autorización
-          },
-          withCredentials: true
+          name: newUser.name,
+          email: newUser.email,
+          password: newUser.password
+        },
+        {
+          withCredentials: true // Asegurarse de enviar la cookie del token
         }
       )
-      setUsers([...users, response.data])
-      setShowModal(false)
-      setNewUser({ name: '', email: '', password: '', confirmPassword: '' })
-      Swal.fire(
-        'Usuario añadido',
-        'El usuario fue añadido correctamente',
-        'success'
-      )
+
+      if (response.status === 201) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Usuario añadido',
+          text: 'El usuario fue añadido correctamente',
+          showConfirmButton: false,
+          timer: 2000
+        })
+
+        setUsers([...users, response.data]) // Añadir el nuevo usuario a la lista
+        setShowModal(false) // Cerrar el modal
+        setNewUser({ name: '', email: '', password: '', confirmPassword: '' }) // Limpiar el formulario
+      }
     } catch (error) {
       console.error('Error al guardar el usuario:', error)
       Swal.fire('Error', 'No se pudo guardar el usuario', 'error')
@@ -85,17 +94,18 @@ const UserCrud = () => {
   const deleteUser = async id => {
     try {
       await axios.delete(`${urlBaseServer}/api/users/${id}`, {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem('token')}` // Enviar token de autorización
-        },
-        withCredentials: true
+        withCredentials: true // Enviar cookie del token
       })
-      setUsers(users.filter(user => user.id !== id))
-      Swal.fire(
-        'Usuario eliminado',
-        'El usuario fue eliminado correctamente',
-        'success'
-      )
+
+      setUsers(users.filter(user => user.id !== id)) // Eliminar el usuario del estado local
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Usuario eliminado',
+        text: 'El usuario fue eliminado correctamente',
+        showConfirmButton: false,
+        timer: 2000
+      })
     } catch (error) {
       console.error('Error al eliminar el usuario:', error)
       Swal.fire('Error', 'No se pudo eliminar el usuario', 'error')
@@ -184,8 +194,7 @@ const UserCrud = () => {
                 placeholder='Ingresa el email'
                 value={newUser.email}
                 onChange={e =>
-                  setNewUser({ ...newUser, email: e.target.value })
-                }
+                  setNewUser({ ...newUser, email: e.target.value })}
               />
             </Form.Group>
             <Form.Group controlId='formPassword' className='mt-3'>
@@ -195,8 +204,7 @@ const UserCrud = () => {
                 placeholder='Ingresa la contraseña'
                 value={newUser.password}
                 onChange={e =>
-                  setNewUser({ ...newUser, password: e.target.value })
-                }
+                  setNewUser({ ...newUser, password: e.target.value })}
               />
             </Form.Group>
             <Form.Group controlId='formConfirmPassword' className='mt-3'>
@@ -206,8 +214,7 @@ const UserCrud = () => {
                 placeholder='Confirma la contraseña'
                 value={newUser.confirmPassword}
                 onChange={e =>
-                  setNewUser({ ...newUser, confirmPassword: e.target.value })
-                }
+                  setNewUser({ ...newUser, confirmPassword: e.target.value })}
               />
             </Form.Group>
           </Form>
