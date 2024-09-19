@@ -1,4 +1,4 @@
-INSERT INTO categories (category_name) VALUES ('Notebooks'), ('Celulares'),('Audio'),('Camara'),('Television');
+INSERT INTO categories (category_name) VALUES ('Notebooks'), ('Celulares'),('Audio'),('Television'),('Camara');
 
 
 

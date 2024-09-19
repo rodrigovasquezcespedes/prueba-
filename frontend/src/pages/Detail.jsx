@@ -75,17 +75,22 @@ const Detail = () => {
                 <Card.Title>{productoDetail.name}</Card.Title>
                 <Card.Text>Marca: {productoDetail.brand}</Card.Text>
                 <Card.Text>Descripción: {productoDetail.description}</Card.Text>
-                <Card.Text>
+                <Card.Text className='fs-4'>
                   Precio: ${productoDetail.price.toLocaleString()}
                 </Card.Text>
-                <ul>
-                  {productoDetail.specifications &&
-                    productoDetail.specifications.map((spec, index) => (
-                      <li key={index}>
-                        <strong>{spec.name}:</strong> {spec.value}
-                      </li>
-                    ))}
-                </ul>
+                {/* Mostrar las especificaciones si existen */}
+                {productoDetail.specifications && productoDetail.specifications.length > 0 && (
+                  <div>
+                    <h5>Especificaciones:</h5>
+                    <ul>
+                      {productoDetail.specifications.map((spec, index) => (
+                        <li key={index}>
+                          {spec.spec_name}: {spec.spec_value}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
                 <div className='d-flex justify-content-center gap-2'>
                   <Button onClick={() => navigate('/products')} variant='dark'>
                     Regresar

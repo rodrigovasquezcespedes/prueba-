@@ -13,11 +13,14 @@ const Report = () => {
   // Obtener los datos del reporte desde la API
   const fetchReportData = async () => {
     try {
-      const response = await axios.get(`${urlBaseServer}/api/dashboard/report`, {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem('token')}`
+      const response = await axios.get(
+        `${urlBaseServer}/api/dashboard/report`,
+        {
+          headers: {
+            withCredentials: true // Ensure cookies are sent and handled
+          }
         }
-      })
+      )
       setReportData(response.data)
       setLoading(false)
     } catch (error) {
@@ -30,15 +33,18 @@ const Report = () => {
     fetchReportData()
   }, [])
 
-  // Función para generar el PDF
   const generatePDF = () => {
     const doc = new jsPDF()
+
+    // Título del reporte
     doc.setFontSize(18)
     doc.text('Reporte del Dashboard', 14, 22)
+
+    // Fecha
     doc.setFontSize(12)
     doc.text(`Fecha: ${new Date().toLocaleDateString()}`, 14, 30)
 
-    // Crear tabla con los datos
+    // Tabla principal
     doc.autoTable({
       startY: 40,
       head: [['Descripción', 'Valor']],
@@ -46,22 +52,44 @@ const Report = () => {
         ['Total de Usuarios', reportData?.totalUsers || 0],
         ['Total de Productos', reportData?.totalProducts || 0],
         ['Total de Ventas', reportData?.totalSales || 0],
-        ['Total de Ingresos', `$${reportData?.totalRevenue?.toLocaleString() || '0'}`],
-        ['Usuarios Registrados Recientemente', reportData?.recentUsers?.length || 0]
+        [
+          'Total de Ingresos',
+          `$${reportData?.totalRevenue?.toLocaleString() || '0'}`
+        ],
+        [
+          'Usuarios Registrados Recientemente',
+          reportData?.recentUsers?.length || 0
+        ]
       ]
     })
 
-    // Añadir tabla de productos más guardados como favoritos
+    // Verificar si hay productos favoritos
     if (reportData?.topFavoriteProducts?.length > 0) {
-      doc.text('Productos más guardados como favoritos:', 14, doc.autoTable.previous.finalY + 10)
+      doc.text(
+        'Productos más guardados como favoritos:',
+        14,
+        doc.autoTable.previous.finalY + 10
+      )
+
+      // Añadir tabla de productos favoritos
       doc.autoTable({
         startY: doc.autoTable.previous.finalY + 15,
-        head: [['Producto', 'Veces Favorito']],
-        body: reportData.topFavoriteProducts.map(product => [product.name, product.favoriteCount])
+        head: [['Producto']],
+        body: reportData.topFavoriteProducts.map(product => [
+          product.name,
+          product.favoriteCount ? product.favoriteCount : 'No disponible'
+        ])
       })
+    } else {
+      doc.text(
+        'No hay productos favoritos disponibles.',
+        14,
+        doc.autoTable.previous.finalY + 10
+      )
     }
 
-    doc.save('reporte_dashboard.pdf') // Descargar el archivo PDF
+    // Guardar el PDF
+    doc.save('reporte_dashboard.pdf')
   }
 
   if (loading) {
@@ -129,18 +157,22 @@ const Report = () => {
         </Col>
       </Row>
 
-      {/* Mostrar los productos más guardados como favoritos */}
+      {/* Mostrar los productos más guardados como favoritos en un Card */}
       {reportData?.topFavoriteProducts?.length > 0 && (
         <Row className='gy-4 mt-4'>
           <Col>
-            <h3>Productos más guardados como favoritos</h3>
-            <ul>
-              {reportData.topFavoriteProducts.map(product => (
-                <li key={product.id_product}>
-                  {product.name} - Guardado {product.favoriteCount} veces
-                </li>
-              ))}
-            </ul>
+            <Card>
+              <Card.Body>
+                <Card.Title>Productos más guardados como favoritos</Card.Title>
+                <ul>
+                  {reportData.topFavoriteProducts.map(product => (
+                    <li key={product.id_product}>
+                      {product.name}
+                    </li>
+                  ))}
+                </ul>
+              </Card.Body>
+            </Card>
           </Col>
         </Row>
       )}
