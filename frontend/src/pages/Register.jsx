@@ -34,9 +34,6 @@ const UserCrud = () => {
   const fetchUsers = async () => {
     try {
       const response = await axios.get(`${urlBaseServer}/api/users`, {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem('token')}` // Token de sesión almacenado
-        },
         withCredentials: true // Enviar cookies con la solicitud
       })
       setUsers(response.data)
@@ -69,9 +66,6 @@ const UserCrud = () => {
           password: newUser.password
         },
         {
-          headers: {
-            Authorization: `Bearer ${sessionStorage.getItem('token')}`
-          },
           withCredentials: true
         }
       )
@@ -99,9 +93,6 @@ const UserCrud = () => {
   const deleteUser = async id => {
     try {
       await axios.delete(`${urlBaseServer}/api/users/${id}`, {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem('token')}`
-        },
         withCredentials: true
       })
 
@@ -202,8 +193,7 @@ const UserCrud = () => {
                 placeholder='Ingresa el email'
                 value={newUser.email}
                 onChange={e =>
-                  setNewUser({ ...newUser, email: e.target.value })
-                }
+                  setNewUser({ ...newUser, email: e.target.value })}
               />
             </Form.Group>
             <Form.Group controlId='formPassword' className='mt-3'>
@@ -213,8 +203,7 @@ const UserCrud = () => {
                 placeholder='Ingresa la contraseña'
                 value={newUser.password}
                 onChange={e =>
-                  setNewUser({ ...newUser, password: e.target.value })
-                }
+                  setNewUser({ ...newUser, password: e.target.value })}
               />
             </Form.Group>
             <Form.Group controlId='formConfirmPassword' className='mt-3'>
@@ -224,8 +213,7 @@ const UserCrud = () => {
                 placeholder='Confirma la contraseña'
                 value={newUser.confirmPassword}
                 onChange={e =>
-                  setNewUser({ ...newUser, confirmPassword: e.target.value })
-                }
+                  setNewUser({ ...newUser, confirmPassword: e.target.value })}
               />
             </Form.Group>
           </Form>
