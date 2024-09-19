@@ -1,9 +1,9 @@
 import pool from '../config/db.js'
 
-const createOrder = async (id_user, total_amount, status) => {
+const createOrder = async (idUser, totalAmount, status) => {
   const query =
     'INSERT INTO orders (id_user, total_amount, status) VALUES ($1, $2, $3) RETURNING *'
-  const values = [id_user, total_amount, status]
+  const values = [idUser, totalAmount, status]
   const result = await pool.query(query, values)
   return result.rows[0]
 }

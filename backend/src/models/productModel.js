@@ -78,9 +78,7 @@ const updateProduct = async (
     [name, description, price, stock, imageUrl, brand, idCategory, id]
   )
 
-  await pool.query('DELETE FROM product_specifications WHERE id_product = $1', [
-    id
-  ])
+  await pool.query('DELETE FROM product_specifications WHERE id_product = $1', [id])
 
   const specQuery =
     'INSERT INTO product_specifications (id_product, spec_name, spec_value) VALUES ($1, $2, $3)'
