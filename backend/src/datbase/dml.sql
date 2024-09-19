@@ -1,8 +1,4 @@
-INSERT INTO categories (category_name) VALUES ('Notebooks');
-INSERT INTO categories (category_name) VALUES ('Celulares');
-INSERT INTO categories (category_name) VALUES ('Audio');
-INSERT INTO categories (category_name) VALUES ('Camara');
-INSERT INTO categories (category_name) VALUES ('Television');
+INSERT INTO categories (category_name) VALUES ('Notebooks'), ('Celulares'),('Audio'),('Camara'),('Television');
 
 
 
