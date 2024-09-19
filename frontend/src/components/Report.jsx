@@ -3,6 +3,7 @@ import { Card, Row, Col, Container, Spinner, Button } from 'react-bootstrap'
 import axios from 'axios'
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
+
 const urlBaseServer = import.meta.env.VITE_URL_BASE_SERVER
 
 const Report = () => {
@@ -12,13 +13,11 @@ const Report = () => {
   // Obtener los datos del reporte desde la API
   const fetchReportData = async () => {
     try {
-      const response = await axios.get(`${urlBaseServer}/api/dashboard/report`,
-        {
-          headers: {
-            Authorization: `Bearer ${sessionStorage.getItem('token')}`
-          }
+      const response = await axios.get(`${urlBaseServer}/api/dashboard/report`, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`
         }
-      )
+      })
       setReportData(response.data)
       setLoading(false)
     } catch (error) {
@@ -47,16 +46,20 @@ const Report = () => {
         ['Total de Usuarios', reportData?.totalUsers || 0],
         ['Total de Productos', reportData?.totalProducts || 0],
         ['Total de Ventas', reportData?.totalSales || 0],
-        [
-          'Total de Ingresos',
-          `$${reportData?.totalRevenue?.toLocaleString() || '0'}`
-        ],
-        [
-          'Usuarios Registrados Recientemente',
-          reportData?.recentUsers?.length || 0
-        ]
+        ['Total de Ingresos', `$${reportData?.totalRevenue?.toLocaleString() || '0'}`],
+        ['Usuarios Registrados Recientemente', reportData?.recentUsers?.length || 0]
       ]
     })
+
+    // Añadir tabla de productos más guardados como favoritos
+    if (reportData?.topFavoriteProducts?.length > 0) {
+      doc.text('Productos más guardados como favoritos:', 14, doc.autoTable.previous.finalY + 10)
+      doc.autoTable({
+        startY: doc.autoTable.previous.finalY + 15,
+        head: [['Producto', 'Veces Favorito']],
+        body: reportData.topFavoriteProducts.map(product => [product.name, product.favoriteCount])
+      })
+    }
 
     doc.save('reporte_dashboard.pdf') // Descargar el archivo PDF
   }
@@ -125,6 +128,22 @@ const Report = () => {
           </Card>
         </Col>
       </Row>
+
+      {/* Mostrar los productos más guardados como favoritos */}
+      {reportData?.topFavoriteProducts?.length > 0 && (
+        <Row className='gy-4 mt-4'>
+          <Col>
+            <h3>Productos más guardados como favoritos</h3>
+            <ul>
+              {reportData.topFavoriteProducts.map(product => (
+                <li key={product.id_product}>
+                  {product.name} - Guardado {product.favoriteCount} veces
+                </li>
+              ))}
+            </ul>
+          </Col>
+        </Row>
+      )}
     </Container>
   )
 }

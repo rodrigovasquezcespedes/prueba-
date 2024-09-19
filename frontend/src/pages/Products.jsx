@@ -1,53 +1,43 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { Container, Row, Col, Pagination, Button } from 'react-bootstrap'
 import axios from 'axios'
 import { FaArrowUp, FaArrowDown } from 'react-icons/fa'
 import ProductCard from '../components/ProductCard'
+
 const urlBaseServer = import.meta.env.VITE_URL_BASE_SERVER
 
 const Products = () => {
   const [productos, setProductos] = useState([])
   const [categorias, setCategorias] = useState([])
-  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState('') // Ahora seleccionamos por id_category
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState('')
   const [marcaSeleccionada, setMarcaSeleccionada] = useState('')
   const [ordenSeleccionado, setOrdenSeleccionado] = useState('recientes')
   const [currentPage, setCurrentPage] = useState(1)
   const productsPerPage = 12
   const [showScrollButton, setShowScrollButton] = useState(false)
 
-  const fetchProductos = async () => {
-    try {
-      const response = await axios.get(`${urlBaseServer}/api/products`)
-      setProductos(response.data)
-    } catch (error) {
-      console.error('Error fetching products:', error)
-    }
-  }
-
-  // Obtener las categorías desde la API
-  const fetchCategorias = async () => {
-    try {
-      const response = await axios.get(`${urlBaseServer}/api/categories`)
-      setCategorias(response.data) // Guardar las categorías en el estado
-    } catch (error) {
-      console.error('Error fetching categories:', error)
-    }
-  }
-
   useEffect(() => {
-    // Cargar productos y categorías al iniciar
-    fetchProductos()
-    fetchCategorias()
+    // Obtener los productos y categorías cuando el componente se monta
+    const fetchProductosYCategorias = async () => {
+      try {
+        const [productosResponse, categoriasResponse] = await Promise.all([
+          axios.get(`${urlBaseServer}/api/products`),
+          axios.get(`${urlBaseServer}/api/categories`)
+        ])
+        setProductos(productosResponse.data)
+        setCategorias(categoriasResponse.data)
+      } catch (error) {
+        console.error('Error al obtener productos o categorías:', error)
+      }
+    }
+
+    fetchProductosYCategorias()
   }, [])
 
   // Mostrar u ocultar botones de scroll según la posición de la página
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 200) {
-        setShowScrollButton(true)
-      } else {
-        setShowScrollButton(false)
-      }
+      setShowScrollButton(window.scrollY > 200)
     }
 
     window.addEventListener('scroll', handleScroll)
@@ -56,58 +46,56 @@ const Products = () => {
     }
   }, [])
 
-  // Obtener marcas filtradas según la categoría seleccionada
-  const marcasFiltradas =
-    categoriaSeleccionada === ''
-      ? [...new Set(productos.map(producto => producto.brand))]
-      : [
-          ...new Set(
-            productos
-              .filter(
-                producto =>
-                  producto.id_category === Number(categoriaSeleccionada)
-              ) // Filtrar por id_category
-              .map(producto => producto.brand)
-          )
-        ]
+  // Obtener las marcas filtradas utilizando `useMemo` para evitar recálculo en cada render
+  const marcasFiltradas = useMemo(() => {
+    const marcas = productos
+      .filter(
+        producto =>
+          !categoriaSeleccionada ||
+          producto.id_category === Number(categoriaSeleccionada)
+      )
+      .map(producto => producto.brand)
+    return [...new Set(marcas)] // Eliminar duplicados
+  }, [productos, categoriaSeleccionada])
 
-  // Filtrar productos por categoría (id_category) y marca seleccionadas
-  const productosFiltrados = productos.filter(producto => {
-    const coincideCategoria =
-      categoriaSeleccionada === '' ||
-      producto.id_category === Number(categoriaSeleccionada) // Comparar id_category
-    const coincideMarca =
-      marcaSeleccionada === '' || producto.brand === marcaSeleccionada
+  // Filtrar y ordenar los productos según categoría, marca, y orden seleccionado
+  const productosFiltradosYOrdenados = useMemo(() => {
+    const productosFiltrados = productos.filter(producto => {
+      const coincideCategoria =
+        !categoriaSeleccionada ||
+        producto.id_category === Number(categoriaSeleccionada)
+      const coincideMarca =
+        !marcaSeleccionada || producto.brand === marcaSeleccionada
+      return coincideCategoria && coincideMarca
+    })
 
-    return coincideCategoria && coincideMarca
-  })
-
-  // Ordenar productos, agregando opción para ordenar por recientes
-  const productosOrdenados = productosFiltrados.slice().sort((a, b) => {
-    if (ordenSeleccionado === 'price-asc') return a.price - b.price
-    if (ordenSeleccionado === 'price-desc') return b.price - a.price
-    if (ordenSeleccionado === 'name-asc') return a.name.localeCompare(b.name)
-    if (ordenSeleccionado === 'name-desc') return b.name.localeCompare(a.name)
-    if (ordenSeleccionado === 'recientes')
-      return new Date(b.created_at) - new Date(a.created_at)
-    return 0
-  })
+    return productosFiltrados.slice().sort((a, b) => {
+      if (ordenSeleccionado === 'price-asc') return a.price - b.price
+      if (ordenSeleccionado === 'price-desc') return b.price - a.price
+      if (ordenSeleccionado === 'name-asc') return a.name.localeCompare(b.name)
+      if (ordenSeleccionado === 'name-desc') return b.name.localeCompare(a.name)
+      if (ordenSeleccionado === 'recientes') return new Date(b.created_at) - new Date(a.created_at)
+      return 0
+    })
+  }, [productos, categoriaSeleccionada, marcaSeleccionada, ordenSeleccionado])
 
   // Paginación
   const indexOfLastProduct = currentPage * productsPerPage
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage
-  const currentProducts = productosOrdenados.slice(
+  const currentProducts = productosFiltradosYOrdenados.slice(
     indexOfFirstProduct,
     indexOfLastProduct
   )
-  const totalPages = Math.ceil(productosOrdenados.length / productsPerPage)
+  const totalPages = Math.ceil(
+    productosFiltradosYOrdenados.length / productsPerPage
+  )
 
   const handlePageChange = pageNumber => {
     setCurrentPage(pageNumber)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  // Función para subir o bajar
+  // Funciones para subir o bajar
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
   const scrollToBottom = () =>
     window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
@@ -115,11 +103,10 @@ const Products = () => {
   return (
     <Container className='py-5'>
       {/* Filtros */}
-      {/* Filtros centrados */}
       <Row className='mb-4 d-flex justify-content-center'>
         <Col xs={12} sm={6} md={4} lg={3} className='mb-2'>
           <select
-            className='form-select w-100' // Asegura que el select ocupe el 100% del ancho
+            className='form-select w-100'
             value={categoriaSeleccionada}
             onChange={e => setCategoriaSeleccionada(e.target.value)}
           >
@@ -134,7 +121,7 @@ const Products = () => {
 
         <Col xs={12} sm={6} md={4} lg={3} className='mb-2'>
           <select
-            className='form-select w-100' // Asegura que el select ocupe el 100% del ancho
+            className='form-select w-100'
             value={marcaSeleccionada}
             onChange={e => setMarcaSeleccionada(e.target.value)}
           >
@@ -149,7 +136,7 @@ const Products = () => {
 
         <Col xs={12} sm={6} md={4} lg={3} className='mb-2'>
           <select
-            className='form-select w-100' // Asegura que el select ocupe el 100% del ancho
+            className='form-select w-100'
             value={ordenSeleccionado}
             onChange={e => setOrdenSeleccionado(e.target.value)}
           >
@@ -174,8 +161,6 @@ const Products = () => {
       {/* Paginación */}
       <Row className='d-flex justify-content-center mt-4'>
         <Col xs='auto'>
-          {' '}
-          {/* Asegura que la paginación ocupe solo el espacio necesario */}
           <Pagination>
             {Array.from({ length: totalPages }, (_, index) => (
               <Pagination.Item
