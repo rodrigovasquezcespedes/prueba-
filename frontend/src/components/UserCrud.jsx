@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import { Button } from 'react-bootstrap'
@@ -13,13 +13,23 @@ const UserCrud = () => {
   const [users, setUsers] = useState([])
   const [showModal, setShowModal] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
-  const [newUser, setNewUser] = useState({ name: '', email: '', password: '', confirmPassword: '' })
+  const [newUser, setNewUser] = useState({
+    id: '',
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  })
   const [currentPage, setCurrentPage] = useState(1)
   const usersPerPage = 5
 
   useEffect(() => {
     if (user && user.role !== true) {
-      Swal.fire('Acceso denegado', 'Solo los administradores pueden gestionar usuarios', 'error')
+      Swal.fire(
+        'Acceso denegado',
+        'Solo los administradores pueden gestionar usuarios',
+        'error'
+      )
     } else {
       fetchUsers()
     }
@@ -39,39 +49,75 @@ const UserCrud = () => {
   const openModal = (isEditMode = false, userData = null) => {
     setIsEdit(isEditMode)
     if (isEditMode && userData) {
+      // Si estamos editando, cargar los datos del usuario
       setNewUser({
-        id: userData.id_user,
+        id: userData.id_user, // Asegurarse de que el id se esté pasando correctamente
         name: userData.name,
         email: userData.email,
-        password: '',
+        password: '', // Dejar vacío para no mostrar la contraseña actual
         confirmPassword: ''
       })
     } else {
-      setNewUser({ name: '', email: '', password: '', confirmPassword: '' })
+      // Si estamos añadiendo un nuevo usuario, limpiar el formulario
+      setNewUser({
+        id: '',
+        name: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
+      })
     }
     setShowModal(true)
   }
 
-  const saveUser = async () => {
+  const handleSaveUser = async () => {
     if (newUser.password !== newUser.confirmPassword) {
-      Swal.fire({ icon: 'error', title: 'Error en el registro', text: 'Las contraseñas no coinciden' })
+      Swal.fire({
+        icon: 'error',
+        title: 'Error en el registro',
+        text: 'Las contraseñas no coinciden'
+      })
       return
     }
 
     try {
       if (isEdit) {
-        await axios.put(`${urlBaseServer}/api/users/${newUser.id}`, { ...newUser }, { withCredentials: true })
-        Swal.fire('Usuario actualizado', 'Los datos del usuario fueron actualizados', 'success')
+        // Actualizar usuario
+        await axios.put(
+          `${urlBaseServer}/api/users/${newUser.id}`, {
+            withCredentials: true
+          },
+          {
+            name: newUser.name,
+            email: newUser.email,
+            password: newUser.password
+          }
+        )
+
+        Swal.fire(
+          'Usuario actualizado',
+          'Los datos del usuario fueron actualizados',
+          'success'
+        )
+        fetchUsers() // Refrescar la lista de usuarios después de actualizar
       } else {
-        const response = await axios.post(`${urlBaseServer}/api/users/register`, { ...newUser }, { withCredentials: true })
-        if (response.status === 201) {
-          setUsers([...users, response.data])
-          Swal.fire('Usuario añadido', 'El usuario fue añadido correctamente', 'success')
-        }
+        // Crear usuario
+        const response = await axios.post(
+          `${urlBaseServer}/api/users/register`,
+          { ...newUser },
+          { withCredentials: true }
+        )
+        setUsers([...users, response.data])
+        Swal.fire(
+          'Usuario añadido',
+          'El usuario fue añadido correctamente',
+          'success'
+        )
       }
       setShowModal(false)
       fetchUsers()
     } catch (error) {
+      console.error('Error al guardar el usuario:', error)
       Swal.fire('Error', 'No se pudo guardar el usuario', 'error')
     }
   }
@@ -90,9 +136,15 @@ const UserCrud = () => {
 
     if (confirmation.isConfirmed) {
       try {
-        await axios.delete(`${urlBaseServer}/api/users/${id}`, { withCredentials: true })
+        await axios.delete(`${urlBaseServer}/api/users/${id}`, {
+          withCredentials: true
+        })
         setUsers(users.filter(user => user.id_user !== id))
-        Swal.fire('Usuario eliminado', 'El usuario fue eliminado correctamente', 'success')
+        Swal.fire(
+          'Usuario eliminado',
+          'El usuario fue eliminado correctamente',
+          'success'
+        )
       } catch (error) {
         Swal.fire('Error', 'No se pudo eliminar el usuario', 'error')
       }
@@ -117,11 +169,11 @@ const UserCrud = () => {
       />
       <UserFormModal
         showModal={showModal}
-        onClose={() => setShowModal(false)}
-        isEdit={isEdit}
+        handleClose={() => setShowModal(false)}
         user={newUser}
-        onChange={setNewUser}
-        onSave={saveUser}
+        setUser={setNewUser}
+        handleSaveUser={handleSaveUser}
+        isEdit={isEdit}
       />
     </div>
   )
