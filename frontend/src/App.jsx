@@ -7,7 +7,6 @@ import Home from './pages/Home'
 import Products from './pages/Products'
 import Profile from './pages/Profile'
 import ShoppingCart from './pages/ShoppingCart'
-import Favorites from './pages/Favorites'
 import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
 import Register from './pages/Register'
@@ -27,7 +26,6 @@ const App = () => {
               <Route path='/' element={<Home />} />
               <Route path='/products' element={<Products />} />
               <Route path='/detail/:id' element={<Detail />} />
-              <Route path='/favorites' element={<Favorites />} />
               <Route path='/shoppingcart' element={<ShoppingCart />} />
               <Route
                 path='/profile'

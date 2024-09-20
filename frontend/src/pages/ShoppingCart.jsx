@@ -1,5 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useCart } from '../context/CartContext'
+import { AuthContext } from '../context/AuthContext' // Asegúrate de importar el AuthContext
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom' // Importar useNavigate para redireccionar
 import {
   Button,
   Container,
@@ -9,23 +12,73 @@ import {
   Image,
   Form
 } from 'react-bootstrap'
+import Swal from 'sweetalert2'
+const urlBaseServer = import.meta.env.VITE_URL_BASE_SERVER
 
 const ShoppingCart = () => {
   const { cartItems, addToCart, removeFromCart, clearCart, deleteFromCart } =
     useCart()
+  const { user } = useContext(AuthContext) // Obtener el usuario logueado
+  const navigate = useNavigate() // Definir el hook useNavigate para redireccionar
 
-  // Calcular el precio total de todos los productos en el carrito
-  const totalPrice = cartItems.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0
-  )
+  // Calcular el precio total de todos los productos en el carrito sin usar reduce
+  let totalPrice = 0
+  cartItems.forEach(item => {
+    totalPrice += item.price * item.quantity
+  })
+
+  // Función para manejar el pago
+  const handlePayment = async () => {
+    try {
+      const paymentMethod = 'credit_card'
+
+      // Enviar los detalles del carrito al backend para procesar el pago
+      const response = await axios.post(
+        `${urlBaseServer}/api/orders/pay`,
+        {
+          id_user: user.id_user, // Aquí se envía el ID del usuario logueado
+          items: cartItems, // Los productos en el carrito
+          payment_method: paymentMethod // Método de pago
+        }
+      )
+
+      if (response.status === 201) {
+        Swal.fire({
+          title: 'Pago Exitoso',
+          text: 'Tu pago ha sido procesado con éxito.',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        }).then(() => {
+          clearCart() // Vaciar el carrito si el pago fue exitoso
+          navigate('/products') // Redireccionar a la página de productos
+        })
+      } else {
+        Swal.fire({
+          title: 'Error',
+          text: 'Hubo un problema al procesar el pago.',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        })
+      }
+    } catch (error) {
+      Swal.fire({
+        title: 'Error',
+        text: 'Hubo un error al procesar el pago. Inténtalo de nuevo.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      })
+    }
+  }
 
   return (
     <Container className='my-5'>
       <h2>Tu Carrito de Compras</h2>
-      {cartItems.length === 0 ? (
-        <p>Tu carrito está vacío</p>
-      ) : (
+
+      {/* Si el carrito está vacío */}
+      {cartItems.length === 0 && <p>Tu carrito está vacío</p>}
+
+      {/* Si hay productos en el carrito */}
+      {cartItems.length > 0 && (
         <>
           <ListGroup variant='flush'>
             {cartItems.map(item => (
@@ -98,7 +151,13 @@ const ShoppingCart = () => {
               <Button variant='warning' onClick={clearCart}>
                 Vaciar Carrito
               </Button>
-              <Button variant='success'>Pagar</Button>
+              <Button
+                variant='success'
+                onClick={handlePayment}
+                disabled={cartItems.length === 0} // Desactivar si el carrito está vacío
+              >
+                Pagar
+              </Button>
             </div>
           </div>
         </>

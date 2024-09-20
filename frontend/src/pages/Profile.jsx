@@ -1,34 +1,37 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { AuthContext } from '../context/AuthContext'
 import axios from 'axios'
-import { Container, Form, Button, Nav, Alert, Card } from 'react-bootstrap'
-import Swal from 'sweetalert2'
+import {
+  Container,
+  Nav,
+  Card,
+  Table
+} from 'react-bootstrap'
 
 const urlBaseServer = import.meta.env.VITE_URL_BASE_SERVER
 
 const Profile = () => {
   const { user } = useContext(AuthContext)
-  const [name, setName] = useState(user?.name || '')
-  const [email, setEmail] = useState(user?.email || '')
-  const [role, setRole] = useState(user?.role ? 'Administrador' : 'Usuario')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
   const [activeTab, setActiveTab] = useState('profile')
   const [favorites, setFavorites] = useState([])
-  const [errorMessage, setErrorMessage] = useState('')
+  const [purchases, setPurchases] = useState([])
 
+  // Cargar favoritos o compras dependiendo de la pestaña activa
   useEffect(() => {
     if (activeTab === 'favorites') {
       fetchFavorites()
+    } else if (activeTab === 'profile') {
+      fetchPurchases()
     }
   }, [activeTab])
 
-  // Función para obtener los favoritos y luego obtener los productos
+  // Obtener los favoritos del usuario
   const fetchFavorites = async () => {
     try {
-      const response = await axios.get(`${urlBaseServer}/api/favorites/${user.id_user}`, {
-        withCredentials: true
-      })
+      const response = await axios.get(
+        `${urlBaseServer}/api/favorites/${user.id_user}`,
+        { withCredentials: true }
+      )
       if (response.data && response.data.length > 0) {
         const favoriteProductIds = response.data.map(fav => fav.id_product)
         fetchFavoriteProducts(favoriteProductIds)
@@ -40,14 +43,15 @@ const Profile = () => {
     }
   }
 
-  // Función para obtener los productos favoritos
-  const fetchFavoriteProducts = async (productIds) => {
+  // Obtener los productos favoritos
+  const fetchFavoriteProducts = async productIds => {
     try {
       const products = await Promise.all(
-        productIds.map(async (productId) => {
-          const productResponse = await axios.get(`${urlBaseServer}/api/products/${productId}`, {
-            withCredentials: true
-          })
+        productIds.map(async productId => {
+          const productResponse = await axios.get(
+            `${urlBaseServer}/api/products/${productId}`,
+            { withCredentials: true }
+          )
           return productResponse.data
         })
       )
@@ -57,93 +61,65 @@ const Profile = () => {
     }
   }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-
-    if (password !== confirmPassword) {
-      setErrorMessage('Las contraseñas no coinciden.')
-      return
-    }
-
+  // Obtener las compras del usuario
+  const fetchPurchases = async () => {
     try {
-      const response = await axios.put(
-        `${urlBaseServer}/api/users/profile`,
-        { name, email, password },
+      const response = await axios.get(
+        `${urlBaseServer}/api/users/${user.id_user}/purchases`,
         { withCredentials: true }
       )
-      Swal.fire('Perfil actualizado', response.data.message, 'success')
+      setPurchases(response.data.length > 0 ? response.data : [])
     } catch (error) {
-      Swal.fire('Error', 'Hubo un problema al actualizar el perfil', 'error')
+      console.error('Error al obtener las compras:', error)
     }
   }
 
-  const renderProfileForm = () => (
-    <Form onSubmit={handleSubmit}>
-      <Form.Group>
-        <Form.Label>Nombre</Form.Label>
-        <Form.Control
-          type='text'
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>Email</Form.Label>
-        <Form.Control
-          type='email'
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>Rol</Form.Label>
-        <Form.Control
-          type='text'
-          value={role}
-          readOnly // No editable
-        />
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>Nueva Contraseña (Opcional)</Form.Label>
-        <Form.Control
-          type='password'
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>Confirmar Contraseña</Form.Label>
-        <Form.Control
-          type='password'
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-        />
-      </Form.Group>
-      {errorMessage && (
-        <Alert variant='danger' className='mt-3'>
-          {errorMessage}
-        </Alert>
+  // Renderizar las compras del usuario
+  const renderPurchases = () => (
+    <div>
+      <h3>Mis Compras</h3>
+      {purchases.length > 0 && (
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Producto</th>
+              <th>Cantidad</th>
+              <th>Total</th>
+              <th>Fecha de compra</th>
+            </tr>
+          </thead>
+          <tbody>
+            {purchases.map((purchase, index) => (
+              <tr key={purchase.id_purchase}>
+                <td>{index + 1}</td>
+                <td>{purchase.product_name}</td>
+                <td>{purchase.quantity}</td>
+                <td>${purchase.total_price.toLocaleString()}</td>
+                <td>{new Date(purchase.purchase_date).toLocaleDateString()}</td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
       )}
-      <Button className='mt-3' type='submit' variant='primary'>
-        Actualizar Perfil
-      </Button>
-    </Form>
+      {purchases.length === 0 && <p>No tienes compras registradas.</p>}
+    </div>
   )
 
-  // Función para renderizar los favoritos
+  // Renderizar los favoritos del usuario
   const renderFavorites = () => (
     <div>
       <h3>Favoritos</h3>
-      {favorites.length > 0 ? (
-        <div className="d-flex flex-wrap">
-          {favorites.map((product) => (
+      {favorites.length > 0 && (
+        <div className='d-flex flex-wrap'>
+          {favorites.map(product => (
             <Card
               key={product.id_product}
-              className="m-3"
+              className='m-3'
               style={{ width: '18rem' }}
             >
               <Card.Img
-                variant="top"
+                variant='top'
                 src={product.image_url || 'https://via.placeholder.com/150'}
               />
               <Card.Body>
@@ -153,9 +129,8 @@ const Profile = () => {
             </Card>
           ))}
         </div>
-      ) : (
-        <p>No tienes productos en favoritos.</p>
       )}
+      {favorites.length === 0 && <p>No tienes productos en favoritos.</p>}
     </div>
   )
 
@@ -164,11 +139,8 @@ const Profile = () => {
       <h2>Perfil de Usuario</h2>
       <Nav variant='tabs' defaultActiveKey='profile'>
         <Nav.Item>
-          <Nav.Link
-            eventKey='profile'
-            onClick={() => setActiveTab('profile')}
-          >
-            Editar Perfil
+          <Nav.Link eventKey='profile' onClick={() => setActiveTab('profile')}>
+            Compras
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
@@ -181,7 +153,7 @@ const Profile = () => {
         </Nav.Item>
       </Nav>
       <div className='mt-4'>
-        {activeTab === 'profile' && renderProfileForm()}
+        {activeTab === 'profile' && renderPurchases()}
         {activeTab === 'favorites' && renderFavorites()}
       </div>
     </Container>
