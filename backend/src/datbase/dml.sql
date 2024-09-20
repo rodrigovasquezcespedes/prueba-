@@ -1,12 +1,21 @@
 INSERT INTO categories (category_name) VALUES ('Notebooks'), ('Celulares'),('Audio'),('Television'),('Camara');
 
 
+INSERT INTO users (name, email, password, role)
+VALUES
+('Juan Pérez', 'juan@gmail.com', '$2b$10$zGYJyvkv77U9poFatz4ZD.uzJygPJ2gmKygKV8kY/XgpWqFyOLKSu', false),
+('Maria López', 'maria@gmail.com', '$2b$10$zGYJyvkv77U9poFatz4ZD.uzJygPJ2gmKygKV8kY/XgpWqFyOLKSu', false),
+('Carlos Gómez', 'carlos@gmail.com', '$2b$10$zGYJyvkv77U9poFatz4ZD.uzJygPJ2gmKygKV8kY/XgpWqFyOLKSu', false),
+('Ana Martínez', 'ana@gmail.com', '$2b$10$zGYJyvkv77U9poFatz4ZD.uzJygPJ2gmKygKV8kY/XgpWqFyOLKSu', false),
+('Admin User', 'admin@gmail.com', '$2b$10$zGYJyvkv77U9poFatz4ZD.uzJygPJ2gmKygKV8kY/XgpWqFyOLKSu', true);
+
+
 
 -- Insertar productos en la tabla products
 INSERT INTO products (name, description, price, stock, image_url, brand, id_category) VALUES
 ('Apple MacBook Air 15,3', 'Apple MacBook Air 15,3 M2 (8GB RAM, 256 GB SSD, 8n CPU, 10n GPU) Azul medianoche', 1790990, 10, 'https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/16874259_01/w=1500,h=1500,fit=pad', 'Apple', 1),
 ('Apple MacBook Pro 16', 'Apple MacBook Pro 16 M2 Pro (16GB RAM, 512GB SSD, 12n CPU, 19n GPU)', 2590990, 10, 'https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/16725090_01/w=1500,h=1500,fit=pad', 'Apple', 1),
-('Apple MacBook Air 13', 'Apple MacBook Air (13 con Chip M1 CPU 8 núcleos y GPU 7 núcleos, 8GB RAM, 256 GB SSD)', 1319990, 10, 'https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/15028801_01/w=1500,h=1500,fit=pad', 'Apple', 1),
+('Apple MacBook Air 13', 'Apple MacBook Air (13 con Chip M1 CPU 8 núcleos y GPU 7 núcleos, 8GB RAM, 256 GB SSD)', 1319990, 10, 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mba13-midnight-select-202402?wid=904&hei=840&fmt=jpeg&qlt=90&.v=1708367688034', 'Apple', 1),
 ('Notebook Inspiron 15.6', 'Notebook INSPIRON 15.6 Intel Core i7 16GB RAM 512GB SSD Dell', 899990, 10, 'https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/17152732_1/w=1500,h=1500,fit=pad', 'Dell', 1),
 ('Notebook Vivobook 14', 'Notebook Vivobook 14 X1404 Intel Core i5 8GB RAM 512GB SSD 14 FHD 60Hz Asus', 689990, 10, 'https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/16874581_01/w=1500,h=1500,fit=pad', 'Asus', 1),
 ('Notebook Vivobook 16', 'Notebook Vivobook 16 X1605 Intel Core i7 10 Núcleos 12GB RAM 512GB SSD 16 WUXGA 60Hz Asus', 1049990, 10, 'https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/16882526_01/w=1500,h=1500,fit=pad', 'Asus', 1),

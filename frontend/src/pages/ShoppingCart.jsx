@@ -32,13 +32,15 @@ const ShoppingCart = () => {
     try {
       const paymentMethod = 'credit_card'
 
-      // Enviar los detalles del carrito al backend para procesar el pago
       const response = await axios.post(
         `${urlBaseServer}/api/orders/pay`,
         {
-          id_user: user.id_user, // Aquí se envía el ID del usuario logueado
-          items: cartItems, // Los productos en el carrito
-          payment_method: paymentMethod // Método de pago
+          idUser: user.id_user,
+          items: cartItems,
+          payment_method: paymentMethod
+        },
+        {
+          withCredentials: true
         }
       )
 

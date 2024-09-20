@@ -35,8 +35,28 @@ const createPayment = async (idOrder, amount, paymentMethod) => {
   return result.rows[0]
 }
 
+const getOrdersByUserId = async idUser => {
+  const query = `
+    SELECT 
+      o.id_order, 
+      oi.quantity, 
+      oi.price AS total_price, 
+      p.name AS product_name, 
+      o.order_date AS purchase_date
+    FROM orders o
+    JOIN order_items oi ON o.id_order = oi.id_order
+    JOIN products p ON oi.id_product = p.id_product
+    WHERE o.id_user = $1
+    ORDER BY o.order_date DESC;
+  `
+  const values = [idUser]
+  const result = await pool.query(query, values)
+  return result.rows
+}
+
 export default {
   createOrder,
   createOrderItems,
-  createPayment
+  createPayment,
+  getOrdersByUserId
 }
