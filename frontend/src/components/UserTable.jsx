@@ -1,6 +1,13 @@
 import { Table, Button, Pagination } from 'react-bootstrap'
 
-const UserTable = ({ users, currentPage, totalPages, onPageChange, onEdit, onDelete }) => {
+const UserTable = ({
+  users,
+  currentPage,
+  totalPages,
+  onPageChange,
+  onEdit,
+  onDelete
+}) => {
   const indexOfLastUser = currentPage * 5
   const indexOfFirstUser = indexOfLastUser - 5
   const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser)
@@ -23,7 +30,11 @@ const UserTable = ({ users, currentPage, totalPages, onPageChange, onEdit, onDel
               <td>{user.name}</td>
               <td>{user.email}</td>
               <td>
-                <Button variant='warning' className='me-2' onClick={() => onEdit(user)}>
+                <Button
+                  variant='warning'
+                  className='me-2'
+                  onClick={() => onEdit(true, user)}
+                >
                   Actualizar
                 </Button>
                 <Button variant='danger' onClick={() => onDelete(user.id_user)}>

@@ -19,7 +19,7 @@ const ProductCrud = () => {
     price: '',
     description: '',
     stock: '',
-    image_url: '',
+    imageUrl: '',
     specifications: []
   })
   const [newSpecification, setNewSpecification] = useState({

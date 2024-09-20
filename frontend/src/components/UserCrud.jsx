@@ -48,13 +48,14 @@ const UserCrud = () => {
 
   const openModal = (isEditMode = false, userData = null) => {
     setIsEdit(isEditMode)
+
     if (isEditMode && userData) {
       // Si estamos editando, cargar los datos del usuario
       setNewUser({
         id: userData.id_user, // Asegurarse de que el id se esté pasando correctamente
         name: userData.name,
         email: userData.email,
-        password: '', // Dejar vacío para no mostrar la contraseña actual
+        password: '', // La contraseña debe quedar vacía para no exponerla
         confirmPassword: ''
       })
     } else {
@@ -67,6 +68,8 @@ const UserCrud = () => {
         confirmPassword: ''
       })
     }
+
+    // Abrir el modal después de asegurarse de que los datos están cargados
     setShowModal(true)
   }
 
@@ -84,13 +87,14 @@ const UserCrud = () => {
       if (isEdit) {
         // Actualizar usuario
         await axios.put(
-          `${urlBaseServer}/api/users/${newUser.id}`, {
-            withCredentials: true
-          },
+          `${urlBaseServer}/api/users/${newUser.id}`,
           {
             name: newUser.name,
             email: newUser.email,
             password: newUser.password
+          },
+          {
+            withCredentials: true
           }
         )
 
@@ -164,13 +168,13 @@ const UserCrud = () => {
         currentPage={currentPage}
         totalPages={Math.ceil(users.length / usersPerPage)}
         onPageChange={setCurrentPage}
-        onEdit={openModal}
+        onEdit={openModal} // Asegurarse de pasar correctamente la función openModal
         onDelete={deleteUser}
       />
       <UserFormModal
         showModal={showModal}
         handleClose={() => setShowModal(false)}
-        user={newUser}
+        user={newUser} // Aquí se pasa el estado newUser como los datos del usuario
         setUser={setNewUser}
         handleSaveUser={handleSaveUser}
         isEdit={isEdit}

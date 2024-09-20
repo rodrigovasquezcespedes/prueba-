@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Navbar, Nav, Container, Badge } from 'react-bootstrap'
 import { AuthContext } from '../context/AuthContext'
 import { useCart } from '../context/CartContext'
-import Swal from 'sweetalert2' // Importar SweetAlert2
+import Swal from 'sweetalert2'
 import {
   FaShoppingCart,
   FaUser,
@@ -16,16 +16,15 @@ import {
 
 const Navigation = () => {
   const { isAuthenticated, user, logout } = useContext(AuthContext)
-  const navigate = useNavigate() // Para redireccionar después del logout
-  const { cartItems } = useCart() // Obtener productos del carrito
+  const navigate = useNavigate()
+  const { cartItems } = useCart()
 
-  const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0) // Calcular total de productos en el carrito
+  const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0)
 
   const handleLogout = async () => {
     try {
-      await logout() // Llamar la función de logout del contexto
+      await logout()
 
-      // Mostrar la alerta de SweetAlert2
       Swal.fire({
         icon: 'success',
         title: 'Sesión cerrada',
@@ -34,14 +33,12 @@ const Navigation = () => {
         showConfirmButton: false
       })
 
-      // Redirigir al usuario a la página de productos después de cerrar sesión
       setTimeout(() => {
         navigate('/products')
-      }, 2000) // Esperar 2 segundos antes de redirigir
+      }, 2000)
     } catch (error) {
       console.error('Error al cerrar sesión:', error)
 
-      // Mostrar una alerta de error si falla el logout
       Swal.fire({
         icon: 'error',
         title: 'Error',
@@ -58,21 +55,17 @@ const Navigation = () => {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
         <Navbar.Collapse id='basic-navbar-nav'>
-          <Nav className='me-auto'>
+          {/* Todos los enlaces alineados a la derecha */}
+          <Nav className='ms-auto align-items-center'>
+            {isAuthenticated && user && (
+              <Nav.Item className='text-light me-3'>
+                Bienvenido, {user.name}!
+              </Nav.Item>
+            )}
             <Nav.Link as={Link} to='/products'>
               <FaBoxOpen className='me-2' />
               Productos
             </Nav.Link>
-          </Nav>
-          <Nav className='ms-auto align-items-center'>
-            {/* Mostrar nombre del usuario si está autenticado */}
-            {isAuthenticated && user && (
-              <Nav.Item className='text-light me-3'>
-                {/* Mostrar el nombre del usuario */}
-                Bienvenido, {user.name}!
-              </Nav.Item>
-            )}
-            {/* Carrito de compras */}
             <Nav.Link
               as={Link}
               to='/shoppingcart'
@@ -87,7 +80,6 @@ const Navigation = () => {
               )}
             </Nav.Link>
 
-            {/* Mostrar contenido solo si está autenticado */}
             {isAuthenticated && user && (
               <>
                 <Nav.Link as={Link} to='/profile'>
@@ -107,7 +99,6 @@ const Navigation = () => {
               </>
             )}
 
-            {/* Mostrar opciones de login y registro si NO está autenticado */}
             {!isAuthenticated && (
               <>
                 <Nav.Link as={Link} to='/login'>

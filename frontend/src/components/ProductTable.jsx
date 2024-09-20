@@ -36,14 +36,17 @@ const ProductTable = ({ currentProducts, editProduct, deleteProduct }) => {
             <td>
               <div className='d-flex justify-content-around'>
                 <Button
-                  variant='danger'
+                  variant='warning'
                   className='me-2'
+                  onClick={() => editProduct(product)}
+                >
+                  Actualizar
+                </Button>
+                <Button
+                  variant='danger'
                   onClick={() => deleteProduct(product.id_product)}
                 >
                   Eliminar
-                </Button>
-                <Button variant='warning' onClick={() => editProduct(product)}>
-                  Editar
                 </Button>
               </div>
             </td>

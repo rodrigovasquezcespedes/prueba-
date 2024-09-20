@@ -16,12 +16,12 @@ const app = express()
 
 dotenv.config()
 
-const allowedOrigins = process.env.FRONTEND_URL || 'http://localhost:5173' // Variable de entorno
-
-app.use(cors({
-  origin: allowedOrigins,
-  credentials: true // Esto es importante para permitir cookies
-}))
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL, // Obtener el origen permitido desde la variable de entorno
+    credentials: true // Permitir el envío de cookies y credenciales
+  })
+)
 
 app.use(morgan('dev'))
 app.use(cookieParser())
