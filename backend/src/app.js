@@ -16,12 +16,16 @@ const app = express()
 
 dotenv.config()
 
-app.use(
-  cors({
-    origin: process.env.FRONTEND_URL, // Obtener el origen permitido desde la variable de entorno
-    credentials: true // Permitir el envío de cookies y credenciales
-  })
-)
+const corsOptions = {
+  origin:
+    process.env.NODE_ENV === 'production'
+      ? 'https://your-frontend-url-on-render.com'
+      : 'http://localhost:5173',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}
+
+app.use(cors(corsOptions))
 
 app.use(morgan('dev'))
 app.use(cookieParser())
