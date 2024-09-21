@@ -14,20 +14,12 @@ const app = express()
 
 dotenv.config()
 
-const allowedOrigins = process.env.CORS_ORIGIN.split(',')
-
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true) // Permitir el origen si está en la lista
-    } else {
-      callback(new Error('Origen no permitido por CORS'))
-    }
-  },
-  credentials: true // Permitir el envío de cookies y credenciales
-}
-
-app.use(cors(corsOptions))
+app.use(
+  cors({
+    origin: '*', // Permitir cualquier origen
+    credentials: true // Permitir envío de cookies y credenciales si es necesario
+  })
+)
 
 app.use(morgan('dev'))
 app.use(cookieParser())
