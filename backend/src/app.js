@@ -14,20 +14,10 @@ const app = express()
 
 dotenv.config()
 
-// Obtener los orígenes permitidos desde el archivo .env
-const allowedOrigins = process.env.CORS_ORIGIN.split(',')
-
 app.use(
   cors({
-    origin: function (origin, callback) {
-      // Permitir solicitudes sin origen (como Postman o herramientas de prueba)
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true)
-      } else {
-        callback(new Error('No permitido por CORS'))
-      }
-    },
-    credentials: true
+    origin: ['https://frontend-q785.onrender.com', 'http://localhost:5173'],
+    credentials: true // Permitir el envío de cookies/credenciales
   })
 )
 
