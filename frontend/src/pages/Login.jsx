@@ -36,8 +36,7 @@ const Login = () => {
           password
         },
         {
-          credentials: 'include',
-          withCredentials: true // Ensure cookies are sent and handled
+          withCredentials: true
         }
       )
 
