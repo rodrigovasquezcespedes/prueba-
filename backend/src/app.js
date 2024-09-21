@@ -17,7 +17,7 @@ dotenv.config()
 app.use(
   cors({
     origin: ['https://frontend-q785.onrender.com', 'http://localhost:5173'],
-    credentials: true // Permitir el envío de cookies/credenciales
+    credentials: true
   })
 )
 
