@@ -15,11 +15,7 @@ const app = express()
 dotenv.config()
 
 const corsOptions = {
-  origin:
-    process.env.NODE_ENV === 'production'
-      ? 'https://frontend-q785.onrender.com/'
-      : 'http://localhost:5173',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  origin: process.env.CORS_ORIGIN,
   credentials: true
 }
 
