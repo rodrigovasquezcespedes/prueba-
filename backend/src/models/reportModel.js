@@ -17,7 +17,7 @@ const getReportData = async () => {
 
     // Obtener total de ventas
     const totalSalesResult = await pool.query(
-      'SELECT COUNT(*) AS total_sales FROM orders WHERE status = TRUE'
+      'SELECT COUNT(*) AS total_sales FROM orders WHERE status = false'
     )
     const totalSales = totalSalesResult.rows[0].total_sales
 

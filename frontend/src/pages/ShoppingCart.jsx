@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import { useCart } from '../context/CartContext'
-import { AuthContext } from '../context/AuthContext' // Asegúrate de importar el AuthContext
+import { AuthContext } from '../context/AuthContext'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom' // Importar useNavigate para redireccionar
+import { useNavigate } from 'react-router-dom'
 import {
   Button,
   Container,
@@ -13,31 +13,53 @@ import {
   Form
 } from 'react-bootstrap'
 import Swal from 'sweetalert2'
+
 const urlBaseServer = import.meta.env.VITE_URL_BASE_SERVER
 
 const ShoppingCart = () => {
   const { cartItems, addToCart, removeFromCart, clearCart, deleteFromCart } =
     useCart()
-  const { user } = useContext(AuthContext) // Obtener el usuario logueado
-  const navigate = useNavigate() // Definir el hook useNavigate para redireccionar
+  const { user } = useContext(AuthContext)
+  const navigate = useNavigate()
 
-  // Calcular el precio total de todos los productos en el carrito sin usar reduce
+  // Calcular el precio total de todos los productos en el carrito
   let totalPrice = 0
   cartItems.forEach(item => {
     totalPrice += item.price * item.quantity
   })
 
-  // Función para manejar el pago
   const handlePayment = async () => {
+    if (!user) {
+      Swal.fire({
+        title: 'No estás logueado',
+        text: 'Debes iniciar sesión para poder realizar el pago.',
+        icon: 'warning',
+        confirmButtonText: 'Iniciar sesión'
+      }).then(() => {
+        navigate('/login')
+      })
+      return
+    }
+
+    if (cartItems.length === 0) {
+      Swal.fire({
+        title: 'Carrito vacío',
+        text: 'No tienes productos en tu carrito.',
+        icon: 'warning',
+        confirmButtonText: 'OK'
+      })
+      return
+    }
+
     try {
-      const paymentMethod = 'credit_card'
+      console.log('Enviando userId:', user.id_user)
 
       const response = await axios.post(
-        `${urlBaseServer}/api/orders/pay`,
+        `${urlBaseServer}/api/orders/purchase`, // Corregir la URL a '/purchase' si es necesario
         {
-          idUser: user.id_user,
+          idUser: user.id_user, // id_user en lugar de idUser
           items: cartItems,
-          payment_method: paymentMethod
+          paymentMethod: 'tarjeta de crédito' // Corregido el método de pago
         },
         {
           withCredentials: true
@@ -51,8 +73,8 @@ const ShoppingCart = () => {
           icon: 'success',
           confirmButtonText: 'OK'
         }).then(() => {
-          clearCart() // Vaciar el carrito si el pago fue exitoso
-          navigate('/products') // Redireccionar a la página de productos
+          clearCart()
+          navigate('/products')
         })
       } else {
         Swal.fire({
@@ -76,20 +98,17 @@ const ShoppingCart = () => {
     <Container className='my-5'>
       <h2>Tu Carrito de Compras</h2>
 
-      {/* Si el carrito está vacío */}
       {cartItems.length === 0 && <p>Tu carrito está vacío</p>}
 
-      {/* Si hay productos en el carrito */}
       {cartItems.length > 0 && (
         <>
           <ListGroup variant='flush'>
             {cartItems.map(item => (
-              <ListGroup.Item key={item.id_product} className='mb-3'>
+              <ListGroup.Item key={item.idProduct} className='mb-3'>
                 <Row className='align-items-center'>
-                  {/* Imagen del producto */}
                   <Col md={2}>
                     <Image
-                      src={item.image_url || 'https://via.placeholder.com/100'}
+                      src={item.image_url || 'https://via.placeholder.com/100'} // Verificar si es image_url
                       alt={item.name}
                       fluid
                       rounded
@@ -101,18 +120,16 @@ const ShoppingCart = () => {
                     />
                   </Col>
 
-                  {/* Detalles del producto */}
                   <Col md={4}>
                     <h5>{item.name}</h5>
                     <p>Precio: ${item.price.toLocaleString()}</p>
                   </Col>
 
-                  {/* Controles de cantidad */}
                   <Col md={3} className='d-flex align-items-center'>
                     <Button
                       variant='secondary'
                       className='me-2'
-                      onClick={() => removeFromCart(item.id_product)} // Disminuye la cantidad
+                      onClick={() => removeFromCart(item.idProduct)} // camelCase
                       disabled={item.quantity <= 1}
                     >
                       -
@@ -126,17 +143,16 @@ const ShoppingCart = () => {
                     <Button
                       variant='primary'
                       className='ms-2'
-                      onClick={() => addToCart(item)} // Aumenta la cantidad
+                      onClick={() => addToCart(item)}
                     >
                       +
                     </Button>
                   </Col>
 
-                  {/* Botón de eliminar */}
                   <Col md={3}>
                     <Button
                       variant='danger'
-                      onClick={() => deleteFromCart(item.id_product)} // Elimina el producto completamente
+                      onClick={() => deleteFromCart(item.idProduct)} // camelCase
                     >
                       Eliminar
                     </Button>
@@ -146,7 +162,6 @@ const ShoppingCart = () => {
             ))}
           </ListGroup>
 
-          {/* Mostrar el precio total y el botón "Pagar" */}
           <div className='mt-4'>
             <h4>Total: ${totalPrice.toLocaleString()}</h4>
             <div className='d-flex justify-content-between'>
@@ -156,7 +171,7 @@ const ShoppingCart = () => {
               <Button
                 variant='success'
                 onClick={handlePayment}
-                disabled={cartItems.length === 0} // Desactivar si el carrito está vacío
+                disabled={cartItems.length === 0}
               >
                 Pagar
               </Button>

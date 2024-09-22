@@ -1,12 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { AuthContext } from '../context/AuthContext'
 import axios from 'axios'
-import {
-  Container,
-  Nav,
-  Card,
-  Table
-} from 'react-bootstrap'
+import { Container, Nav, Card, Table } from 'react-bootstrap'
 
 const urlBaseServer = import.meta.env.VITE_URL_BASE_SERVER
 
@@ -65,7 +60,7 @@ const Profile = () => {
   const fetchPurchases = async () => {
     try {
       const response = await axios.get(
-        `${urlBaseServer}/api/users/${user.id_user}/purchases`,
+        `${urlBaseServer}/api/orders/user/${user.id_user}`, // Corregido el endpoint
         { withCredentials: true }
       )
       setPurchases(response.data.length > 0 ? response.data : [])
@@ -85,18 +80,22 @@ const Profile = () => {
               <th>#</th>
               <th>Producto</th>
               <th>Cantidad</th>
+              <th>Precio Unitario</th>
               <th>Total</th>
               <th>Fecha de compra</th>
             </tr>
           </thead>
           <tbody>
             {purchases.map((purchase, index) => (
-              <tr key={purchase.id_purchase}>
+              <tr key={purchase.id_order}>
                 <td>{index + 1}</td>
                 <td>{purchase.product_name}</td>
                 <td>{purchase.quantity}</td>
-                <td>${purchase.total_price.toLocaleString()}</td>
-                <td>{new Date(purchase.purchase_date).toLocaleDateString()}</td>
+                <td>${purchase.price.toLocaleString()}</td>
+                <td>
+                  ${(purchase.price * purchase.quantity).toLocaleString()}
+                </td>
+                <td>{new Date(purchase.order_date).toLocaleDateString()}</td>
               </tr>
             ))}
           </tbody>
