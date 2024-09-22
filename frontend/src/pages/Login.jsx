@@ -6,6 +6,7 @@ import { FaUser } from 'react-icons/fa'
 import { RiLockPasswordFill } from 'react-icons/ri'
 import Swal from 'sweetalert2'
 import axios from 'axios'
+import Cookies from 'js-cookie'
 
 const urlBaseServer = import.meta.env.VITE_URL_BASE_SERVER
 
@@ -36,14 +37,21 @@ const Login = () => {
           password
         },
         {
-          withCredentials: true
+          withCredentials: true // Asegura que se envíen las cookies
         }
       )
 
       if (response.status === 200) {
-        const { user } = response.data
+        const { user, token } = response.data // Obtener el token y los datos del usuario
 
-        // Call the login function from AuthContext to update state
+        // Guardar el token en la cookie
+        Cookies.set('token', token, {
+          expires: 1, // La cookie expira en 1 día
+          secure: true, // Asegura que solo se envíe por HTTPS
+          sameSite: 'Strict'
+        })
+
+        // Actualizar el estado global de autenticación
         login(user)
 
         Swal.fire({
@@ -53,7 +61,7 @@ const Login = () => {
           timer: 2000
         })
 
-        navigate('/products') // Navigate to the products page
+        navigate('/products') // Redirigir a la página de productos
       }
     } catch (error) {
       console.error('Error al iniciar sesión:', error)
