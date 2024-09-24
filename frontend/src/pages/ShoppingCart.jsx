@@ -55,11 +55,11 @@ const ShoppingCart = () => {
       console.log('Enviando userId:', user.id_user)
 
       const response = await axios.post(
-        `${urlBaseServer}/api/orders/purchase`, // Corregir la URL a '/purchase' si es necesario
+        `${urlBaseServer}/api/orders/pay`, // Corregir la URL si es necesario
         {
-          idUser: user.id_user, // id_user en lugar de idUser
+          idUser: user.id_user, // Enviar id_user del usuario autenticado
           items: cartItems,
-          paymentMethod: 'tarjeta de crédito' // Corregido el método de pago
+          paymentMethod: 'tarjeta de crédito'
         },
         {
           withCredentials: true
@@ -104,11 +104,11 @@ const ShoppingCart = () => {
         <>
           <ListGroup variant='flush'>
             {cartItems.map(item => (
-              <ListGroup.Item key={item.idProduct} className='mb-3'>
+              <ListGroup.Item key={item.id_product} className='mb-3'>
                 <Row className='align-items-center'>
                   <Col md={2}>
                     <Image
-                      src={item.image_url || 'https://via.placeholder.com/100'} // Verificar si es image_url
+                      src={item.image_url || 'https://via.placeholder.com/100'}
                       alt={item.name}
                       fluid
                       rounded
@@ -129,7 +129,7 @@ const ShoppingCart = () => {
                     <Button
                       variant='secondary'
                       className='me-2'
-                      onClick={() => removeFromCart(item.idProduct)} // camelCase
+                      onClick={() => removeFromCart(item.id_product)} // Disminuye la cantidad
                       disabled={item.quantity <= 1}
                     >
                       -
@@ -143,7 +143,7 @@ const ShoppingCart = () => {
                     <Button
                       variant='primary'
                       className='ms-2'
-                      onClick={() => addToCart(item)}
+                      onClick={() => addToCart(item)} // Aumenta la cantidad
                     >
                       +
                     </Button>
@@ -152,7 +152,7 @@ const ShoppingCart = () => {
                   <Col md={3}>
                     <Button
                       variant='danger'
-                      onClick={() => deleteFromCart(item.idProduct)} // camelCase
+                      onClick={() => deleteFromCart(item.id_product)} // Eliminar el producto
                     >
                       Eliminar
                     </Button>

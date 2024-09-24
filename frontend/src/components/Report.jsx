@@ -16,9 +16,7 @@ const Report = () => {
       const response = await axios.get(
         `${urlBaseServer}/api/dashboard/report`,
         {
-          headers: {
-            withCredentials: true // Ensure cookies are sent and handled
-          }
+          withCredentials: true // Ensure cookies are sent and handled
         }
       )
       setReportData(response.data)
@@ -49,16 +47,25 @@ const Report = () => {
       startY: 40,
       head: [['Descripción', 'Valor']],
       body: [
-        ['Total de Usuarios', reportData?.totalUsers || 0],
-        ['Total de Productos', reportData?.totalProducts || 0],
-        ['Total de Ventas', reportData?.totalSales || 0],
+        [
+          'Total de Usuarios',
+          Number(reportData?.totalUsers || 0).toLocaleString('es-ES')
+        ],
+        [
+          'Total de Productos',
+          Number(reportData?.totalProducts || 0).toLocaleString('es-ES')
+        ],
+        [
+          'Total de Ventas',
+          Number(reportData?.totalSales || 0).toLocaleString('es-ES')
+        ],
         [
           'Total de Ingresos',
-          `$${reportData?.totalRevenue?.toLocaleString() || '0'}`
+          `$${Number(reportData?.totalRevenue || 0).toLocaleString('es-ES')}`
         ],
         [
           'Usuarios Registrados Recientemente',
-          reportData?.recentUsers?.length || 0
+          Number(reportData?.recentUsers?.length || 0).toLocaleString('es-ES')
         ]
       ]
     })
@@ -77,7 +84,9 @@ const Report = () => {
         head: [['Producto']],
         body: reportData.topFavoriteProducts.map(product => [
           product.name,
-          product.favoriteCount ? product.favoriteCount : 'No disponible'
+          product.favoriteCount
+            ? Number(product.favoriteCount).toLocaleString('es-ES')
+            : 'No disponible'
         ])
       })
     } else {
@@ -113,7 +122,10 @@ const Report = () => {
           <Card>
             <Card.Body>
               <Card.Title>Total de Usuarios</Card.Title>
-              <Card.Text>{reportData?.totalUsers || 0} usuarios</Card.Text>
+              <Card.Text>
+                {Number(reportData?.totalUsers || 0).toLocaleString('es-ES')}{' '}
+                usuarios
+              </Card.Text>
             </Card.Body>
           </Card>
         </Col>
@@ -121,7 +133,10 @@ const Report = () => {
           <Card>
             <Card.Body>
               <Card.Title>Total de Productos</Card.Title>
-              <Card.Text>{reportData?.totalProducts || 0} productos</Card.Text>
+              <Card.Text>
+                {Number(reportData?.totalProducts || 0).toLocaleString('es-ES')}{' '}
+                productos
+              </Card.Text>
             </Card.Body>
           </Card>
         </Col>
@@ -129,7 +144,10 @@ const Report = () => {
           <Card>
             <Card.Body>
               <Card.Title>Total de Ventas</Card.Title>
-              <Card.Text>{reportData?.totalSales || 0} ventas</Card.Text>
+              <Card.Text>
+                {Number(reportData?.totalSales || 0).toLocaleString('es-ES')}{' '}
+                ventas
+              </Card.Text>
             </Card.Body>
           </Card>
         </Col>
@@ -140,7 +158,7 @@ const Report = () => {
             <Card.Body>
               <Card.Title>Total de Ingresos</Card.Title>
               <Card.Text>
-                ${reportData?.totalRevenue?.toLocaleString() || '0'}
+                ${Number(reportData?.totalRevenue || 0).toLocaleString('es-ES')}
               </Card.Text>
             </Card.Body>
           </Card>
@@ -150,7 +168,10 @@ const Report = () => {
             <Card.Body>
               <Card.Title>Usuarios Registrados Recientemente</Card.Title>
               <Card.Text>
-                {reportData?.recentUsers?.length || 0} nuevos usuarios
+                {Number(reportData?.recentUsers?.length || 0).toLocaleString(
+                  'es-ES'
+                )}{' '}
+                nuevos usuarios
               </Card.Text>
             </Card.Body>
           </Card>
@@ -166,9 +187,7 @@ const Report = () => {
                 <Card.Title>Productos más guardados como favoritos</Card.Title>
                 <ul>
                   {reportData.topFavoriteProducts.map(product => (
-                    <li key={product.id_product}>
-                      {product.name}
-                    </li>
+                    <li key={product.id_product}>{product.name}</li>
                   ))}
                 </ul>
               </Card.Body>

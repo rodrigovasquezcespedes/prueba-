@@ -10,9 +10,11 @@ export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([])
 
   // Añadir un producto al carrito
-  const addToCart = (product) => {
-    setCartItems((prevItems) => {
-      const existingItem = prevItems.find(item => item.id_product === product.id_product)
+  const addToCart = product => {
+    setCartItems(prevItems => {
+      const existingItem = prevItems.find(
+        item => item.id_product === product.id_product
+      )
       if (existingItem) {
         return prevItems.map(item =>
           item.id_product === product.id_product
@@ -26,19 +28,23 @@ export const CartProvider = ({ children }) => {
   }
 
   // Disminuir la cantidad de un producto en el carrito
-  const removeFromCart = (productId) => {
-    setCartItems((prevItems) => {
-      return prevItems.map(item =>
-        item.id_product === productId && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
-      )
+  const removeFromCart = productId => {
+    setCartItems(prevItems => {
+      return prevItems
+        .map(item =>
+          item.id_product === productId
+            ? { ...item, quantity: item.quantity - 1 }
+            : item
+        )
+        .filter(item => item.quantity > 0) // Filtrar productos con cantidad 0
     })
   }
 
   // Eliminar completamente un producto del carrito
-  const deleteFromCart = (productId) => {
-    setCartItems((prevItems) => prevItems.filter(item => item.id_product !== productId))
+  const deleteFromCart = productId => {
+    setCartItems(prevItems =>
+      prevItems.filter(item => item.id_product !== productId)
+    )
   }
 
   // Vaciar el carrito
@@ -48,7 +54,13 @@ export const CartProvider = ({ children }) => {
 
   return (
     <CartContext.Provider
-      value={{ cartItems, addToCart, removeFromCart, deleteFromCart, clearCart }}
+      value={{
+        cartItems,
+        addToCart,
+        removeFromCart,
+        deleteFromCart,
+        clearCart
+      }}
     >
       {children}
     </CartContext.Provider>
