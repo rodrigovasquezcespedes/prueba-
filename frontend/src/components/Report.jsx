@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Card, Row, Col, Container, Spinner, Button } from 'react-bootstrap'
 import axios from 'axios'
-import jsPDF from 'jspdf'
+import { jsPDF as JsPdf } from 'jspdf'
 import 'jspdf-autotable'
 
 const urlBaseServer = import.meta.env.VITE_URL_BASE_SERVER
@@ -32,7 +32,7 @@ const Report = () => {
   }, [])
 
   const generatePDF = () => {
-    const doc = new jsPDF()
+    const doc = new JsPdf()
 
     // Título del reporte
     doc.setFontSize(18)

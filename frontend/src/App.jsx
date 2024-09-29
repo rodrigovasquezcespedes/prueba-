@@ -1,5 +1,4 @@
 import { Routes, Route, HashRouter } from 'react-router-dom'
-import { FavoritesProvider } from './context/FavoritesContext'
 import { CartProvider } from './context/CartContext'
 import { AuthProvider } from './context/AuthContext'
 import Navigation from './components/Navigation'
@@ -19,35 +18,33 @@ const App = () => {
   return (
     <HashRouter>
       <AuthProvider>
-        <FavoritesProvider>
-          <CartProvider>
-            <Navigation />
-            <Routes>
-              <Route path='/' element={<Home />} />
-              <Route path='/products' element={<Products />} />
-              <Route path='/detail/:id' element={<Detail />} />
-              <Route path='/shoppingcart' element={<ShoppingCart />} />
-              <Route
-                path='/profile'
-                element={
-                  <ProtectedRoute>
-                    <Profile />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path='/dashboard'
-                element={
-                  <AdminProtectedRoute>
-                    <Dashboard />
-                  </AdminProtectedRoute>
-                }
-              />
-              <Route path='/login' element={<Login />} />
-              <Route path='/register' element={<Register />} />
-            </Routes>
-          </CartProvider>
-        </FavoritesProvider>
+        <CartProvider>
+          <Navigation />
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/products' element={<Products />} />
+            <Route path='/detail/:id' element={<Detail />} />
+            <Route path='/shoppingcart' element={<ShoppingCart />} />
+            <Route
+              path='/profile'
+              element={
+                <ProtectedRoute>
+                  <Profile />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/dashboard'
+              element={
+                <AdminProtectedRoute>
+                  <Dashboard />
+                </AdminProtectedRoute>
+              }
+            />
+            <Route path='/login' element={<Login />} />
+            <Route path='/register' element={<Register />} />
+          </Routes>
+        </CartProvider>
       </AuthProvider>
     </HashRouter>
   )

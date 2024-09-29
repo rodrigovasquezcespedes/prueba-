@@ -3,7 +3,6 @@ import { Card, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContext'
 import { useCart } from '../context/CartContext'
-import { useFavorites } from '../context/FavoritesContext'
 import { FaEye, FaCartPlus, FaHeart } from 'react-icons/fa'
 import axios from 'axios'
 
@@ -12,7 +11,6 @@ const urlBaseServer = import.meta.env.VITE_URL_BASE_SERVER
 const ProductCard = ({ producto }) => {
   const { user } = useContext(AuthContext)
   const { addToCart } = useCart()
-  const { favorites, addToFavorites, removeFromFavorites } = useFavorites() // Acceder a los favoritos del contexto
   const [isFavorite, setIsFavorite] = useState(false)
   const [favoriteId, setFavoriteId] = useState(null)
 
@@ -23,15 +21,31 @@ const ProductCard = ({ producto }) => {
     }
   }, [user?.id_user, producto.id_product])
 
-  // Función para verificar si el producto ya está en favoritos
-  const fetchFavoriteStatus = () => {
-    if (favorites && favorites.length > 0) {
+  // Función para verificar si el producto ya está en favoritos en la base de datos
+  const fetchFavoriteStatus = async () => {
+    try {
+      const response = await axios.get(
+        `${urlBaseServer}/api/favorites/${user.id_user}`,
+        {
+          withCredentials: true
+        }
+      )
+      const favorites = response.data
       const favorite = favorites.find(
         fav => fav.id_product === producto.id_product
       )
-      setIsFavorite(!!favorite)
-      setFavoriteId(favorite?.id_favorite || null)
-      console.log('Favorite ID:', favorite?.id_favorite) // Asegúrate de que se está obteniendo el id_favorite correcto
+      if (favorite) {
+        setIsFavorite(true)
+        setFavoriteId(favorite.id_favorite) // Guardar el ID del favorito para eliminarlo correctamente
+      } else {
+        setIsFavorite(false)
+        setFavoriteId(null)
+      }
+    } catch (error) {
+      console.error(
+        'Error al obtener el estado de favoritos:',
+        error.response?.data || error.message
+      )
     }
   }
 
@@ -46,8 +60,7 @@ const ProductCard = ({ producto }) => {
         },
         { withCredentials: true }
       )
-      addToFavorites(producto) // Actualizar favoritos en el contexto
-      setIsFavorite(true) // Cambiar el estado inmediatamente
+      setIsFavorite(true)
       setFavoriteId(response.data.result.id_favorite) // Guardar el ID del favorito desde la respuesta
       console.log(
         'Favorito agregado con éxito',
@@ -67,7 +80,6 @@ const ProductCard = ({ producto }) => {
       await axios.delete(`${urlBaseServer}/api/favorites/${favoriteId}`, {
         withCredentials: true
       })
-      removeFromFavorites(producto.id_product) // Actualizar favoritos en el contexto
       setIsFavorite(false) // Cambiar el estado inmediatamente
       setFavoriteId(null) // Resetear el ID del favorito
       console.log('Favorito eliminado con éxito')

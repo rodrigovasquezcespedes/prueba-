@@ -16,7 +16,6 @@ const getFavoritesByUserId = async idUser => {
 }
 
 const removeFavorite = async idFavorite => {
-  console.log('Deleting favorite with ID:', idFavorite) // Verificar el ID que se recibe
   const query = 'DELETE FROM favorites WHERE id_favorite = $1 RETURNING *'
   const values = [idFavorite]
   const result = await pool.query(query, values)

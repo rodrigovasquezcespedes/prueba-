@@ -2,7 +2,6 @@ import favoriteModel from '../models/favoriteModel.js'
 
 const addFavorite = async (req, res) => {
   const { idUser, idProduct } = req.body
-  console.log('controller', idUser, idProduct)
   if (!idUser || !idProduct) {
     return res.status(400).json({ message: 'Faltan datos necesarios' })
   }
@@ -10,7 +9,6 @@ const addFavorite = async (req, res) => {
   try {
     // Insertar en la tabla de favoritos
     const result = await favoriteModel.addFavorite(idUser, idProduct)
-
     res.status(201).json({ message: 'Producto agregado a favoritos', result })
   } catch (error) {
     console.error('Error al agregar a favoritos:', error)
@@ -30,7 +28,6 @@ const getFavoritesByUserId = async (req, res) => {
 
 const removeFavorite = async (req, res) => {
   const { idFavorite } = req.params
-  console.log('Removing favorite with ID:', idFavorite) // Asegúrate de que se está obteniendo el idFavorite correcto
   try {
     const deletedFavorite = await favoriteModel.removeFavorite(idFavorite)
     if (!deletedFavorite) {

@@ -73,6 +73,17 @@ const ProductCrud = () => {
   }
 
   const handleSaveProduct = async () => {
+    if (!newProduct.imageUrl) {
+      // Si estamos editando y no se ha proporcionado una nueva imagen, mantener la anterior
+      if (editingProduct) {
+        const existingProduct = products.find(product => product.id_product === editingProduct)
+        newProduct.imageUrl = existingProduct.imageUrl // Mantén la URL de la imagen
+      } else {
+        // Si es un producto nuevo, podrías asignar una imagen por defecto
+        newProduct.imageUrl = 'https://via.placeholder.com/150' // Imagen por defecto
+      }
+    }
+
     if (editingProduct) {
       await updateProduct()
     } else {
@@ -107,7 +118,7 @@ const ProductCrud = () => {
 
   const updateProduct = async () => {
     try {
-      await axios.put(
+      const response = await axios.put(
         `${urlBaseServer}/api/products/${editingProduct}`,
         newProduct,
         {
@@ -116,7 +127,9 @@ const ProductCrud = () => {
       )
       setProducts(
         products.map(product =>
-          product.id_product === editingProduct ? newProduct : product
+          product.id_product === editingProduct
+            ? { ...response.data, imageUrl: newProduct.imageUrl }
+            : product
         )
       )
       Swal.fire({
@@ -164,7 +177,15 @@ const ProductCrud = () => {
   }
 
   const editProduct = product => {
-    setNewProduct(product)
+    setNewProduct({
+      id_product: product.id_product,
+      name: product.name,
+      price: product.price,
+      description: product.description,
+      stock: product.stock,
+      imageUrl: product.imageUrl || '', // Mantén la URL de la imagen si ya existe
+      specifications: product.specifications || []
+    })
     setEditingProduct(product.id_product)
     setShowModal(true)
   }
@@ -185,7 +206,6 @@ const ProductCrud = () => {
     <div>
       <h3>Gestión de Productos</h3>
 
-      {/* Filtro por categoría, junto con el botón "Añadir Producto" */}
       <Row className='align-items-center mb-3'>
         <Col md={2}>
           <Button variant='primary' onClick={() => setShowModal(true)}>

@@ -4,9 +4,7 @@ import {
   Container,
   Row,
   Card,
-  Button,
-  Toast,
-  ToastContainer
+  Button
 } from 'react-bootstrap'
 import axios from 'axios'
 import { useCart } from '../context/CartContext'
@@ -14,21 +12,20 @@ import { useCart } from '../context/CartContext'
 const urlBaseServer = import.meta.env.VITE_URL_BASE_SERVER
 
 const Detail = () => {
-  const { id } = useParams() // Obtener el ID del producto desde la URL
-  const [productoDetail, setProductoDetail] = useState(null) // Iniciar como null para manejar estado de carga
-  const [showToast, setShowToast] = useState(false)
+  const { id } = useParams()
+  const [productoDetail, setProductoDetail] = useState(null)
   const navigate = useNavigate()
 
-  const { addToCart } = useCart() // Get addToCart from CartContext
+  const { addToCart } = useCart()
 
   useEffect(() => {
     const fetchProducto = async () => {
       try {
         const response = await axios.get(`${urlBaseServer}/api/products/${id}`)
-        setProductoDetail(response.data) // Cargar el producto específico desde la base de datos
+        setProductoDetail(response.data)
       } catch (error) {
         console.error('Error fetching product:', error)
-        navigate('/products') // Redirigir si no se encuentra el producto
+        navigate('/products')
       }
     }
 
@@ -43,16 +40,14 @@ const Detail = () => {
         name: productoDetail.name,
         price: productoDetail.price,
         image_url: productoDetail.image_url,
-        quantity: 1 // Always start with a quantity of 1 when adding
+        quantity: 1
       }
-      addToCart(productToAdd) // Add the specific product to the cart
-      setShowToast(true)
-      setTimeout(() => setShowToast(false), 3000)
+      addToCart(productToAdd)
     }
   }
 
   if (productoDetail === null) {
-    return <div>Cargando...</div> // Mostrar mensaje de carga mientras se obtiene el producto
+    return <div>Cargando...</div>
   }
 
   return (
@@ -78,7 +73,6 @@ const Detail = () => {
                 <Card.Text className='fs-4'>
                   Precio: ${productoDetail.price.toLocaleString()}
                 </Card.Text>
-                {/* Mostrar las especificaciones si existen */}
                 {productoDetail.specifications && productoDetail.specifications.length > 0 && (
                   <div>
                     <h5>Especificaciones:</h5>
@@ -108,21 +102,6 @@ const Detail = () => {
           </div>
         </Row>
       </Container>
-
-      {/* Toast para mostrar notificación */}
-      <ToastContainer position='top-end' className='p-3'>
-        <Toast
-          onClose={() => setShowToast(false)}
-          show={showToast}
-          delay={3000}
-          autohide
-        >
-          <Toast.Header>
-            <strong className='me-auto'>Carrito</strong>
-          </Toast.Header>
-          <Toast.Body>Producto añadido al carrito con éxito!</Toast.Body>
-        </Toast>
-      </ToastContainer>
     </>
   )
 }
