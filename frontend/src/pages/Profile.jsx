@@ -11,7 +11,6 @@ const Profile = () => {
   const [favorites, setFavorites] = useState([])
   const [purchases, setPurchases] = useState([])
 
-  // Cargar favoritos o compras dependiendo de la pestaña activa
   useEffect(() => {
     if (activeTab === 'favorites') {
       fetchFavorites()
@@ -20,7 +19,6 @@ const Profile = () => {
     }
   }, [activeTab])
 
-  // Obtener los favoritos del usuario
   const fetchFavorites = async () => {
     try {
       const response = await axios.get(
@@ -38,7 +36,6 @@ const Profile = () => {
     }
   }
 
-  // Obtener los productos favoritos
   const fetchFavoriteProducts = async productIds => {
     try {
       const products = await Promise.all(
@@ -56,11 +53,10 @@ const Profile = () => {
     }
   }
 
-  // Obtener las compras del usuario
   const fetchPurchases = async () => {
     try {
       const response = await axios.get(
-        `${urlBaseServer}/api/orders/user/${user.id_user}`, // Corregido el endpoint
+        `${urlBaseServer}/api/orders/user/${user.id_user}`,
         { withCredentials: true }
       )
       setPurchases(response.data.length > 0 ? response.data : [])

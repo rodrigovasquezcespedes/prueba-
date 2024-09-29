@@ -17,7 +17,6 @@ const Products = () => {
   const [showScrollButton, setShowScrollButton] = useState(false)
 
   useEffect(() => {
-    // Obtener los productos y categorías cuando el componente se monta
     const fetchProductosYCategorias = async () => {
       try {
         const [productosResponse, categoriasResponse] = await Promise.all([
@@ -34,7 +33,6 @@ const Products = () => {
     fetchProductosYCategorias()
   }, [])
 
-  // Mostrar u ocultar botones de scroll según la posición de la página
   useEffect(() => {
     const handleScroll = () => {
       setShowScrollButton(window.scrollY > 200)
@@ -46,7 +44,6 @@ const Products = () => {
     }
   }, [])
 
-  // Obtener las marcas filtradas utilizando `useMemo` para evitar recálculo en cada render
   const marcasFiltradas = useMemo(() => {
     const marcas = productos
       .filter(
@@ -55,10 +52,9 @@ const Products = () => {
           producto.id_category === Number(categoriaSeleccionada)
       )
       .map(producto => producto.brand)
-    return [...new Set(marcas)] // Eliminar duplicados
+    return [...new Set(marcas)]
   }, [productos, categoriaSeleccionada])
 
-  // Filtrar y ordenar los productos según categoría, marca, y orden seleccionado
   const productosFiltradosYOrdenados = useMemo(() => {
     const productosFiltrados = productos.filter(producto => {
       const coincideCategoria =
@@ -79,7 +75,6 @@ const Products = () => {
     })
   }, [productos, categoriaSeleccionada, marcaSeleccionada, ordenSeleccionado])
 
-  // Paginación
   const indexOfLastProduct = currentPage * productsPerPage
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage
   const currentProducts = productosFiltradosYOrdenados.slice(
@@ -95,7 +90,6 @@ const Products = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  // Funciones para subir o bajar
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
   const scrollToBottom = () =>
     window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
@@ -149,7 +143,6 @@ const Products = () => {
         </Col>
       </Row>
 
-      {/* Mostrar productos */}
       <Row className='g-4'>
         {currentProducts.map(producto => (
           <Col key={producto.id_product} xs={12} sm={6} md={4} lg={3}>
@@ -158,7 +151,6 @@ const Products = () => {
         ))}
       </Row>
 
-      {/* Paginación */}
       <Row className='d-flex justify-content-center mt-4'>
         <Col xs='auto'>
           <Pagination>
@@ -175,7 +167,6 @@ const Products = () => {
         </Col>
       </Row>
 
-      {/* Botones de subir y bajar */}
       {showScrollButton && (
         <>
           <Button

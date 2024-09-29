@@ -1,23 +1,21 @@
 import pool from '../config/db.js'
 
-// Crear la orden (asegúrate de pasar el `userId` correctamente)
 const createOrder = async (userId, totalAmount) => {
   const { rows } = await pool.query(
     `INSERT INTO orders (id_user, total_amount) 
      VALUES ($1, $2) RETURNING *`,
-    [userId, totalAmount] // Asegúrate de pasar `userId` y `totalAmount`
+    [userId, totalAmount]
   )
-  return rows[0] // Devuelve la fila insertada, incluyendo `id_order`
+  return rows[0]
 }
 
-// Crear los ítems de la orden (asegúrate de pasar `orderId` y `productId` correctamente)
 const createOrderItem = async (orderId, productId, quantity, price) => {
   const { rows } = await pool.query(
     `INSERT INTO order_items (id_order, id_product, quantity, price) 
      VALUES ($1, $2, $3, $4) RETURNING *`,
-    [orderId, productId, quantity, price] // Asegúrate de pasar `productId` y `orderId`
+    [orderId, productId, quantity, price]
   )
-  return rows[0] // Devuelve la fila insertada
+  return rows[0]
 }
 
 const getUserOrders = async userId => {
@@ -30,7 +28,7 @@ const getUserOrders = async userId => {
      ORDER BY o.order_date DESC`,
     [userId]
   )
-  return rows // Devuelve todas las órdenes del usuario
+  return rows
 }
 
 export default { createOrder, createOrderItem, getUserOrders }

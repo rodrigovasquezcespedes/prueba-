@@ -50,16 +50,14 @@ const UserCrud = () => {
     setIsEdit(isEditMode)
 
     if (isEditMode && userData) {
-      // Si estamos editando, cargar los datos del usuario
       setNewUser({
-        id: userData.id_user, // Asegurarse de que el id se esté pasando correctamente
+        id: userData.id_user,
         name: userData.name,
         email: userData.email,
-        password: '', // La contraseña debe quedar vacía para no exponerla
+        password: '',
         confirmPassword: ''
       })
     } else {
-      // Si estamos añadiendo un nuevo usuario, limpiar el formulario
       setNewUser({
         id: '',
         name: '',
@@ -68,8 +66,6 @@ const UserCrud = () => {
         confirmPassword: ''
       })
     }
-
-    // Abrir el modal después de asegurarse de que los datos están cargados
     setShowModal(true)
   }
 
@@ -85,7 +81,6 @@ const UserCrud = () => {
 
     try {
       if (isEdit) {
-        // Actualizar usuario
         await axios.put(
           `${urlBaseServer}/api/users/${newUser.id}`,
           {
@@ -103,9 +98,8 @@ const UserCrud = () => {
           'Los datos del usuario fueron actualizados',
           'success'
         )
-        fetchUsers() // Refrescar la lista de usuarios después de actualizar
+        fetchUsers()
       } else {
-        // Crear usuario
         const response = await axios.post(
           `${urlBaseServer}/api/users/register`,
           { ...newUser },
@@ -168,13 +162,13 @@ const UserCrud = () => {
         currentPage={currentPage}
         totalPages={Math.ceil(users.length / usersPerPage)}
         onPageChange={setCurrentPage}
-        onEdit={openModal} // Asegurarse de pasar correctamente la función openModal
+        onEdit={openModal}
         onDelete={deleteUser}
       />
       <UserFormModal
         showModal={showModal}
         handleClose={() => setShowModal(false)}
-        user={newUser} // Aquí se pasa el estado newUser como los datos del usuario
+        user={newUser}
         setUser={setNewUser}
         handleSaveUser={handleSaveUser}
         isEdit={isEdit}

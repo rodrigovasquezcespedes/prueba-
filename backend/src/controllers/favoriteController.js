@@ -7,7 +7,6 @@ const addFavorite = async (req, res) => {
   }
 
   try {
-    // Insertar en la tabla de favoritos
     const result = await favoriteModel.addFavorite(idUser, idProduct)
     res.status(201).json({ message: 'Producto agregado a favoritos', result })
   } catch (error) {

@@ -9,7 +9,6 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const navigate = useNavigate()
 
-  // Function to handle login and update context
   const login = userData => {
     console.log('User data al iniciar sesión:', userData)
     setUser(userData)
@@ -22,11 +21,9 @@ export const AuthProvider = ({ children }) => {
         withCredentials: true
       })
 
-      // Clear the authentication state
       setIsAuthenticated(false)
       setUser(null)
 
-      // Redirect to products page after logout
       navigate('/products')
     } catch (error) {
       console.error('Error al cerrar sesión:', error)

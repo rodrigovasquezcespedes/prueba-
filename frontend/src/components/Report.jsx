@@ -10,13 +10,12 @@ const Report = () => {
   const [reportData, setReportData] = useState(null)
   const [loading, setLoading] = useState(true)
 
-  // Obtener los datos del reporte desde la API
   const fetchReportData = async () => {
     try {
       const response = await axios.get(
         `${urlBaseServer}/api/dashboard/report`,
         {
-          withCredentials: true // Ensure cookies are sent and handled
+          withCredentials: true
         }
       )
       setReportData(response.data)
@@ -34,15 +33,12 @@ const Report = () => {
   const generatePDF = () => {
     const doc = new JsPdf()
 
-    // Título del reporte
     doc.setFontSize(18)
     doc.text('Reporte del Dashboard', 14, 22)
 
-    // Fecha
     doc.setFontSize(12)
     doc.text(`Fecha: ${new Date().toLocaleDateString()}`, 14, 30)
 
-    // Tabla principal
     doc.autoTable({
       startY: 40,
       head: [['Descripción', 'Valor']],
@@ -70,7 +66,6 @@ const Report = () => {
       ]
     })
 
-    // Verificar si hay productos favoritos
     if (reportData?.topFavoriteProducts?.length > 0) {
       doc.text(
         'Productos más guardados como favoritos:',
@@ -78,7 +73,6 @@ const Report = () => {
         doc.autoTable.previous.finalY + 10
       )
 
-      // Añadir tabla de productos favoritos
       doc.autoTable({
         startY: doc.autoTable.previous.finalY + 15,
         head: [['Producto']],
@@ -97,7 +91,6 @@ const Report = () => {
       )
     }
 
-    // Guardar el PDF
     doc.save('reporte_dashboard.pdf')
   }
 
@@ -112,7 +105,6 @@ const Report = () => {
   return (
     <Container className='my-5'>
       <h2>Reporte del Dashboard</h2>
-      {/* Botón para descargar el PDF */}
       <Button variant='primary' onClick={generatePDF} className='mb-4'>
         Descargar PDF
       </Button>
@@ -178,7 +170,6 @@ const Report = () => {
         </Col>
       </Row>
 
-      {/* Mostrar los productos más guardados como favoritos en un Card */}
       {reportData?.topFavoriteProducts?.length > 0 && (
         <Row className='gy-4 mt-4'>
           <Col>

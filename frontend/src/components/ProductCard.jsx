@@ -14,14 +14,12 @@ const ProductCard = ({ producto }) => {
   const [isFavorite, setIsFavorite] = useState(false)
   const [favoriteId, setFavoriteId] = useState(null)
 
-  // Cargar el estado del producto en favoritos cuando se carga el componente
   useEffect(() => {
     if (user?.id_user && producto.id_product) {
       fetchFavoriteStatus()
     }
   }, [user?.id_user, producto.id_product])
 
-  // Función para verificar si el producto ya está en favoritos en la base de datos
   const fetchFavoriteStatus = async () => {
     try {
       const response = await axios.get(
@@ -36,7 +34,7 @@ const ProductCard = ({ producto }) => {
       )
       if (favorite) {
         setIsFavorite(true)
-        setFavoriteId(favorite.id_favorite) // Guardar el ID del favorito para eliminarlo correctamente
+        setFavoriteId(favorite.id_favorite)
       } else {
         setIsFavorite(false)
         setFavoriteId(null)
@@ -49,7 +47,6 @@ const ProductCard = ({ producto }) => {
     }
   }
 
-  // Función para agregar un producto a favoritos
   const addFavorite = async () => {
     try {
       const response = await axios.post(
@@ -61,7 +58,7 @@ const ProductCard = ({ producto }) => {
         { withCredentials: true }
       )
       setIsFavorite(true)
-      setFavoriteId(response.data.result.id_favorite) // Guardar el ID del favorito desde la respuesta
+      setFavoriteId(response.data.result.id_favorite)
       console.log(
         'Favorito agregado con éxito',
         response.data.result.id_favorite
@@ -74,14 +71,13 @@ const ProductCard = ({ producto }) => {
     }
   }
 
-  // Función para eliminar un producto de favoritos
   const removeFavorite = async () => {
     try {
       await axios.delete(`${urlBaseServer}/api/favorites/${favoriteId}`, {
         withCredentials: true
       })
-      setIsFavorite(false) // Cambiar el estado inmediatamente
-      setFavoriteId(null) // Resetear el ID del favorito
+      setIsFavorite(false)
+      setFavoriteId(null)
       console.log('Favorito eliminado con éxito')
     } catch (error) {
       console.error(
@@ -91,12 +87,11 @@ const ProductCard = ({ producto }) => {
     }
   }
 
-  // Función para alternar entre agregar y eliminar de favoritos
   const toggleFavorite = () => {
     if (isFavorite) {
-      removeFavorite() // Eliminar de favoritos
+      removeFavorite()
     } else {
-      addFavorite() // Agregar a favoritos
+      addFavorite()
     }
   }
 
@@ -122,7 +117,7 @@ const ProductCard = ({ producto }) => {
           onError={e => (e.target.src = 'https://via.placeholder.com/200')}
           style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
         />
-        {/* Solo mostrar el botón de favoritos si el usuario está logueado */}
+
         {user && (
           <Button
             variant='light'

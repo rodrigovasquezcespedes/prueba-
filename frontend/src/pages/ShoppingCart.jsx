@@ -55,9 +55,9 @@ const ShoppingCart = () => {
       console.log('Enviando userId:', user.id_user)
 
       const response = await axios.post(
-        `${urlBaseServer}/api/orders/pay`, // Corregir la URL si es necesario
+        `${urlBaseServer}/api/orders/pay`,
         {
-          idUser: user.id_user, // Enviar id_user del usuario autenticado
+          idUser: user.id_user,
           items: cartItems,
           paymentMethod: 'tarjeta de crédito'
         },
@@ -129,7 +129,7 @@ const ShoppingCart = () => {
                     <Button
                       variant='secondary'
                       className='me-2'
-                      onClick={() => removeFromCart(item.id_product)} // Disminuye la cantidad
+                      onClick={() => removeFromCart(item.id_product)}
                       disabled={item.quantity <= 1}
                     >
                       -
@@ -143,7 +143,7 @@ const ShoppingCart = () => {
                     <Button
                       variant='primary'
                       className='ms-2'
-                      onClick={() => addToCart(item)} // Aumenta la cantidad
+                      onClick={() => addToCart(item)}
                     >
                       +
                     </Button>
@@ -152,7 +152,7 @@ const ShoppingCart = () => {
                   <Col md={3}>
                     <Button
                       variant='danger'
-                      onClick={() => deleteFromCart(item.id_product)} // Eliminar el producto
+                      onClick={() => deleteFromCart(item.id_product)}
                     >
                       Eliminar
                     </Button>

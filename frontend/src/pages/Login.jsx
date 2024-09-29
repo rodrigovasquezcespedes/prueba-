@@ -18,7 +18,6 @@ const Login = () => {
   const handleSubmit = async e => {
     e.preventDefault()
 
-    // Verificar campos vacíos
     if (email.trim() === '' || password.trim() === '') {
       Swal.fire({
         icon: 'error',
@@ -43,7 +42,6 @@ const Login = () => {
       if (response.status === 200) {
         const { user } = response.data
 
-        // Call the login function from AuthContext to update state
         login(user)
 
         Swal.fire({
@@ -53,12 +51,11 @@ const Login = () => {
           timer: 2000
         })
 
-        navigate('/products') // Navigate to the products page
+        navigate('/products')
       }
     } catch (error) {
       console.error('Error al iniciar sesión:', error)
 
-      // Mostrar un mensaje de error si la autenticación falla
       Swal.fire({
         icon: 'error',
         title: 'Error de autenticación',

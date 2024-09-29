@@ -10,9 +10,10 @@ import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Detail from './pages/Detail'
+import NotFound from './pageS/NotFound'
 
 import AdminProtectedRoute from './components/AdminProtectedRoute'
-import ProtectedRoute from './components/ProtectedRoutes' // Import the ProtectedRoute
+import ProtectedRoute from './components/ProtectedRoutes'
 
 const App = () => {
   return (
@@ -43,6 +44,7 @@ const App = () => {
             />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
+            <Route path='*' element={<NotFound />} />
           </Routes>
         </CartProvider>
       </AuthProvider>

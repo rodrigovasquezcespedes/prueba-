@@ -26,7 +26,6 @@ const loginUser = async (req, res) => {
       { expiresIn: '1h' }
     )
 
-    // Configuración de la cookie
     res.cookie('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
@@ -84,38 +83,34 @@ const updateUser = async (req, res) => {
   const { name, email, password, role } = req.body
 
   try {
-    // Obtener el usuario actual
     const existingUser = await userModel.getUserById(id)
 
     if (!existingUser) {
       return res.status(404).json({ message: 'Usuario no encontrado' })
     }
-
-    // Mostrar la contraseña actual antes de la actualización
     console.log(
       'Contraseña actual (hashed) del usuario:',
       existingUser.password
     )
 
-    // Mantener la contraseña actual si no se proporciona una nueva
     let hashedPassword = existingUser.password
 
-    // Solo encriptar y actualizar si se ha proporcionado una nueva contraseña
     if (password && password.trim() !== '') {
       hashedPassword = await bcrypt.hash(password, 10)
-      console.log('Nueva contraseña proporcionada y encriptada:', hashedPassword)
+      console.log(
+        'Nueva contraseña proporcionada y encriptada:',
+        hashedPassword
+      )
     }
 
-    // Actualizar el usuario
     const updatedUser = await userModel.updateUser(
       id,
       name,
       email,
-      hashedPassword, // Usar la contraseña actual o encriptar solo si es nueva
+      hashedPassword,
       role
     )
 
-    // Mostrar la contraseña después de la actualización
     console.log('Contraseña después de la actualización:', hashedPassword)
 
     res.status(200).json(updatedUser)

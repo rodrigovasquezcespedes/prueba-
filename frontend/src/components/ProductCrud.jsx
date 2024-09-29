@@ -52,7 +52,6 @@ const ProductCrud = () => {
     }
   }
 
-  // Filtrar productos por categoría
   const filteredProducts = products.filter(product => {
     return !selectedCategory || product.id_category === Number(selectedCategory)
   })
@@ -74,13 +73,13 @@ const ProductCrud = () => {
 
   const handleSaveProduct = async () => {
     if (!newProduct.imageUrl) {
-      // Si estamos editando y no se ha proporcionado una nueva imagen, mantener la anterior
       if (editingProduct) {
-        const existingProduct = products.find(product => product.id_product === editingProduct)
-        newProduct.imageUrl = existingProduct.imageUrl // Mantén la URL de la imagen
+        const existingProduct = products.find(
+          product => product.id_product === editingProduct
+        )
+        newProduct.imageUrl = existingProduct.imageUrl
       } else {
-        // Si es un producto nuevo, podrías asignar una imagen por defecto
-        newProduct.imageUrl = 'https://via.placeholder.com/150' // Imagen por defecto
+        newProduct.imageUrl = 'https://via.placeholder.com/150'
       }
     }
 
@@ -183,7 +182,7 @@ const ProductCrud = () => {
       price: product.price,
       description: product.description,
       stock: product.stock,
-      imageUrl: product.imageUrl || '', // Mantén la URL de la imagen si ya existe
+      imageUrl: product.imageUrl || '',
       specifications: product.specifications || []
     })
     setEditingProduct(product.id_product)

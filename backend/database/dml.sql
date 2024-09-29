@@ -33,7 +33,6 @@ INSERT INTO products (name, description, price, stock, image_url, brand, id_cate
 ('Canon 90D', 'Cámara Profesional 90D 18-135 Canon', 1599990, 10, 'https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCL/15171325_1/w=1500,h=1500,fit=pad', 'Canon', 5);
 
 INSERT INTO product_specifications (id_product, spec_name, spec_value) VALUES
--- Especificaciones para "Apple MacBook Air 15,3"
 (1, 'Tamaño de pantalla', '15 pulgadas'),
 (1, 'Tarjeta gráfica', 'GPU de 10 nucleos'),
 (1, 'Capacidad de almacenamiento', '256 GB'),

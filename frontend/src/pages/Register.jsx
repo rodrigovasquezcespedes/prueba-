@@ -18,7 +18,6 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    // Verificar que las contraseñas coincidan
     if (password !== confirmPassword) {
       Swal.fire({
         icon: 'error',
@@ -29,7 +28,6 @@ const Register = () => {
     }
 
     try {
-      // Enviar solicitud POST al backend para registrar al usuario usando axios
       const response = await axios.post(`${urlBaseServer}/api/users/register`, {
         name,
         email,
@@ -43,7 +41,7 @@ const Register = () => {
           showConfirmButton: false,
           timer: 2000
         })
-        navigate('/login') // Redirigir a la página de login después de un registro exitoso
+        navigate('/login')
       }
     } catch (error) {
       console.error('Error al registrar usuario:', error)

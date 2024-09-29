@@ -1,6 +1,5 @@
 import reportModel from '../models/reportModel.js'
 
-// Controlador para obtener los datos del reporte
 export const getReport = async (req, res) => {
   try {
     const reportData = await reportModel.getReportData()

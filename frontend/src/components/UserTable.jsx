@@ -46,7 +46,6 @@ const UserTable = ({
         </tbody>
       </Table>
 
-      {/* Paginación */}
       <Pagination className='justify-content-center'>
         {Array.from({ length: totalPages }, (_, index) => (
           <Pagination.Item

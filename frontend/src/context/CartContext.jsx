@@ -9,7 +9,6 @@ export const useCart = () => {
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([])
 
-  // Añadir un producto al carrito
   const addToCart = product => {
     setCartItems(prevItems => {
       const existingItem = prevItems.find(
@@ -26,8 +25,6 @@ export const CartProvider = ({ children }) => {
       }
     })
   }
-
-  // Disminuir la cantidad de un producto en el carrito
   const removeFromCart = productId => {
     setCartItems(prevItems => {
       return prevItems
@@ -36,18 +33,16 @@ export const CartProvider = ({ children }) => {
             ? { ...item, quantity: item.quantity - 1 }
             : item
         )
-        .filter(item => item.quantity > 0) // Filtrar productos con cantidad 0
+        .filter(item => item.quantity > 0)
     })
   }
 
-  // Eliminar completamente un producto del carrito
   const deleteFromCart = productId => {
     setCartItems(prevItems =>
       prevItems.filter(item => item.id_product !== productId)
     )
   }
 
-  // Vaciar el carrito
   const clearCart = () => {
     setCartItems([])
   }

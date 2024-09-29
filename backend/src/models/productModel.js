@@ -1,6 +1,5 @@
 import pool from '../config/db.js'
 
-// Crear un producto con sus especificaciones
 const createProduct = async (
   name,
   description,
@@ -31,7 +30,6 @@ const createProduct = async (
   return product[0]
 }
 
-// Obtener un producto con sus especificaciones
 const getProductById = async id => {
   const { rows: product } = await pool.query(
     'SELECT * FROM products WHERE id_product = $1',
@@ -46,7 +44,6 @@ const getProductById = async id => {
   return product[0]
 }
 
-// Obtener todos los productos con sus especificaciones
 const getAllProducts = async () => {
   const { rows: products } = await pool.query('SELECT * FROM products')
 
@@ -61,7 +58,6 @@ const getAllProducts = async () => {
   return products
 }
 
-// Actualizar un producto y sus especificaciones
 const updateProduct = async (
   id,
   name,
@@ -78,7 +74,9 @@ const updateProduct = async (
     [name, description, price, stock, imageUrl, brand, idCategory, id]
   )
 
-  await pool.query('DELETE FROM product_specifications WHERE id_product = $1', [id])
+  await pool.query('DELETE FROM product_specifications WHERE id_product = $1', [
+    id
+  ])
 
   const specQuery =
     'INSERT INTO product_specifications (id_product, spec_name, spec_value) VALUES ($1, $2, $3)'
@@ -89,7 +87,6 @@ const updateProduct = async (
   return product[0]
 }
 
-// Eliminar un producto y sus especificaciones
 const deleteProduct = async id => {
   await pool.query('DELETE FROM product_specifications WHERE id_product = $1', [
     id

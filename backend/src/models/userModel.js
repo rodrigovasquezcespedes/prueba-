@@ -33,7 +33,6 @@ const updateUser = async (id, name, email, password, role) => {
   let values
 
   if (password) {
-    // Si se proporciona una nueva contraseña, la incluimos en la consulta
     query = `
       UPDATE users
       SET name = $1, email = $2, password = $3, role = $4
@@ -42,7 +41,6 @@ const updateUser = async (id, name, email, password, role) => {
     `
     values = [name, email, password, role, id]
   } else {
-    // Si no se proporciona una nueva contraseña, omitimos el campo password
     query = `
       UPDATE users
       SET name = $1, email = $2, role = $3

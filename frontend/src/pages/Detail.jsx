@@ -34,7 +34,6 @@ const Detail = () => {
 
   const handleAddToCart = () => {
     if (productoDetail) {
-      // Add only relevant product details to the cart
       const productToAdd = {
         id_product: productoDetail.id_product,
         name: productoDetail.name,

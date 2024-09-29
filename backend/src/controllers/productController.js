@@ -1,8 +1,16 @@
 import productModel from '../models/productModel.js'
 
-// Crear un producto con sus especificaciones
 const createProduct = async (req, res) => {
-  const { name, description, price, stock, imageUrl, brand, idCategory, specifications } = req.body
+  const {
+    name,
+    description,
+    price,
+    stock,
+    imageUrl,
+    brand,
+    idCategory,
+    specifications
+  } = req.body
   try {
     const product = await productModel.createProduct(
       name,
@@ -12,7 +20,7 @@ const createProduct = async (req, res) => {
       imageUrl,
       brand,
       idCategory,
-      specifications // Pasar las especificaciones al modelo
+      specifications
     )
     res.status(201).json(product)
   } catch (error) {
@@ -20,7 +28,6 @@ const createProduct = async (req, res) => {
   }
 }
 
-// Obtener un producto por su ID junto con sus especificaciones
 const getProductById = async (req, res) => {
   const { id } = req.params
   try {
@@ -31,7 +38,6 @@ const getProductById = async (req, res) => {
   }
 }
 
-// Obtener todos los productos junto con sus especificaciones
 const getAllProducts = async (req, res) => {
   try {
     const products = await productModel.getAllProducts()
@@ -41,10 +47,18 @@ const getAllProducts = async (req, res) => {
   }
 }
 
-// Actualizar un producto y sus especificaciones
 const updateProduct = async (req, res) => {
   const { id } = req.params
-  const { name, description, price, stock, imageUrl, brand, idCategory, specifications } = req.body
+  const {
+    name,
+    description,
+    price,
+    stock,
+    imageUrl,
+    brand,
+    idCategory,
+    specifications
+  } = req.body
   try {
     const updatedProduct = await productModel.updateProduct(
       id,
@@ -55,7 +69,7 @@ const updateProduct = async (req, res) => {
       imageUrl,
       brand,
       idCategory,
-      specifications // Pasar las especificaciones al modelo
+      specifications
     )
     res.status(200).json(updatedProduct)
   } catch (error) {
@@ -63,7 +77,6 @@ const updateProduct = async (req, res) => {
   }
 }
 
-// Eliminar un producto y sus especificaciones
 const deleteProduct = async (req, res) => {
   const { id } = req.params
   try {

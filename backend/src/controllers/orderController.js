@@ -1,23 +1,19 @@
 import orderModel from '../models/orderModel.js'
 import paymentModel from '../models/paymentModel.js'
 
-// Procesar la compra y crear la orden
 const processOrder = async (req, res) => {
   const { idUser, items, paymentMethod } = req.body
 
   try {
-    // Calcular el total de la compra
     const totalAmount = items.reduce(
       (sum, item) => sum + item.price * item.quantity,
       0
     )
 
-    // Crear la orden (asegúrate de que el `idUser` se está pasando correctamente)
     const order = await orderModel.createOrder(idUser, totalAmount)
 
-    // Insertar los ítems de la orden
     for (const item of items) {
-      console.log('Insertando ítem de la orden:', item) // Para depuración
+      console.log('Insertando ítem de la orden:', item)
       await orderModel.createOrderItem(
         order.id_order,
         item.id_product,
@@ -26,7 +22,6 @@ const processOrder = async (req, res) => {
       )
     }
 
-    // Crear el pago (si tienes esta funcionalidad)
     await paymentModel.createPayment(order.id_order, totalAmount, paymentMethod)
 
     res.status(201).json({ message: 'Compra realizada exitosamente', order })
@@ -37,7 +32,7 @@ const processOrder = async (req, res) => {
 }
 
 const getUserOrders = async (req, res) => {
-  const { userId } = req.params // userId es el ID del usuario logueado
+  const { userId } = req.params
 
   try {
     const orders = await orderModel.getUserOrders(userId)

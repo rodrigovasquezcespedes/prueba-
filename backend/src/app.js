@@ -25,7 +25,6 @@ app.use(morgan('dev'))
 app.use(cookieParser())
 app.use(express.json())
 
-// Rutas
 app.use('/api/users', userRoutes)
 app.use('/api/products', productRoutes)
 app.use('/api/categories', categoryRoutes)
