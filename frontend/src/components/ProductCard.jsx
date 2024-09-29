@@ -31,6 +31,7 @@ const ProductCard = ({ producto }) => {
       )
       setIsFavorite(!!favorite)
       setFavoriteId(favorite?.id_favorite || null)
+      console.log('Favorite ID:', favorite?.id_favorite) // Asegúrate de que se está obteniendo el id_favorite correcto
     }
   }
 
@@ -47,8 +48,11 @@ const ProductCard = ({ producto }) => {
       )
       addToFavorites(producto) // Actualizar favoritos en el contexto
       setIsFavorite(true) // Cambiar el estado inmediatamente
-      setFavoriteId(response.data.id_favorite) // Guardar el ID del favorito desde la respuesta
-      console.log('Favorito agregado con éxito')
+      setFavoriteId(response.data.result.id_favorite) // Guardar el ID del favorito desde la respuesta
+      console.log(
+        'Favorito agregado con éxito',
+        response.data.result.id_favorite
+      )
     } catch (error) {
       console.error(
         'Error al agregar a favoritos:',

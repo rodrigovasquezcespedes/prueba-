@@ -30,10 +30,15 @@ const getFavoritesByUserId = async (req, res) => {
 
 const removeFavorite = async (req, res) => {
   const { idFavorite } = req.params
+  console.log('Removing favorite with ID:', idFavorite) // Asegúrate de que se está obteniendo el idFavorite correcto
   try {
     const deletedFavorite = await favoriteModel.removeFavorite(idFavorite)
+    if (!deletedFavorite) {
+      return res.status(404).json({ message: 'Favorito no encontrado' })
+    }
     res.status(200).json({ message: 'Favorito eliminado', deletedFavorite })
   } catch (error) {
+    console.error('Error al eliminar de favoritos:', error)
     res.status(500).json({ message: 'Error al eliminar de favoritos', error })
   }
 }
