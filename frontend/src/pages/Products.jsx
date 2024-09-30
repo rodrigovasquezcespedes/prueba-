@@ -3,6 +3,7 @@ import { Container, Row, Col, Pagination, Button } from 'react-bootstrap'
 import axios from 'axios'
 import { FaArrowUp, FaArrowDown } from 'react-icons/fa'
 import ProductCard from '../components/ProductCard'
+import Cookies from 'js-cookie' // Importa la librería js-cookie para manejar cookies
 
 const urlBaseServer = import.meta.env.VITE_URL_BASE_SERVER
 
@@ -16,9 +17,18 @@ const Products = () => {
   const productsPerPage = 12
   const [showScrollButton, setShowScrollButton] = useState(false)
 
+  // Función para recuperar el token desde las cookies
+  const getTokenFromCookies = () => {
+    return Cookies.get('token') // Asume que el token está guardado en una cookie llamada 'token'
+  }
+
+  // Configurar axios para que siempre envíe el token en el encabezado de autorización
+  axios.defaults.headers.common.Authorization = `Bearer ${getTokenFromCookies()}`
+
   useEffect(() => {
     const fetchProductosYCategorias = async () => {
       try {
+        // Las solicitudes enviarán automáticamente el token gracias a la configuración de axios
         const [productosResponse, categoriasResponse] = await Promise.all([
           axios.get(`${urlBaseServer}/api/products`),
           axios.get(`${urlBaseServer}/api/categories`)
@@ -33,6 +43,7 @@ const Products = () => {
     fetchProductosYCategorias()
   }, [])
 
+  // Efecto para mostrar el botón de scroll
   useEffect(() => {
     const handleScroll = () => {
       setShowScrollButton(window.scrollY > 200)

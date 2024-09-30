@@ -10,9 +10,12 @@ import {
   Row,
   Col,
   Image,
-  Form
+  Form,
+  Card,
+  Stack
 } from 'react-bootstrap'
 import Swal from 'sweetalert2'
+import { FaTrash, FaMinus, FaPlus, FaShoppingCart } from 'react-icons/fa'
 
 const urlBaseServer = import.meta.env.VITE_URL_BASE_SERVER
 
@@ -22,7 +25,6 @@ const ShoppingCart = () => {
   const { user } = useContext(AuthContext)
   const navigate = useNavigate()
 
-  // Calcular el precio total de todos los productos en el carrito
   let totalPrice = 0
   cartItems.forEach(item => {
     totalPrice += item.price * item.quantity
@@ -96,75 +98,103 @@ const ShoppingCart = () => {
 
   return (
     <Container className='my-5'>
-      <h2>Tu Carrito de Compras</h2>
+      <h2 className='text-center mb-4'>Tu Carrito de Compras</h2>
 
-      {cartItems.length === 0 && <p>Tu carrito está vacío</p>}
+      {cartItems.length === 0 && (
+        <div className='text-center'>
+          <FaShoppingCart size={80} className='text-muted mb-3' />
+          <h4 className='text-muted'>Tu carrito está vacío</h4>
+          <p className='text-muted'>
+            ¡Explora nuestros productos y agrega algunos a tu carrito!
+          </p>
+          <Button
+            variant='primary'
+            onClick={() => navigate('/products')}
+            className='mt-3'
+          >
+            Volver a productos
+          </Button>
+        </div>
+      )}
 
       {cartItems.length > 0 && (
         <>
           <ListGroup variant='flush'>
             {cartItems.map(item => (
               <ListGroup.Item key={item.id_product} className='mb-3'>
-                <Row className='align-items-center'>
-                  <Col md={2}>
-                    <Image
-                      src={item.image_url || 'https://via.placeholder.com/100'}
-                      alt={item.name}
-                      fluid
-                      rounded
-                      style={{
-                        width: '80px',
-                        height: '80px',
-                        objectFit: 'cover'
-                      }}
-                    />
-                  </Col>
+                <Card className='p-3 shadow-sm'>
+                  <Row className='align-items-center'>
+                    <Col md={2}>
+                      <Image
+                        src={
+                          item.image_url || 'https://via.placeholder.com/100'
+                        }
+                        alt={item.name}
+                        fluid
+                        rounded
+                        style={{
+                          width: '80px',
+                          height: '80px',
+                          objectFit: 'cover'
+                        }}
+                      />
+                    </Col>
 
-                  <Col md={4}>
-                    <h5>{item.name}</h5>
-                    <p>Precio: ${item.price.toLocaleString()}</p>
-                  </Col>
+                    <Col md={4}>
+                      <h5 className='mb-0'>{item.name}</h5>
+                      <p className='text-muted'>
+                        Precio: ${item.price.toLocaleString()}
+                      </p>
+                    </Col>
 
-                  <Col md={3} className='d-flex align-items-center'>
-                    <Button
-                      variant='secondary'
-                      className='me-2'
-                      onClick={() => removeFromCart(item.id_product)}
-                      disabled={item.quantity <= 1}
-                    >
-                      -
-                    </Button>
-                    <Form.Control
-                      type='text'
-                      value={item.quantity}
-                      readOnly
-                      style={{ width: '50px', textAlign: 'center' }}
-                    />
-                    <Button
-                      variant='primary'
-                      className='ms-2'
-                      onClick={() => addToCart(item)}
-                    >
-                      +
-                    </Button>
-                  </Col>
+                    <Col md={3} className='d-flex align-items-center'>
+                      <Button
+                        variant='outline-secondary'
+                        className='me-2'
+                        onClick={() => removeFromCart(item.id_product)}
+                        disabled={item.quantity <= 1}
+                      >
+                        <FaMinus />
+                      </Button>
+                      <Form.Control
+                        type='text'
+                        value={item.quantity}
+                        readOnly
+                        className='text-center'
+                        style={{ width: '50px' }}
+                      />
+                      <Button
+                        variant='outline-primary'
+                        className='ms-2'
+                        onClick={() => addToCart(item)}
+                      >
+                        <FaPlus />
+                      </Button>
+                    </Col>
 
-                  <Col md={3}>
-                    <Button
-                      variant='danger'
-                      onClick={() => deleteFromCart(item.id_product)}
-                    >
-                      Eliminar
-                    </Button>
-                  </Col>
-                </Row>
+                    <Col md={3}>
+                      <Button
+                        variant='outline-danger'
+                        onClick={() => deleteFromCart(item.id_product)}
+                      >
+                        <FaTrash /> Eliminar
+                      </Button>
+                    </Col>
+                  </Row>
+                </Card>
               </ListGroup.Item>
             ))}
           </ListGroup>
 
-          <div className='mt-4'>
-            <h4>Total: ${totalPrice.toLocaleString()}</h4>
-            <div className='d-flex justify-content-between'>
+          <Card className='p-3 mt-4 shadow-sm'>
+            <h4 className='text-center'>
+              Total: ${totalPrice.toLocaleString()}
+            </h4>
+            <Stack
+              direction='horizontal'
+              gap={3}
+              className='justify-content-between mt-3'
+            >
               <Button variant='warning' onClick={clearCart}>
                 Vaciar Carrito
               </Button>
@@ -175,8 +205,8 @@ const ShoppingCart = () => {
               >
                 Pagar
               </Button>
-            </div>
-          </div>
+            </Stack>
+          </Card>
         </>
       )}
     </Container>

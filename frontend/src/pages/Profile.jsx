@@ -101,7 +101,6 @@ const Profile = () => {
     </div>
   )
 
-  // Renderizar los favoritos del usuario
   const renderFavorites = () => (
     <div>
       <h3>Favoritos</h3>
