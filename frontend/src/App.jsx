@@ -10,7 +10,7 @@ import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Detail from './pages/Detail'
-import NotFound from './pageS/NotFound'
+import NotFound from './pages/NotFound'
 
 import AdminProtectedRoute from './components/AdminProtectedRoute'
 import ProtectedRoute from './components/ProtectedRoutes'
