@@ -19,7 +19,7 @@ const Products = () => {
 
   // Función para recuperar el token desde las cookies
   const getTokenFromCookies = () => {
-    return Cookies.get('token') // Asume que el token está guardado en una cookie llamada 'token'
+    return Cookies.get('token')
   }
 
   // Configurar axios para que siempre envíe el token en el encabezado de autorización

@@ -9,7 +9,6 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const navigate = useNavigate()
 
-  // Cargar el usuario desde sessionStorage al montar la aplicación
   useEffect(() => {
     const storedUser = sessionStorage.getItem('user')
     if (storedUser) {
@@ -19,7 +18,7 @@ export const AuthProvider = ({ children }) => {
   }, [])
 
   const login = userData => {
-    console.log('User data al iniciar sesión:', userData)
+    console.log('Datos de usuario al iniciar sesión:', userData)
     setUser(userData)
     setIsAuthenticated(true)
     // Guardar usuario en sessionStorage
