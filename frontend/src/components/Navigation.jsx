@@ -51,7 +51,7 @@ const Navigation = () => {
     <Navbar bg='dark' variant='dark' expand='lg' className='sticky-top py-1'>
       <Container>
         <Navbar.Brand as={Link} to='/' className='fw-bold'>
-          Ecommerce
+          TecnoExpress
         </Navbar.Brand>
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
         <Navbar.Collapse id='basic-navbar-nav'>

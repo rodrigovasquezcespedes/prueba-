@@ -6,7 +6,11 @@
   "eslintConfig": {
     "extends": [
       "./node_modules/standard/eslintrc.json"
-    ]
+    ],
+    "env": {
+      "browser": true,
+      "es2021": true 
+    }
   },
   "scripts": {
     "dev": "vite",

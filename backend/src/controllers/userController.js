@@ -88,19 +88,13 @@ const updateUser = async (req, res) => {
     if (!existingUser) {
       return res.status(404).json({ message: 'Usuario no encontrado' })
     }
-    console.log(
-      'Contraseña actual (hashed) del usuario:',
-      existingUser.password
-    )
+    console.log('Contraseña actual del usuario:', existingUser.password)
 
     let hashedPassword = existingUser.password
 
     if (password && password.trim() !== '') {
       hashedPassword = await bcrypt.hash(password, 10)
-      console.log(
-        'Nueva contraseña proporcionada y encriptada:',
-        hashedPassword
-      )
+      console.log('Nueva contraseña proporcionada y encriptada:', hashedPassword)
     }
 
     const updatedUser = await userModel.updateUser(

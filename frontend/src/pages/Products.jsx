@@ -107,7 +107,6 @@ const Products = () => {
 
   return (
     <Container className='py-5'>
-      {/* Filtros */}
       <Row className='mb-4 d-flex justify-content-center'>
         <Col xs={12} sm={6} md={4} lg={3} className='mb-2'>
           <select
