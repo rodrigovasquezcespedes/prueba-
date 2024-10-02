@@ -40,7 +40,11 @@ const Login = () => {
       )
 
       if (response.status === 200) {
-        const { user } = response.data
+        const { user, token } = response.data
+
+        document.cookie = `authToken=${token}; path=/; secure; SameSite=Strict`
+
+        sessionStorage.setItem('user', JSON.stringify(user))
 
         login(user)
 
