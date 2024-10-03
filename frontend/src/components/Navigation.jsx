@@ -55,7 +55,7 @@ const Navigation = () => {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
         <Navbar.Collapse id='basic-navbar-nav'>
-          {/* Todos los enlaces alineados a la derecha */}
+
           <Nav className='ms-auto align-items-center'>
             {isAuthenticated && user && (
               <Nav.Item className='text-light me-3'>
